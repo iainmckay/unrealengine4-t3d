@@ -5,11 +5,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionClamp : Node
     {
-        public UnresolvedExpressionReference Input { get; }
-        public UnresolvedExpressionReference Min { get; }
-        public UnresolvedExpressionReference Max { get; }
+        public ExpressionReference Input { get; }
+        public ExpressionReference Min { get; }
+        public ExpressionReference Max { get; }
 
-        public MaterialExpressionClamp(string name, UnresolvedExpressionReference input, UnresolvedExpressionReference min, UnresolvedExpressionReference max, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionClamp(string name, ExpressionReference input, ExpressionReference min, ExpressionReference max, int editorX, int editorY) : base(name, editorX, editorY)
         {
             Input = input;
             Min = min;

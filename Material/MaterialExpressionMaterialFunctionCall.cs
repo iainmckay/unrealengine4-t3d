@@ -5,10 +5,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionMaterialFunctionCall : Node
     {
-        public UnresolvedExpressionReference MaterialFunction { get; }
-        public UnresolvedExpressionReference[] FunctionInputs { get; }
+        public ExpressionReference MaterialFunction { get; }
+        public ExpressionReference[] FunctionInputs { get; }
 
-        public MaterialExpressionMaterialFunctionCall(string name, UnresolvedExpressionReference materialFunction, UnresolvedExpressionReference[] functionInputs, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionMaterialFunctionCall(string name, ExpressionReference materialFunction, ExpressionReference[] functionInputs, int editorX, int editorY) : base(name, editorX, editorY)
         {
             MaterialFunction = materialFunction;
             FunctionInputs = functionInputs;

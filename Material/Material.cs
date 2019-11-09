@@ -7,14 +7,14 @@
     public class Material : Node
     {
         public ShadingModel ShadingModel { get; }
-        public UnresolvedExpressionReference BaseColor { get; }
-        public UnresolvedExpressionReference Metallic { get; }
-        public UnresolvedExpressionReference Normal { get; }
-        public UnresolvedExpressionReference Roughness { get; }
-        public UnresolvedExpressionReference Specular { get; }
-        public UnresolvedExpressionReference[] Expressions { get; }
+        public ExpressionReference BaseColor { get; }
+        public ExpressionReference Metallic { get; }
+        public ExpressionReference Normal { get; }
+        public ExpressionReference Roughness { get; }
+        public ExpressionReference Specular { get; }
+        public ExpressionReference[] Expressions { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, UnresolvedExpressionReference baseColor, UnresolvedExpressionReference metallic, UnresolvedExpressionReference normal, UnresolvedExpressionReference roughness, UnresolvedExpressionReference specular, UnresolvedExpressionReference[] expressionReferences, int editorX, int editorY) 
+        public Material(Node[] children, string name, ShadingModel shadingModel, ExpressionReference baseColor, ExpressionReference metallic, ExpressionReference normal, ExpressionReference roughness, ExpressionReference specular, ExpressionReference[] expressionReferences, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
             ShadingModel = shadingModel;
@@ -26,7 +26,7 @@
             Expressions = expressionReferences;
         }
 
-        public Node ResolveExpressionReference(UnresolvedExpressionReference reference)
+        public Node ResolveExpressionReference(ExpressionReference reference)
         {
             if (null == reference) {
                 return null;

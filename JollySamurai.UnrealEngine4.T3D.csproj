@@ -69,7 +69,7 @@
     <Compile Include="SamplerType.cs" />
     <Compile Include="ShadingModel.cs" />
     <Compile Include="TextureReference.cs" />
-    <Compile Include="UnresolvedExpressionReference.cs" />
+    <Compile Include="ExpressionReference.cs" />
     <Compile Include="ValueUtil.cs" />
     <Compile Include="Vector4.cs" />
   </ItemGroup>

@@ -5,10 +5,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionAdd : Node
     {
-        public UnresolvedExpressionReference A { get; }
-        public UnresolvedExpressionReference B { get; }
+        public ExpressionReference A { get; }
+        public ExpressionReference B { get; }
 
-        public MaterialExpressionAdd(string name, UnresolvedExpressionReference a, UnresolvedExpressionReference b, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionAdd(string name, ExpressionReference a, ExpressionReference b, int editorX, int editorY) : base(name, editorX, editorY)
         {
             A = a;
             B = b;

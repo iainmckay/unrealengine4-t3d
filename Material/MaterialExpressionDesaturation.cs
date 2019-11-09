@@ -5,10 +5,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionDesaturation : Node
     {
-        public UnresolvedExpressionReference Input { get; }
-        public UnresolvedExpressionReference Fraction { get; }
+        public ExpressionReference Input { get; }
+        public ExpressionReference Fraction { get; }
 
-        public MaterialExpressionDesaturation(string name, UnresolvedExpressionReference input, UnresolvedExpressionReference fraction, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionDesaturation(string name, ExpressionReference input, ExpressionReference fraction, int editorX, int editorY) : base(name, editorX, editorY)
         {
             Input = input;
             Fraction = fraction;

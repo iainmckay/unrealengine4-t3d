@@ -5,11 +5,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionLinearInterpolate : Node
     {
-        public UnresolvedExpressionReference A { get; }
-        public UnresolvedExpressionReference B { get; }
-        public UnresolvedExpressionReference Alpha { get; }
+        public ExpressionReference A { get; }
+        public ExpressionReference B { get; }
+        public ExpressionReference Alpha { get; }
 
-        public MaterialExpressionLinearInterpolate(string name, UnresolvedExpressionReference a, UnresolvedExpressionReference b, UnresolvedExpressionReference alpha, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionLinearInterpolate(string name, ExpressionReference a, ExpressionReference b, ExpressionReference alpha, int editorX, int editorY) : base(name, editorX, editorY)
         {
             A = a;
             B = b;

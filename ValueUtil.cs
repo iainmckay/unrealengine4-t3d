@@ -93,7 +93,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             throw new Exception("unhandled shading model");
         }
 
-        public static UnresolvedExpressionReference TryParseExpressionReference(string value, out bool successOrFailure)
+        public static ExpressionReference TryParseExpressionReference(string value, out bool successOrFailure)
         {
             try {
                 successOrFailure = true;
@@ -105,7 +105,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             return null;
         }
 
-        public static UnresolvedExpressionReference ParseExpressionReference(string value)
+        public static ExpressionReference ParseExpressionReference(string value)
         {
             if (value == null) {
                 return null;
@@ -143,10 +143,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
             if (! match.Success) {
                 // FIXME: replace with named exception
-                throw new Exception("Failed to parse UnresolvedExpressionReference");
+                throw new Exception("Failed to parse ExpressionReference");
             }
 
-            return new UnresolvedExpressionReference(match.Groups["type"].Value, match.Groups["object"].Value, propertyBag);
+            return new ExpressionReference(match.Groups["type"].Value, match.Groups["object"].Value, propertyBag);
         }
 
         public static TextureReference TryParseTextureReference(string value, out bool successOrFailure)
@@ -230,9 +230,9 @@ namespace JollySamurai.UnrealEngine4.T3D
             return new Vector4(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value), ParseFloat(match.Groups[4].Value));
         }
 
-        public static UnresolvedExpressionReference[] ParseExpressionReferenceArray(ParsedProperty[] elements)
+        public static ExpressionReference[] ParseExpressionReferenceArray(ParsedProperty[] elements)
         {
-            List<UnresolvedExpressionReference> list = new List<UnresolvedExpressionReference>();
+            List<ExpressionReference> list = new List<ExpressionReference>();
 
             foreach (var parsedProperty in elements) {
                 list.Add(ParseExpressionReference(parsedProperty.Value));

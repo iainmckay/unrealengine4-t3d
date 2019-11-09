@@ -5,10 +5,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionStaticSwitchParameter : ParameterNode<bool>
     {
-        public UnresolvedExpressionReference A { get; }
-        public UnresolvedExpressionReference B { get; }
+        public ExpressionReference A { get; }
+        public ExpressionReference B { get; }
 
-        public MaterialExpressionStaticSwitchParameter(string name, string parameterName, bool defaultValue, UnresolvedExpressionReference a, UnresolvedExpressionReference b, int editorX, int editorY)
+        public MaterialExpressionStaticSwitchParameter(string name, string parameterName, bool defaultValue, ExpressionReference a, ExpressionReference b, int editorX, int editorY)
             : base(name, parameterName, defaultValue, editorX, editorY)
         {
             A = a;

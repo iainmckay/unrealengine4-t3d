@@ -5,12 +5,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionTextureSampleParameter2D : ParameterNode<TextureReference>
     {
-        public UnresolvedExpressionReference Coordinates { get; }
+        public ExpressionReference Coordinates { get; }
 
         public TextureReference Texture { get; }
         public SamplerType SamplerType { get; }
 
-        public MaterialExpressionTextureSampleParameter2D(string name, string parameterName, UnresolvedExpressionReference coordinates, TextureReference texture, SamplerType samplerType, int editorX, int editorY)
+        public MaterialExpressionTextureSampleParameter2D(string name, string parameterName, ExpressionReference coordinates, TextureReference texture, SamplerType samplerType, int editorX, int editorY)
             : base(name, parameterName, null, editorX, editorY)
         {
             Coordinates = coordinates;
