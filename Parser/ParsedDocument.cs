@@ -11,8 +11,8 @@
 
         public static ParsedDocument From(string content)
         {
-            Parser parser = new Parser(content);
-            ParsedNode rootNode = parser.Parse();
+            DocumentParser documentParser = new DocumentParser(content);
+            ParsedNode rootNode = documentParser.Parse();
 
             return new ParsedDocument(rootNode);
         }

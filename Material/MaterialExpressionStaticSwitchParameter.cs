@@ -3,17 +3,14 @@ using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class MaterialExpressionStaticSwitchParameter : Node
+    public class MaterialExpressionStaticSwitchParameter : ParameterNode<bool>
     {
-        public string ParameterName { get; }
-        public bool DefaultValue { get; }
         public UnresolvedExpressionReference A { get; }
         public UnresolvedExpressionReference B { get; }
 
-        public MaterialExpressionStaticSwitchParameter(string name, string parameterName, bool defaultValue, UnresolvedExpressionReference a, UnresolvedExpressionReference b, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionStaticSwitchParameter(string name, string parameterName, bool defaultValue, UnresolvedExpressionReference a, UnresolvedExpressionReference b, int editorX, int editorY)
+            : base(name, parameterName, defaultValue, editorX, editorY)
         {
-            ParameterName = parameterName;
-            DefaultValue = defaultValue;
             A = a;
             B = b;
         }

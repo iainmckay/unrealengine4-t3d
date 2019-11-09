@@ -6,7 +6,7 @@ using JollySamurai.UnrealEngine4.T3D.Parser;
 
 namespace JollySamurai.UnrealEngine4.T3D
 {
-    public class ValueUtil
+    public static class ValueUtil
     {
         public static readonly Regex ExpressionReferenceRegex = new Regex(@"(?<type>[a-zA-Z0-9]+)'""(?<material>\w+:)?(?<object>.+)""'", RegexOptions.Compiled);
         public static readonly Regex ResourceReferenceRegex = new Regex(@"(\w+)'""([\w\/\.]+)""'", RegexOptions.Compiled);
@@ -69,6 +69,30 @@ namespace JollySamurai.UnrealEngine4.T3D
             throw new Exception("unhandled sampler type");
         }
 
+        public static ShadingModel TryParseShadingModel(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+                return ParseShadingModel(value);
+            } catch (Exception /* FIXME: replace with named exception */) {
+                successOrFailure = false;
+            }
+
+            return ShadingModel.Unknown;
+        }
+
+        public static ShadingModel ParseShadingModel(string value)
+        {
+            if (value == null) {
+                return ShadingModel.DefaultLit;
+            } else if (value == "MSM_Unlit") {
+                return ShadingModel.Unlit;
+            }
+
+            // FIXME:
+            throw new Exception("unhandled shading model");
+        }
+
         public static UnresolvedExpressionReference TryParseExpressionReference(string value, out bool successOrFailure)
         {
             try {
@@ -91,7 +115,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             string expression;
             
             if (value.StartsWith("(") && value.EndsWith(")")) {
-                Parser parser = new Parser(value.Substring(1, value.Length - 2));
+                var parser = new DocumentParser(value.Substring(1, value.Length - 2));
 
                 if (parser.PeekToken() == "ExpressionInputId") {
                     parser.ExpectToken("ExpressionInputId");
@@ -102,7 +126,7 @@ namespace JollySamurai.UnrealEngine4.T3D
 
                     var inputValue = parser.ReadUntilEndOfLine();
                     
-                    parser = new Parser(inputValue.Substring(1, inputValue.Length - 2));
+                    parser = new DocumentParser(inputValue.Substring(1, inputValue.Length - 2));
                 }
 
                 parser.ExpectToken("Expression");

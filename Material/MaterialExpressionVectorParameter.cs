@@ -3,16 +3,11 @@ using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class MaterialExpressionVectorParameter : Node
+    public class MaterialExpressionVectorParameter : ParameterNode<Vector4>
     {
-        public string ParameterName { get; }
-
-        public Vector4 DefaultValue { get; }
-
-        public MaterialExpressionVectorParameter(string name, string parameterName, Vector4 defaultValue, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionVectorParameter(string name, string parameterName, Vector4 defaultValue, int editorX, int editorY)
+            : base(name, parameterName, defaultValue, editorX, editorY)
         {
-            ParameterName = parameterName;
-            DefaultValue = defaultValue;
         }
     }
 

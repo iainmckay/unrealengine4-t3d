@@ -12,8 +12,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         FunctionReference = 16,
         Integer = 32,
         SamplerType = 64,
-        String = 128,
-        TextureReference = 256,
-        Vector4 = 512,
+        ShadingModel = 128,
+        String = 256,
+        TextureReference = 512,
+        Vector4 = 1024,
     }
 }

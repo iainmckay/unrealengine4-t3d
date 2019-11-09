@@ -6,6 +6,7 @@
 {
     public class Material : Node
     {
+        public ShadingModel ShadingModel { get; }
         public UnresolvedExpressionReference BaseColor { get; }
         public UnresolvedExpressionReference Metallic { get; }
         public UnresolvedExpressionReference Normal { get; }
@@ -13,9 +14,10 @@
         public UnresolvedExpressionReference Specular { get; }
         public UnresolvedExpressionReference[] Expressions { get; }
 
-        public Material(Node[] children, string name, UnresolvedExpressionReference baseColor, UnresolvedExpressionReference metallic, UnresolvedExpressionReference normal, UnresolvedExpressionReference roughness, UnresolvedExpressionReference specular, UnresolvedExpressionReference[] expressionReferences, int editorX, int editorY) 
+        public Material(Node[] children, string name, ShadingModel shadingModel, UnresolvedExpressionReference baseColor, UnresolvedExpressionReference metallic, UnresolvedExpressionReference normal, UnresolvedExpressionReference roughness, UnresolvedExpressionReference specular, UnresolvedExpressionReference[] expressionReferences, int editorX, int editorY) 
             : base(name, editorX, editorY, children)
         {
+            ShadingModel = shadingModel;
             BaseColor = baseColor;
             Metallic = metallic;
             Normal = normal;
@@ -44,29 +46,23 @@
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-//            AddRequiredProperty("bCanMaskedBeAssumedOpaque", PropertyDataType.Boolean);
-//            AddRequiredProperty("bUsedWithStaticLighting", PropertyDataType.Boolean);
-//            AddRequiredProperty("EditorComments", PropertyDataType.String | PropertyDataType.Array);
             AddRequiredProperty("EditorX", PropertyDataType.Integer);
             AddRequiredProperty("EditorY", PropertyDataType.Integer);
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
-//            AddRequiredProperty("LightingGuid", PropertyDataType.String);
-//            AddRequiredProperty("MaterialFunctionInfos", PropertyDataType.String | PropertyDataType.Array);
-//            AddRequiredProperty("ReferencedTextureGuids", PropertyDataType.String | PropertyDataType.Array);
-//            AddRequiredProperty("StateId", PropertyDataType.String);
-//            AddRequiredProperty("ThumbnailInfo", PropertyDataType.String);
 
             AddOptionalProperty("BaseColor", PropertyDataType.ExpressionReference);
             AddOptionalProperty("Metallic", PropertyDataType.ExpressionReference);
             AddOptionalProperty("Normal", PropertyDataType.ExpressionReference);
             AddOptionalProperty("Roughness", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
             AddOptionalProperty("Specular", PropertyDataType.ExpressionReference);
-            
+
+            AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("StateId");
             AddIgnoredProperty("ThumbnailInfo");
         }
-        
+
         public override Node Convert(ParsedNode node, Node[] children)
         {
             ParsedProperty expressionList = node.FindProperty("Expressions");
@@ -74,6 +70,7 @@
             return new Material(
                 children,
                 node.FindAttributeValue("Name"),
+                ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
                 ValueUtil.ParseExpressionReference(node.FindPropertyValue("BaseColor")),
                 ValueUtil.ParseExpressionReference(node.FindPropertyValue("Metallic")),
                 ValueUtil.ParseExpressionReference(node.FindPropertyValue("Normal")),

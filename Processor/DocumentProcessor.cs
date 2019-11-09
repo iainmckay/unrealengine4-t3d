@@ -163,6 +163,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseInteger(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.SamplerType)) {
                 ValueUtil.TryParseSamplerType(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.ShadingModel)) {
+                ValueUtil.TryParseShadingModel(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.String)) {
                 wasValid = true;
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.TextureReference)) {

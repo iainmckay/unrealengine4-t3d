@@ -7,7 +7,7 @@ using System.Text;
 
 namespace JollySamurai.UnrealEngine4.T3D.Parser
 {
-    public class Parser
+    public class DocumentParser
     {
         private static readonly char[] TokenTerminatorList = new char[] {
             '=',
@@ -22,7 +22,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
         private int _cursorPosition;
         private StringBuilder _tokenBuffer;
 
-        internal Parser(string content)
+        internal DocumentParser(string content)
         {
             _content = content;
             _contentLength = content.Length;
