@@ -21,5 +21,20 @@
         {
             return GetType().Name == className;
         }
+
+        public Node FindChildByName(string name)
+        {
+            if (Children == null || string.IsNullOrEmpty(name)) {
+                return null;
+            }
+
+            foreach (var child in Children) {
+                if (child.Name == name) {
+                    return child;
+                }
+            }
+
+            return null;
+        }
     }
 }
