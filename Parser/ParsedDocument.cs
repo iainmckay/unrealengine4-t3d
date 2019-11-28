@@ -3,18 +3,20 @@
     public class ParsedDocument
     {
         public ParsedNode RootNode { get; }
+        public string FileName { get; }
 
-        private ParsedDocument(ParsedNode rootNode)
+        private ParsedDocument(string fileName, ParsedNode rootNode)
         {
+            FileName = fileName;
             RootNode = rootNode;
         }
 
-        public static ParsedDocument From(string content)
+        public static ParsedDocument From(string fileName, string content)
         {
             DocumentParser documentParser = new DocumentParser(content);
             ParsedNode rootNode = documentParser.Parse();
 
-            return new ParsedDocument(rootNode);
+            return new ParsedDocument(fileName, rootNode);
         }
     }
 }
