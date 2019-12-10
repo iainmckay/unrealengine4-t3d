@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using JollySamurai.UnrealEngine4.T3D.Exception;
 using JollySamurai.UnrealEngine4.T3D.Parser;
 
 namespace JollySamurai.UnrealEngine4.T3D
@@ -50,7 +51,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             try {
                 successOrFailure = true;
                 return ParseSamplerType(value);
-            } catch (Exception /* FIXME: replace with named exception */) {
+            } catch (ValueException) {
                 successOrFailure = false;
             }
 
@@ -65,8 +66,7 @@ namespace JollySamurai.UnrealEngine4.T3D
                 return SamplerType.Normal;
             }
 
-            // FIXME:
-            throw new Exception("unhandled sampler type");
+            throw new ValueException("Unexpected sampler type: " + value);
         }
 
         public static ShadingModel TryParseShadingModel(string value, out bool successOrFailure)
@@ -74,7 +74,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             try {
                 successOrFailure = true;
                 return ParseShadingModel(value);
-            } catch (Exception /* FIXME: replace with named exception */) {
+            } catch (ValueException) {
                 successOrFailure = false;
             }
 
@@ -89,8 +89,7 @@ namespace JollySamurai.UnrealEngine4.T3D
                 return ShadingModel.Unlit;
             }
 
-            // FIXME:
-            throw new Exception("unhandled shading model");
+            throw new ValueException("Unexpected shading model: " + value);
         }
 
         public static ExpressionReference TryParseExpressionReference(string value, out bool successOrFailure)
@@ -98,7 +97,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             try {
                 successOrFailure = true;
                 return ParseExpressionReference(value);
-            } catch (Exception /* FIXME: replace with named exception */) {
+            } catch (ValueException) {
                 successOrFailure = false;
             }
 
@@ -142,8 +141,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             Match match = ExpressionReferenceRegex.Match(expression);
 
             if (! match.Success) {
-                // FIXME: replace with named exception
-                throw new Exception("Failed to parse ExpressionReference");
+                throw new ValueException("Failed to parse ExpressionReference");
             }
 
             return new ExpressionReference(match.Groups["type"].Value, match.Groups["object"].Value, propertyBag);
@@ -154,7 +152,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             try {
                 successOrFailure = true;
                 return ParseTextureReference(value);
-            } catch (Exception /* FIXME: replace with named exception */) {
+            } catch (ValueException) {
                 successOrFailure = false;
             }
 
@@ -166,8 +164,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             Match match = ResourceReferenceRegex.Match(value);
 
             if (! match.Success) {
-                // FIXME: replace with named exception
-                throw new Exception("Failed to parse TextureReference");
+                throw new ValueException("Failed to parse TextureReference");
             }
 
             var type = TextureType.Texture2D;
@@ -175,8 +172,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             if (match.Groups[1].Value == "Texture2D") {
                 type = TextureType.Texture2D;
             } else {
-                // FIXME: replace with named exception
-                throw new Exception("Failed to parse TextureReference");
+                throw new ValueException("Failed to parse TextureReference");
             }
 
             return new TextureReference(type, match.Groups[2].Value);
@@ -187,7 +183,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             try {
                 successOrFailure = true;
                 return ParseFunctionReference(value);
-            } catch (Exception /* FIXME: replace with named exception */) {
+            } catch (ValueException) {
                 successOrFailure = false;
             }
 
@@ -199,8 +195,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             Match match = ResourceReferenceRegex.Match(value);
 
             if (! match.Success) {
-                // FIXME: replace with named exception
-                throw new Exception("Failed to parse FunctionReference");
+                throw new ValueException("Failed to parse FunctionReference");
             }
 
             return new FunctionReference(match.Groups[1].Value, match.Groups[2].Value);
@@ -211,7 +206,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             try {
                 successOrFailure = true;
                 return ParseVector4(value);
-            } catch (Exception /* FIXME: replace with named exception */) {
+            } catch (ValueException) {
                 successOrFailure = false;
             }
 
@@ -223,8 +218,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             Match match = Vector4Regex.Match(value);
 
             if (! match.Success) {
-                // FIXME: replace with named exception
-                throw new Exception("Failed to parse Vector4");
+                throw new ValueException("Failed to parse Vector4");
             }
 
             return new Vector4(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value), ParseFloat(match.Groups[4].Value));

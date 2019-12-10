@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using JollySamurai.UnrealEngine4.T3D.Exception;
 
 namespace JollySamurai.UnrealEngine4.T3D.Parser
 {
@@ -19,8 +20,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
 
         private string _content;
         private int _contentLength;
-        private int _cursorPosition;
         private StringBuilder _tokenBuffer;
+
+        private int _cursorPosition;
+        private int _lineNumber;
+        private int _columnNumber;
 
         internal DocumentParser(string content)
         {
@@ -62,8 +66,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                 } else {
                     ParsedProperty property = ReadProperty();
 
-                    // FIXME: remove traces, replace with exceptions and error handling
-                    Trace.Assert(property != null);
+                    if (property == null) {
+                        throw CreateException("This is unexpected, read null property");
+                    }
 
                     propertyList.Add(property);
                 }
@@ -79,7 +84,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
             string actualToken = ReadToken();
 
             if (actualToken != expectedToken) {
-                throw new Exception($"Expected \"{expectedToken}\" but got \"{actualToken}\"");
+                throw CreateException($"Expected \"{expectedToken}\" but got \"{actualToken}\"");
             }
         }
 
@@ -162,6 +167,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                         ReadCharacter();
                     }
 
+                    IncrementLineCounter();
+
                     break;
                 }
 
@@ -222,18 +229,23 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                     ReadCharacter();
                 }
 
+                if (isEndOfLine) {
+                    IncrementLineCounter();
+                }
+
                 if (shouldReturn || ReachedEndOfDocument()) {
                     return _tokenBuffer.ToString();
                 }
             }
 
-            throw new Exception("Unexpected end of document reached while reading token");
+            throw CreateException("Unexpected end of document reached while reading token");
         }
 
         public char ReadCharacter()
         {
             char nextCharacter = PeekCharacter();
             _cursorPosition++;
+            _columnNumber++;
 
             return nextCharacter;
         }
@@ -241,7 +253,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
         public char GetCharacter(int position)
         {
             if (IsPositionPastEndOfDocument(position)) {
-                throw new InvalidOperationException("Attempted to read character past the end of the document");
+                throw CreateException("Attempted to read character past the end of the document");
             }
 
             return _content[position];
@@ -297,6 +309,17 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
             }
 
             return newList;
+        }
+
+        private void IncrementLineCounter()
+        {
+            _lineNumber++;
+            _columnNumber = 0;
+        }
+
+        private ParserException CreateException(string message)
+        {
+            return new ParserException(message, _lineNumber, _columnNumber);
         }
     }
 }

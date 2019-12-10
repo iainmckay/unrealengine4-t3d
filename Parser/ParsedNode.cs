@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JollySamurai.UnrealEngine4.T3D.Exception;
 
 namespace JollySamurai.UnrealEngine4.T3D.Parser
 {
@@ -61,9 +62,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                     string elementName = arrayCheckResult.Groups[2].Value;
 
                     if (properties.ContainsKey(arrayName)) {
-                        // FIXME:
-                        Console.WriteLine("found an array element but there is a non-array version of the property registered");
-                        continue;
+                        throw new ParserException("Found an array element but there is a non-array version of the property registered", -1, -1);
                     }
 
                     if (! arrayElements.ContainsKey(arrayName)) {
@@ -73,8 +72,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                     arrayElements[arrayName].Add(new ParsedProperty(elementName, property.Value));
                 } else {
                     if (arrayElements.ContainsKey(property.Name)) {
-                        // FIXME:
-                        Console.WriteLine("found a normal element but there is an array version of the property registered");
+                        throw new ParserException("Found a normal element but there is an array version of the property registered", -1, -1);
                     }
 
                     properties.Add(property.Name, property);

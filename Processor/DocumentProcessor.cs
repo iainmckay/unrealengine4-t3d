@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using JollySamurai.UnrealEngine4.T3D.Exception;
 using JollySamurai.UnrealEngine4.T3D.Parser;
 
 namespace JollySamurai.UnrealEngine4.T3D.Processor
 {
-    public abstract class DocumentProcessor<T> where T : Node
+    public abstract class DocumentProcessor<T>
+        where T : Node
     {
         public static readonly Regex TypeNameRegex = new Regex(@"(\w+)[0-9]{1,}", RegexOptions.Compiled);
 
@@ -42,56 +44,59 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
             return null;
         }
 
-        public T Convert(ParsedDocument document)
+        public DocumentProcessorResult<T> Convert(ParsedDocument document)
         {
             ParsedNode rootNode = document.RootNode;
+            DocumentProcessorState state = new DocumentProcessorState();
+            T convertedRootNode = ProcessNode(rootNode, state) as T;
 
-            return ProcessNode(rootNode) as T;
+            return new DocumentProcessorResult<T>(convertedRootNode, state.Problems);
         }
 
-        private Node ProcessNode(ParsedNode node)
+        private Node ProcessNode(ParsedNode node, DocumentProcessorState state)
         {
             NodeProcessor nodeProcessor = FindProcessorForNode(node);
 
             if (null == nodeProcessor) {
-                // FIXME:
-                Console.WriteLine(String.Format("processor not found for node, {0} -> {1}", node.AttributeBag.FindProperty("Class")?.Value, node.AttributeBag.FindProperty("Name")?.Value));
+                state.AddWarning("Processor not found (class={0}, node={1})", node.AttributeBag.FindProperty("Class")?.Value, node.AttributeBag.FindProperty("Name")?.Value);
 
                 return null;
             }
 
-            ProcessProperties(node, node.AttributeBag, nodeProcessor.AttributeDefinitions, nodeProcessor.IgnoredAttributeNames);
-            ProcessProperties(node, node.PropertyBag, nodeProcessor.PropertyDefinitions, nodeProcessor.IgnoredPropertyNames);
+            if (! Validate(node, nodeProcessor, state)) {
+                return null;
+            }
 
             List<Node> children = new List<Node>();
 
             foreach (ParsedNode childNode in node.Children.Nodes) {
-                Node child = ProcessNode(childNode);
+                Node child = ProcessNode(childNode, state);
 
-                if (null == child) {
-                    // FIXME:
-                    Console.WriteLine("Failed to process node");
-                    continue;
+                if (null != child) {
+                    children.Add(child);
                 }
-
-                children.Add(child);
             }
 
             return nodeProcessor.Convert(node, children.ToArray());
         }
 
-        private void ProcessProperties(ParsedNode node, ParsedPropertyBag propertyBag, PropertyDefinition[] propertyDefinitions, string[] ignoredPropertyNames)
+        private bool Validate(ParsedNode node, NodeProcessor nodeProcessor, DocumentProcessorState state)
         {
-            bool presenceValidationResult = ValidatePresenceOfProperties(node.FindAttributeValue("Name"), propertyBag, propertyDefinitions, ignoredPropertyNames);
-            bool valueValidationResult = ValidatePropertiesValues(propertyBag, propertyDefinitions);
+            bool validateAttributesResult = ValidateProperties(node, node.AttributeBag, nodeProcessor.AttributeDefinitions, nodeProcessor.IgnoredAttributeNames, state);
+            bool validatePropertiesResult = ValidateProperties(node, node.PropertyBag, nodeProcessor.PropertyDefinitions, nodeProcessor.IgnoredPropertyNames, state);
 
-            if (! presenceValidationResult || ! valueValidationResult) {
-                // FIXME:
-                Console.WriteLine("could not process node it had one or more failures");
-            }
+            return validateAttributesResult && validatePropertiesResult;
         }
 
-        private bool ValidatePresenceOfProperties(string nodeName, ParsedPropertyBag propertyBag, PropertyDefinition[] propertyDefinitions, string[] ignoredPropertyNames)
+        private bool ValidateProperties(ParsedNode node, ParsedPropertyBag propertyBag, PropertyDefinition[] propertyDefinitions, string[] ignoredPropertyNames, DocumentProcessorState state)
+        {
+            bool presenceValidationResult = ValidatePresenceOfProperties(node.FindAttributeValue("Name"), propertyBag, propertyDefinitions, ignoredPropertyNames, state);
+            bool valueValidationResult = ValidatePropertiesValues(node.FindAttributeValue("Name"), propertyBag, propertyDefinitions, state);
+
+            return presenceValidationResult && valueValidationResult;
+        }
+
+        private bool ValidatePresenceOfProperties(string nodeName, ParsedPropertyBag propertyBag, PropertyDefinition[] propertyDefinitions, string[] ignoredPropertyNames, DocumentProcessorState state)
         {
             IEnumerable<string> providedKeys = propertyBag.Properties.Select(property => property.Name);
             IEnumerable<string> allDefinedKeys = propertyDefinitions.Select(property => property.Name);
@@ -101,19 +106,17 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
             string[] missingRequiredProperties = requiredDefinedKeys.Except(providedKeys).ToArray();
 
             foreach (string s in missingPropertiesInMaterial) {
-                // FIXME:
-                Console.WriteLine(String.Format("FIXME: unknown attribute/property defined in material: {0} -> {1}", s, nodeName));
+                state.AddWarning("Unknown property found (property={0}, node={1})", s, nodeName);
             }
 
             foreach (string s in missingRequiredProperties) {
-                // FIXME:
-                Console.WriteLine(String.Format("FIXME: missing required attribute/property: {0} -> {1}", s, nodeName));
+                state.AddError("Required property is missing (property={0}, node={1})", s, nodeName);
             }
 
             return missingRequiredProperties.Length == 0;
         }
 
-        private bool ValidatePropertiesValues(ParsedPropertyBag propertyBag, PropertyDefinition[] propertyDefinitions)
+        private bool ValidatePropertiesValues(string nodeName, ParsedPropertyBag propertyBag, PropertyDefinition[] propertyDefinitions, DocumentProcessorState state)
         {
             bool hasProblems = false;
 
@@ -124,7 +127,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                     continue;
                 }
 
-                if (! ValidatePropertyValue(parsedProperty, propertyDefinition)) {
+                if (! ValidatePropertyValue(nodeName, parsedProperty, propertyDefinition, state)) {
                     hasProblems = true;
                 }
             }
@@ -132,7 +135,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
             return ! hasProblems;
         }
 
-        private bool ValidatePropertyValue(ParsedProperty parsedProperty, PropertyDefinition propertyDefinition, bool testForArray = true)
+        private bool ValidatePropertyValue(string nodeName, ParsedProperty parsedProperty, PropertyDefinition propertyDefinition, DocumentProcessorState state, bool testForArray = true)
         {
             bool wasValid = false;
 
@@ -140,13 +143,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 if (! parsedProperty.IsArray) {
                     wasValid = false;
 
-                    // FIXME:
-                    Console.WriteLine(String.Format("property {0} was expected to be an array but got something else", propertyDefinition.Name));
+                    state.AddError($"Property \"{propertyDefinition.Name}\" on \"{nodeName}\" was expected to be an array but got something else");
+
+                    return false;
                 } else {
                     wasValid = true;
 
                     foreach (var parsedPropertyElement in parsedProperty.Elements) {
-                        if (! ValidatePropertyValue(parsedPropertyElement, propertyDefinition, false)) {
+                        if (! ValidatePropertyValue(nodeName, parsedPropertyElement, propertyDefinition, state, false)) {
                             wasValid = false;
                         }
                     }
@@ -172,17 +176,57 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector4)) {
                 ValueUtil.TryParseVector4(parsedProperty.Value, out wasValid);
             } else {
-                // FIXME:
-                Console.WriteLine("unhandled data type");
+                state.AddError($"Property \"{parsedProperty.Name} on \"{nodeName}\" had unhandled data type: {propertyDefinition.DataType}");
+
                 return false;
             }
 
             if (! wasValid) {
-                // FIXME:
-                Console.WriteLine("data is invalid");
+                state.AddError($"Property \"{parsedProperty.Name}\" on \"{nodeName}\" value is invalid: {parsedProperty.Value}");
             }
 
             return wasValid;
+        }
+    }
+
+    public class DocumentProcessorResult<T>
+        where T : Node
+    {
+        public T RootNode { get; }
+        public Problem[] Problems { get; }
+
+        public DocumentProcessorResult(T rootNode, Problem[] problems)
+        {
+            RootNode = rootNode;
+            Problems = problems;
+        }
+    }
+
+    public class DocumentProcessorState
+    {
+        private List<Problem> _problems = new List<Problem>();
+
+        public Problem[] Problems {
+            get { return _problems.ToArray(); }
+        }
+
+        public DocumentProcessorState()
+        {
+        }
+
+        public void AddWarning(string format, params object[] args)
+        {
+            AddProblem(ProblemSeverity.Warning, format, args);
+        }
+
+        public void AddError(string format, params object[] args)
+        {
+            AddProblem(ProblemSeverity.Error, format, args);
+        }
+
+        private void AddProblem(ProblemSeverity severity, string format, object[] args)
+        {
+            _problems.Add(new Problem(severity, string.Format(format, args)));
         }
     }
 }
