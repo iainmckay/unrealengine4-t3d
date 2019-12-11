@@ -7,7 +7,7 @@
         public bool IsRequired { get; }
 
         public bool IsArray => DataType.HasFlag(PropertyDataType.Array);
-
+        
         public PropertyDefinition(string name, PropertyDataType dataType, bool isRequired)
         {
             Name = name;
