@@ -24,11 +24,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("DefaultValue", PropertyDataType.Boolean);
             AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddRequiredProperty("ParameterName", PropertyDataType.String);
 
+            AddOptionalProperty("DefaultValue", PropertyDataType.Boolean);
             AddOptionalProperty("A", PropertyDataType.ExpressionReference);
             AddOptionalProperty("B", PropertyDataType.ExpressionReference);
 
@@ -39,7 +39,15 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionStaticSwitchParameter(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), ValueUtil.ParseBoolean(node.FindPropertyValue("DefaultValue")), ValueUtil.ParseExpressionReference(node.FindPropertyValue("A")), ValueUtil.ParseExpressionReference(node.FindPropertyValue("B")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionStaticSwitchParameter(
+                node.FindAttributeValue("Name"),
+                node.FindPropertyValue("ParameterName"),
+                ValueUtil.ParseBoolean(node.FindPropertyValue("DefaultValue") ?? "False"),
+                ValueUtil.ParseExpressionReference(node.FindPropertyValue("A")),
+                ValueUtil.ParseExpressionReference(node.FindPropertyValue("B")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY"))
+            );
         }
     }
 }
