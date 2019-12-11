@@ -23,10 +23,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("bCollapsed", PropertyDataType.Boolean);
-            AddRequiredProperty("CoordinateIndex", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
+
+            AddOptionalProperty("bCollapsed", PropertyDataType.Boolean);
+            AddOptionalProperty("CoordinateIndex", PropertyDataType.Integer);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -34,7 +35,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionTextureCoordinate(node.FindAttributeValue("Name"), ValueUtil.ParseBoolean(node.FindPropertyValue("bCollapsed")), ValueUtil.ParseInteger(node.FindPropertyValue("CoordinateIndex")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionTextureCoordinate(
+                node.FindAttributeValue("Name"),
+                ValueUtil.ParseBoolean(node.FindPropertyValue("bCollapsed") ?? "False"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("CoordinateIndex") ?? "0"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY"))
+            );
         }
     }
 }
