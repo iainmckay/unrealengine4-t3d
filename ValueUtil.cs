@@ -253,6 +253,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static ExpressionReference[] ParseExpressionReferenceArray(ParsedProperty[] elements)
         {
+            if (null == elements) {
+                return new ExpressionReference[] {};
+            }
+
             List<ExpressionReference> list = new List<ExpressionReference>();
 
             foreach (var parsedProperty in elements) {
