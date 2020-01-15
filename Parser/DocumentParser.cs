@@ -190,12 +190,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                 char nextCharacter = PeekCharacter(enableBufferConsumption ? -1 : peekOffset++);
                 bool isStringStartOrEnd = false;
 
-                if (nextCharacter == '"' || nextCharacter == '\'') {
+                if (nextCharacter == '"' || nextCharacter == '\'' || nextCharacter=='(' || nextCharacter == ')') {
                     if (isInsideString && nextCharacter == stringOpener) {
                         isStringStartOrEnd = true;
                     } else if (! isInsideString) {
                         isStringStartOrEnd = true;
                         stringOpener = nextCharacter;
+
+                        if (stringOpener == '(') {
+                            stringOpener = ')';
+                        }
                     }
                 }
 
@@ -215,7 +219,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                 bool shouldConsume = (isStringStartOrEnd || isInsideString) || ! (isTerminationCharacter && _tokenBuffer.Length != 0) && ! isEndOfLine;
                 bool shouldAppend = true;
 
-                if (isStringStartOrEnd && nextCharacter != '\'') {
+                if (isStringStartOrEnd && nextCharacter != '\'' && stringOpener != ')') {
                     shouldAppend = false;
                 } else {
                     shouldAppend = (isInsideString && ! isEndOfLine) || (! isWhitespaceCharacter && shouldConsume);

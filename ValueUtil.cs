@@ -147,6 +147,33 @@ namespace JollySamurai.UnrealEngine4.T3D
             return new ExpressionReference(match.Groups["type"].Value, match.Groups["object"].Value, propertyBag);
         }
 
+        public static ParsedPropertyBag ParseAttributeList(string value)
+        {
+            if (value == null) {
+                return null;
+            }
+
+            if (! value.StartsWith("(") || ! value.EndsWith(")")) {
+                throw new ValueException("PropertyBag should begin with parenthesis");
+            }
+
+            var parser = new DocumentParser(value.Substring(1, value.Length - 2));
+
+            return parser.ReadAttributeList();
+        }
+
+        public static ParsedPropertyBag TryParseAttributeList(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+                return ParseAttributeList(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return null;
+        }
+
         public static TextureReference TryParseTextureReference(string value, out bool successOrFailure)
         {
             try {
@@ -230,6 +257,21 @@ namespace JollySamurai.UnrealEngine4.T3D
 
             foreach (var parsedProperty in elements) {
                 list.Add(ParseExpressionReference(parsedProperty.Value));
+            }
+
+            return list.ToArray();
+        }
+
+        public static ParsedPropertyBag[] ParseAttributeListArray(ParsedProperty[] elements)
+        {
+            if (null == elements) {
+                return new ParsedPropertyBag[] {};
+            }
+
+            List<ParsedPropertyBag> list = new List<ParsedPropertyBag>();
+
+            foreach (var parsedProperty in elements) {
+                list.Add(ParseAttributeList(parsedProperty.Value));
             }
 
             return list.ToArray();

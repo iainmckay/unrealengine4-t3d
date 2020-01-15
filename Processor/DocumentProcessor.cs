@@ -155,6 +155,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                         }
                     }
                 }
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.AttributeList)) {
+                ValueUtil.TryParseAttributeList(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Boolean)) {
                 ValueUtil.TryParseBoolean(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.ExpressionReference)) {
