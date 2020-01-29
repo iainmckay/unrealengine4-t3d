@@ -5,10 +5,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionAdd : Node
     {
-        public ExpressionReference A { get; }
-        public ExpressionReference B { get; }
+        public ParsedPropertyBag A { get; }
+        public ParsedPropertyBag B { get; }
 
-        public MaterialExpressionAdd(string name, ExpressionReference a, ExpressionReference b, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionAdd(string name, ParsedPropertyBag a, ParsedPropertyBag b, int editorX, int editorY) : base(name, editorX, editorY)
         {
             A = a;
             B = b;
@@ -26,8 +26,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
-            AddOptionalProperty("A", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("B", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("A", PropertyDataType.AttributeList);
+            AddOptionalProperty("B", PropertyDataType.AttributeList);
 
             AddIgnoredProperty("MaterialExpressionGuid");
             AddIgnoredProperty("Material");
@@ -35,7 +35,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionAdd(node.FindAttributeValue("Name"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("A")), ValueUtil.ParseExpressionReference(node.FindPropertyValue("B")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionAdd(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("A")), ValueUtil.ParseAttributeList(node.FindPropertyValue("B")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
         }
     }
 }

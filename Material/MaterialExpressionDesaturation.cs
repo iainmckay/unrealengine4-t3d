@@ -5,10 +5,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionDesaturation : Node
     {
-        public ExpressionReference Input { get; }
-        public ExpressionReference Fraction { get; }
+        public ParsedPropertyBag Input { get; }
+        public ParsedPropertyBag Fraction { get; }
 
-        public MaterialExpressionDesaturation(string name, ExpressionReference input, ExpressionReference fraction, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionDesaturation(string name, ParsedPropertyBag input, ParsedPropertyBag fraction, int editorX, int editorY) : base(name, editorX, editorY)
         {
             Input = input;
             Fraction = fraction;
@@ -26,8 +26,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
-            AddOptionalProperty("Input", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("Fraction", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("Input", PropertyDataType.AttributeList);
+            AddOptionalProperty("Fraction", PropertyDataType.AttributeList);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -35,7 +35,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionDesaturation(node.FindAttributeValue("Name"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("Input")), ValueUtil.ParseExpressionReference(node.FindPropertyValue("Fraction")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionDesaturation(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Input")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Fraction")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
         }
     }
 }

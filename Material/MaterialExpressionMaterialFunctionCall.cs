@@ -1,4 +1,6 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
@@ -6,9 +8,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
     public class MaterialExpressionMaterialFunctionCall : Node
     {
         public ExpressionReference MaterialFunction { get; }
-        public ExpressionReference[] FunctionInputs { get; }
+        public ParsedPropertyBag[] FunctionInputs { get; }
 
-        public MaterialExpressionMaterialFunctionCall(string name, ExpressionReference materialFunction, ExpressionReference[] functionInputs, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionMaterialFunctionCall(string name, ExpressionReference materialFunction, ParsedPropertyBag[] functionInputs, int editorX, int editorY)
+            : base(name, editorX, editorY)
         {
             MaterialFunction = materialFunction;
             FunctionInputs = functionInputs;
@@ -26,7 +29,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddRequiredProperty("MaterialFunction", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("FunctionInputs", PropertyDataType.ExpressionReference | PropertyDataType.Array);
+            AddOptionalProperty("FunctionInputs", PropertyDataType.AttributeList | PropertyDataType.Array);
 
             AddIgnoredProperty("FunctionOutputs");
             AddIgnoredProperty("Material");
@@ -36,10 +39,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            ParsedProperty functionInputList = node.FindProperty("FunctionInputs");
-            ParsedProperty functionOutputList = node.FindProperty("FunctionOutputs");
+            var functionInputList = new List<ParsedPropertyBag>();
 
-            return new MaterialExpressionMaterialFunctionCall(node.FindAttributeValue("Name"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("MaterialFunction")), ValueUtil.ParseExpressionReferenceArray(functionInputList.Elements), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            foreach (var parsedProperty in node.FindProperty("FunctionInputs").Elements) {
+                functionInputList.Add(ValueUtil.ParseAttributeList(parsedProperty.Value));
+            }
+
+            return new MaterialExpressionMaterialFunctionCall(node.FindAttributeValue("Name"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("MaterialFunction")), functionInputList.ToArray(), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
         }
     }
 }

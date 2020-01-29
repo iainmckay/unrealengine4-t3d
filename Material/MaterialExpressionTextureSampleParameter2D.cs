@@ -5,12 +5,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionTextureSampleParameter2D : ParameterNode<TextureReference>
     {
-        public ExpressionReference Coordinates { get; }
+        public ParsedPropertyBag Coordinates { get; }
 
         public TextureReference Texture { get; }
         public SamplerType SamplerType { get; }
 
-        public MaterialExpressionTextureSampleParameter2D(string name, string parameterName, ExpressionReference coordinates, TextureReference texture, SamplerType samplerType, int editorX, int editorY)
+        public MaterialExpressionTextureSampleParameter2D(string name, string parameterName, ParsedPropertyBag coordinates, TextureReference texture, SamplerType samplerType, int editorX, int editorY)
             : base(name, parameterName, null, editorX, editorY)
         {
             Coordinates = coordinates;
@@ -32,7 +32,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredProperty("ParameterName", PropertyDataType.String);
             AddRequiredProperty("Texture", PropertyDataType.TextureReference);
 
-            AddOptionalProperty("Coordinates", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("Coordinates", PropertyDataType.AttributeList);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
 
             AddIgnoredProperty("ExpressionGUID");
@@ -42,7 +42,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionTextureSampleParameter2D(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("Coordinates")), ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")), ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionTextureSampleParameter2D(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")), ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")), ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
         }
     }
 }

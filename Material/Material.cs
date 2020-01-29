@@ -7,15 +7,15 @@
     public class Material : Node
     {
         public ShadingModel ShadingModel { get; }
-        public ExpressionReference BaseColor { get; }
-        public ExpressionReference Metallic { get; }
-        public ExpressionReference Normal { get; }
-        public ExpressionReference Roughness { get; }
-        public ExpressionReference Specular { get; }
-        public ExpressionReference EmissiveColor { get; }
+        public ParsedPropertyBag BaseColor { get; }
+        public ParsedPropertyBag Metallic { get; }
+        public ParsedPropertyBag Normal { get; }
+        public ParsedPropertyBag Roughness { get; }
+        public ParsedPropertyBag Specular { get; }
+        public ParsedPropertyBag EmissiveColor { get; }
         public ExpressionReference[] Expressions { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, ExpressionReference baseColor, ExpressionReference metallic, ExpressionReference normal, ExpressionReference roughness, ExpressionReference specular, ExpressionReference emissiveColor, ExpressionReference[] expressionReferences, int editorX, int editorY)
+        public Material(Node[] children, string name, ShadingModel shadingModel, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ExpressionReference[] expressionReferences, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
             ShadingModel = shadingModel;
@@ -52,13 +52,13 @@
             AddRequiredProperty("EditorY", PropertyDataType.Integer);
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
 
-            AddOptionalProperty("BaseColor", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("EmissiveColor", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("Metallic", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("Normal", PropertyDataType.ExpressionReference);
-            AddOptionalProperty("Roughness", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
+            AddOptionalProperty("EmissiveColor", PropertyDataType.AttributeList);
+            AddOptionalProperty("Metallic", PropertyDataType.AttributeList);
+            AddOptionalProperty("Normal", PropertyDataType.AttributeList);
+            AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
-            AddOptionalProperty("Specular", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("Specular", PropertyDataType.AttributeList);
 
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ReferencedTextureGuids");
@@ -74,12 +74,12 @@
                 children,
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("BaseColor")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("Metallic")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("Normal")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("Roughness")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("Specular")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("EmissiveColor")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("BaseColor")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("Metallic")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("Normal")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("Roughness")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("Specular")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions").Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX"))

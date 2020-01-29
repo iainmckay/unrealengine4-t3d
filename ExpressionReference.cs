@@ -6,13 +6,11 @@ namespace JollySamurai.UnrealEngine4.T3D
     {
         public string ClassName { get; }
         public string NodeName { get; }
-        public ParsedPropertyBag Properties { get; }
 
-        public ExpressionReference(string className, string nodeName, ParsedPropertyBag properties)
+        public ExpressionReference(string className, string nodeName)
         {
             ClassName = className;
             NodeName = nodeName;
-            Properties = properties;
         }
     }
 }

@@ -109,42 +109,14 @@ namespace JollySamurai.UnrealEngine4.T3D
             if (value == null) {
                 return null;
             }
-
-            ParsedPropertyBag propertyBag;
-            string expression;
             
-            if (value.StartsWith("(") && value.EndsWith(")")) {
-                var parser = new DocumentParser(value.Substring(1, value.Length - 2));
-
-                if (parser.PeekToken() == "ExpressionInputId") {
-                    parser.ExpectToken("ExpressionInputId");
-                    parser.ExpectToken("=");
-                    parser.ReadToken();
-                    parser.ExpectToken("Input");
-                    parser.ExpectToken("=");
-
-                    var inputValue = parser.ReadUntilEndOfLine();
-                    
-                    parser = new DocumentParser(inputValue.Substring(1, inputValue.Length - 2));
-                }
-
-                parser.ExpectToken("Expression");
-                parser.ExpectToken("=");
-
-                expression= parser.ReadToken();
-                propertyBag = parser.ReadAttributeList();
-            } else {
-                expression = value;
-                propertyBag = ParsedPropertyBag.Empty;
-            }
-            
-            Match match = ExpressionReferenceRegex.Match(expression);
+            Match match = ExpressionReferenceRegex.Match(value);
 
             if (! match.Success) {
                 throw new ValueException("Failed to parse ExpressionReference");
             }
 
-            return new ExpressionReference(match.Groups["type"].Value, match.Groups["object"].Value, propertyBag);
+            return new ExpressionReference(match.Groups["type"].Value, match.Groups["object"].Value);
         }
 
         public static ParsedPropertyBag ParseAttributeList(string value)
@@ -154,7 +126,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             }
 
             if (! value.StartsWith("(") || ! value.EndsWith(")")) {
-                throw new ValueException("PropertyBag should begin with parenthesis");
+                throw new ValueException("Attribute list should begin and end with parenthesis");
             }
 
             var parser = new DocumentParser(value.Substring(1, value.Length - 2));

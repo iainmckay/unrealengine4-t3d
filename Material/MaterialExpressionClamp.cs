@@ -5,11 +5,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionClamp : Node
     {
-        public ExpressionReference Input { get; }
-        public ExpressionReference Min { get; }
-        public ExpressionReference Max { get; }
+        public ParsedPropertyBag Input { get; }
+        public ParsedPropertyBag Min { get; }
+        public ParsedPropertyBag Max { get; }
 
-        public MaterialExpressionClamp(string name, ExpressionReference input, ExpressionReference min, ExpressionReference max, int editorX, int editorY) : base(name, editorX, editorY)
+        public MaterialExpressionClamp(string name, ParsedPropertyBag input, ParsedPropertyBag min, ParsedPropertyBag max, int editorX, int editorY) : base(name, editorX, editorY)
         {
             Input = input;
             Min = min;
@@ -25,11 +25,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("Input", PropertyDataType.ExpressionReference);
+            AddRequiredProperty("Input", PropertyDataType.AttributeList);
             AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
-            AddRequiredProperty("Max", PropertyDataType.ExpressionReference);
-            AddRequiredProperty("Min", PropertyDataType.ExpressionReference);
+            AddRequiredProperty("Max", PropertyDataType.AttributeList);
+            AddRequiredProperty("Min", PropertyDataType.AttributeList);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -37,7 +37,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionClamp(node.FindAttributeValue("Name"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("Input")), ValueUtil.ParseExpressionReference(node.FindPropertyValue("Min")), ValueUtil.ParseExpressionReference(node.FindPropertyValue("Max")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionClamp(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Input")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Min")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Max")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
         }
     }
 }
