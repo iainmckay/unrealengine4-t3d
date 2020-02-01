@@ -48,11 +48,11 @@
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("EditorX", PropertyDataType.Integer);
-            AddRequiredProperty("EditorY", PropertyDataType.Integer);
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
 
             AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
+            AddOptionalProperty("EditorX", PropertyDataType.Integer);
+            AddOptionalProperty("EditorY", PropertyDataType.Integer);
             AddOptionalProperty("EmissiveColor", PropertyDataType.AttributeList);
             AddOptionalProperty("Metallic", PropertyDataType.AttributeList);
             AddOptionalProperty("Normal", PropertyDataType.AttributeList);
@@ -81,8 +81,8 @@
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Specular")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions").Elements),
-                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX")),
-                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX"))
+                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0")
             );
         }
     }

@@ -25,12 +25,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
-
             AddOptionalProperty("A", PropertyDataType.AttributeList);
             AddOptionalProperty("Alpha", PropertyDataType.AttributeList);
             AddOptionalProperty("B", PropertyDataType.AttributeList);
+            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -38,7 +37,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionLinearInterpolate(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("A")), ValueUtil.ParseAttributeList(node.FindPropertyValue("B")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Alpha")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionLinearInterpolate(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("A")), ValueUtil.ParseAttributeList(node.FindPropertyValue("B")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Alpha")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0"));
         }
     }
 }

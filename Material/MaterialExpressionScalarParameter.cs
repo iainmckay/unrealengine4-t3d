@@ -19,11 +19,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddRequiredProperty("ParameterName", PropertyDataType.String);
 
             AddOptionalProperty("DefaultValue", PropertyDataType.Float);
+            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Material");
@@ -32,7 +32,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionScalarParameter(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), node.HasProperty("DefaultValue") ? ValueUtil.ParseFloat(node.FindPropertyValue("DefaultValue")) : 0, ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionScalarParameter(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), node.HasProperty("DefaultValue") ? ValueUtil.ParseFloat(node.FindPropertyValue("DefaultValue")) : 0, ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0"));
         }
     }
 }

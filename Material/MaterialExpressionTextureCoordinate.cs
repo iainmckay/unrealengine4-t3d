@@ -23,11 +23,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
-
             AddOptionalProperty("bCollapsed", PropertyDataType.Boolean);
             AddOptionalProperty("CoordinateIndex", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -39,8 +38,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseBoolean(node.FindPropertyValue("bCollapsed") ?? "False"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("CoordinateIndex") ?? "0"),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY"))
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
             );
         }
     }

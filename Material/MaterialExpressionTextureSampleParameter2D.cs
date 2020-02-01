@@ -27,12 +27,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddRequiredProperty("ParameterName", PropertyDataType.String);
             AddRequiredProperty("Texture", PropertyDataType.TextureReference);
 
             AddOptionalProperty("Coordinates", PropertyDataType.AttributeList);
+            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
 
             AddIgnoredProperty("ExpressionGUID");
@@ -42,7 +42,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionTextureSampleParameter2D(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")), ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")), ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionTextureSampleParameter2D(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")), ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")), ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0"));
         }
     }
 }

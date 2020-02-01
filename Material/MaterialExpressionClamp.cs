@@ -26,10 +26,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredAttribute("Name", PropertyDataType.String);
 
             AddRequiredProperty("Input", PropertyDataType.AttributeList);
-            AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddRequiredProperty("Max", PropertyDataType.AttributeList);
             AddRequiredProperty("Min", PropertyDataType.AttributeList);
+
+            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -37,7 +38,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionClamp(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Input")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Min")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Max")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")));
+            return new MaterialExpressionClamp(node.FindAttributeValue("Name"), ValueUtil.ParseAttributeList(node.FindPropertyValue("Input")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Min")), ValueUtil.ParseAttributeList(node.FindPropertyValue("Max")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0"));
         }
     }
 }

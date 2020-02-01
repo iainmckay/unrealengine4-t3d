@@ -24,13 +24,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddRequiredProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddRequiredProperty("ParameterName", PropertyDataType.String);
 
-            AddOptionalProperty("DefaultValue", PropertyDataType.Boolean);
             AddOptionalProperty("A", PropertyDataType.AttributeList);
             AddOptionalProperty("B", PropertyDataType.AttributeList);
+            AddOptionalProperty("DefaultValue", PropertyDataType.Boolean);
+            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
+            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Material");
@@ -45,8 +45,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseBoolean(node.FindPropertyValue("DefaultValue") ?? "False"),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("A")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("B")),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY"))
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
             );
         }
     }
