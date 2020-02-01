@@ -13,9 +13,10 @@
         public ParsedPropertyBag Roughness { get; }
         public ParsedPropertyBag Specular { get; }
         public ParsedPropertyBag EmissiveColor { get; }
+        public ParsedPropertyBag Opacity { get; }
         public ExpressionReference[] Expressions { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ExpressionReference[] expressionReferences, int editorX, int editorY)
+        public Material(Node[] children, string name, ShadingModel shadingModel, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
             ShadingModel = shadingModel;
@@ -25,6 +26,7 @@
             Roughness = roughness;
             Specular = specular;
             EmissiveColor = emissiveColor;
+            Opacity = opacity;
             Expressions = expressionReferences;
         }
 
@@ -56,6 +58,7 @@
             AddOptionalProperty("EmissiveColor", PropertyDataType.AttributeList);
             AddOptionalProperty("Metallic", PropertyDataType.AttributeList);
             AddOptionalProperty("Normal", PropertyDataType.AttributeList);
+            AddOptionalProperty("Opacity", PropertyDataType.AttributeList);
             AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
             AddOptionalProperty("Specular", PropertyDataType.AttributeList);
@@ -80,6 +83,7 @@
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Roughness")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Specular")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("Opacity")),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions").Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0")
