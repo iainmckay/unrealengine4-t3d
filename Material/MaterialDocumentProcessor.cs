@@ -19,6 +19,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionTextureCoordinateProcessor());
             AddNodeProcessor(new MaterialExpressionTextureSampleParameter2DProcessor());
             AddNodeProcessor(new MaterialExpressionVectorParameterProcessor());
+
+            IgnoreNode("/Script/UnrealEd.SceneThumbnailInfoWithPrimitive");
         }
     }
 }
