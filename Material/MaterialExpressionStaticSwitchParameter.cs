@@ -24,13 +24,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("ParameterName", PropertyDataType.String);
-
             AddOptionalProperty("A", PropertyDataType.AttributeList);
             AddOptionalProperty("B", PropertyDataType.AttributeList);
             AddOptionalProperty("DefaultValue", PropertyDataType.Boolean);
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
+            AddOptionalProperty("ParameterName", PropertyDataType.String);
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Material");
@@ -41,7 +40,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             return new MaterialExpressionStaticSwitchParameter(
                 node.FindAttributeValue("Name"),
-                node.FindPropertyValue("ParameterName"),
+                node.FindPropertyValue("ParameterName") ?? "Param",
                 ValueUtil.ParseBoolean(node.FindPropertyValue("DefaultValue") ?? "False"),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("A")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("B")),
