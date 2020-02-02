@@ -15,8 +15,9 @@
         public ParsedPropertyBag EmissiveColor { get; }
         public ParsedPropertyBag Opacity { get; }
         public ExpressionReference[] Expressions { get; }
+        public ExpressionReference[] EditorComments { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, int editorX, int editorY)
+        public Material(Node[] children, string name, ShadingModel shadingModel, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
             ShadingModel = shadingModel;
@@ -28,6 +29,7 @@
             EmissiveColor = emissiveColor;
             Opacity = opacity;
             Expressions = expressionReferences;
+            EditorComments = editorComments;
         }
 
         public Node ResolveExpressionReference(ExpressionReference reference)
@@ -53,6 +55,7 @@
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
 
             AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
+            AddOptionalProperty("EditorComments", PropertyDataType.ExpressionReference | PropertyDataType.Array);
             AddOptionalProperty("EditorX", PropertyDataType.Integer);
             AddOptionalProperty("EditorY", PropertyDataType.Integer);
             AddOptionalProperty("EmissiveColor", PropertyDataType.AttributeList);
@@ -85,6 +88,7 @@
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Opacity")),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions").Elements),
+                ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments").Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0")
             );

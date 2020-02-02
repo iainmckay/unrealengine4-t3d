@@ -49,6 +49,7 @@
     <Compile Include="Material\MaterialExpressionAdd.cs" />
     <Compile Include="Material\MaterialExpressionAppendVector.cs" />
     <Compile Include="Material\MaterialExpressionClamp.cs" />
+    <Compile Include="Material\MaterialExpressionComment.cs" />
     <Compile Include="Material\MaterialExpressionDesaturation.cs" />
     <Compile Include="Material\MaterialExpressionLinearInterpolate.cs" />
     <Compile Include="Material\MaterialExpressionMaterialFunctionCall.cs" />

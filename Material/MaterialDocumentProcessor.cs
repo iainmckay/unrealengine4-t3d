@@ -10,6 +10,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionAddProcessor());
             AddNodeProcessor(new MaterialExpressionAppendVectorProcessor());
             AddNodeProcessor(new MaterialExpressionClampProcessor());
+            AddNodeProcessor(new MaterialExpressionCommentProcessor());
             AddNodeProcessor(new MaterialExpressionDesaturationProcessor());
             AddNodeProcessor(new MaterialExpressionLinearInterpolateProcessor());
             AddNodeProcessor(new MaterialExpressionMaterialFunctionCallProcessor());
