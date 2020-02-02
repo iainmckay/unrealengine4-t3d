@@ -14,14 +14,22 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
 
         private Dictionary<string, NodeProcessor> _nodeProcessors;
 
+        private List<string> _ignoredNodes;
+
         public DocumentProcessor()
         {
             _nodeProcessors = new Dictionary<string, NodeProcessor>();
+            _ignoredNodes = new List<string>();
         }
 
         protected void AddNodeProcessor(NodeProcessor nodeProcessor)
         {
             _nodeProcessors.Add(nodeProcessor.Class, nodeProcessor);
+        }
+        
+        protected void IgnoreNode(string className)
+        {
+            _ignoredNodes.Add(className);
         }
 
         protected NodeProcessor FindProcessorForNode(ParsedNode parsedNode)
@@ -55,10 +63,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
 
         private Node ProcessNode(ParsedNode node, DocumentProcessorState state)
         {
+            var nodeClass = node.AttributeBag.FindProperty("Class")?.Value;
+
+            if (_ignoredNodes.Contains(nodeClass)) {
+                return null;
+            }
+
             NodeProcessor nodeProcessor = FindProcessorForNode(node);
 
             if (null == nodeProcessor) {
-                state.AddWarning("Processor not found (class={0}, node={1})", node.AttributeBag.FindProperty("Class")?.Value, node.AttributeBag.FindProperty("Name")?.Value);
+                state.AddWarning("Processor not found (class={0}, node={1})", nodeClass, node.AttributeBag.FindProperty("Name")?.Value);
 
                 return null;
             }
