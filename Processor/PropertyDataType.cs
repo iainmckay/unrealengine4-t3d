@@ -6,16 +6,17 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
     public enum PropertyDataType
     {
         Array = 1,
-        Boolean = 2,
-        ExpressionReference = 4,
-        Float = 8,
-        FunctionReference = 16,
-        Integer = 32,
-        AttributeList = 64,
-        SamplerType = 128,
-        ShadingModel = 256,
-        String = 512,
-        TextureReference = 1024,
-        Vector4 = 2048,
+        BlendMode = 2,
+        Boolean = 4,
+        ExpressionReference = 8,
+        Float = 16,
+        FunctionReference = 32,
+        Integer = 64,
+        AttributeList = 128,
+        SamplerType = 256,
+        ShadingModel = 512,
+        String = 1024,
+        TextureReference = 2048,
+        Vector4 = 4096,
     }
 }

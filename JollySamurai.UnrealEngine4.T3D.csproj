@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlendMode.cs" />
     <Compile Include="Exception\ParserException.cs" />
     <Compile Include="Exception\T3DException.cs" />
     <Compile Include="Exception\ValueException.cs" />

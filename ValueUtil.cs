@@ -69,6 +69,35 @@ namespace JollySamurai.UnrealEngine4.T3D
             throw new ValueException("Unexpected sampler type: " + value);
         }
 
+        public static BlendMode TryParseBlendMode(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+                return ParseBlendMode(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return BlendMode.Unknown;
+        }
+
+        public static BlendMode ParseBlendMode(string value)
+        {
+            if (value == null || value == "BLEND_Opaque") {
+                return BlendMode.Opaque;
+            } else if (value == "BLEND_Additive") {
+                return BlendMode.Additive;
+            } else if (value == "BLEND_Masked") {
+                return BlendMode.Masked;
+            } else if (value == "BLEND_Modulate") {
+                return BlendMode.Modulate;
+            } else if (value == "BLEND_Translucent") {
+                return BlendMode.Translucent;
+            }
+
+            throw new ValueException("Unexpected blend mode: " + value);
+        }
+
         public static ShadingModel TryParseShadingModel(string value, out bool successOrFailure)
         {
             try {

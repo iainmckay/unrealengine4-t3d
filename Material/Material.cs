@@ -7,6 +7,8 @@
     public class Material : Node
     {
         public ShadingModel ShadingModel { get; }
+        public BlendMode BlendMode { get; }
+        public bool IsTwoSided { get; }
         public ParsedPropertyBag BaseColor { get; }
         public ParsedPropertyBag Metallic { get; }
         public ParsedPropertyBag Normal { get; }
@@ -17,10 +19,12 @@
         public ExpressionReference[] Expressions { get; }
         public ExpressionReference[] EditorComments { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int editorX, int editorY)
+        public Material(Node[] children, string name, ShadingModel shadingModel, BlendMode blendMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
             ShadingModel = shadingModel;
+            BlendMode = blendMode;
+            IsTwoSided = isTwoSided;
             BaseColor = baseColor;
             Metallic = metallic;
             Normal = normal;
@@ -55,6 +59,7 @@
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
 
             AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
+            AddOptionalProperty("BlendMode", PropertyDataType.BlendMode);
             AddOptionalProperty("EditorComments", PropertyDataType.ExpressionReference | PropertyDataType.Array);
             AddOptionalProperty("EditorX", PropertyDataType.Integer);
             AddOptionalProperty("EditorY", PropertyDataType.Integer);
@@ -65,6 +70,7 @@
             AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
             AddOptionalProperty("Specular", PropertyDataType.AttributeList);
+            AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ReferencedTextureGuids");
@@ -80,6 +86,8 @@
                 children,
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
+                ValueUtil.ParseBlendMode(node.FindPropertyValue("BlendMode")),
+                ValueUtil.ParseBoolean(node.FindPropertyValue("TwoSided") ?? "False"),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("BaseColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Metallic")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Normal")),
