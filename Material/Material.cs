@@ -80,8 +80,6 @@
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            ParsedProperty expressionList = node.FindProperty("Expressions");
-
             return new Material(
                 children,
                 node.FindAttributeValue("Name"),
@@ -95,8 +93,8 @@
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Specular")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Opacity")),
-                ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions").Elements),
-                ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments").Elements),
+                ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions")?.Elements),
+                ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments")?.Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0")
             );
