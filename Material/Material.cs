@@ -73,6 +73,7 @@
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("LightingGuid");
+            AddIgnoredProperty("MaterialFunctionInfos");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("StateId");
             AddIgnoredProperty("ThumbnailInfo");
