@@ -43,7 +43,7 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static float ParseFloat(string value)
         {
-            return float.Parse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands);
+            return float.Parse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign);
         }
 
         public static SamplerType TryParseSamplerType(string value, out bool successOrFailure)
