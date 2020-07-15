@@ -45,12 +45,17 @@
     <Compile Include="FunctionReference.cs" />
     <Compile Include="MaterialInstance\MaterialInstanceDocumentProcessor.cs" />
     <Compile Include="MaterialInstance\MaterialInstance.cs" />
+    <Compile Include="Material\MaterialExpressionConstant.cs" />
+    <Compile Include="Material\MaterialExpressionConstant2Vector.cs" />
+    <Compile Include="Material\MaterialExpressionConstant4Vector.cs" />
+    <Compile Include="Material\VectorConstantNode.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="Material\MaterialDocumentProcessor.cs" />
     <Compile Include="Material\MaterialExpressionAdd.cs" />
     <Compile Include="Material\MaterialExpressionAppendVector.cs" />
     <Compile Include="Material\MaterialExpressionClamp.cs" />
     <Compile Include="Material\MaterialExpressionComment.cs" />
+    <Compile Include="Material\MaterialExpressionConstant3Vector.cs" />
     <Compile Include="Material\MaterialExpressionDesaturation.cs" />
     <Compile Include="Material\MaterialExpressionFresnel.cs" />
     <Compile Include="Material\MaterialExpressionLinearInterpolate.cs" />
