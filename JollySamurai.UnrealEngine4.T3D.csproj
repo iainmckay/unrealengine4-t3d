@@ -50,6 +50,7 @@
     <Compile Include="Material\MaterialExpressionConstant4Vector.cs" />
     <Compile Include="Material\MaterialExpressionOneMinus.cs" />
     <Compile Include="Material\MaterialExpressionSubtract.cs" />
+    <Compile Include="Material\MaterialExpressionTextureSample.cs" />
     <Compile Include="Material\VectorConstantNode.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="Material\MaterialDocumentProcessor.cs" />
