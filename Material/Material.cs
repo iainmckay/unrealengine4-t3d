@@ -73,6 +73,7 @@
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
+            AddIgnoredProperty("bUsedWithParticleSprites");
             AddIgnoredProperty("bUsedWithStaticLighting");
             AddIgnoredProperty("bUsedWithSplineMeshes");
             AddIgnoredProperty("CachedExpressionData");
@@ -81,6 +82,7 @@
             AddIgnoredProperty("ParameterGroupData");
             AddIgnoredProperty("ParameterOverviewExpansion");
             AddIgnoredProperty("ReferencedTextureGuids");
+            AddIgnoredProperty("ShadingModels");
             AddIgnoredProperty("StateId");
             AddIgnoredProperty("TextureStreamingDataVersion");
             AddIgnoredProperty("ThumbnailInfo");
