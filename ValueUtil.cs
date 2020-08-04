@@ -10,7 +10,7 @@ namespace JollySamurai.UnrealEngine4.T3D
     public static class ValueUtil
     {
         public static readonly Regex ExpressionReferenceRegex = new Regex(@"(?<type>[a-zA-Z0-9]+)'""(?<material>\w+:)?(?<object>.+)""'", RegexOptions.Compiled);
-        public static readonly Regex ResourceReferenceRegex = new Regex(@"(\w+)'""([\w\/\.]+)""'", RegexOptions.Compiled);
+        public static readonly Regex ResourceReferenceRegex = new Regex(@"(\w+)'""(.+)""'", RegexOptions.Compiled);
         public static readonly Regex Vector4Regex = new Regex(@"\(R=([0-9]+\.[0-9]+),G=([0-9]+\.[0-9]+),B=([0-9]+\.[0-9]+),A=([0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
 
         public static bool ParseBoolean(string value)
