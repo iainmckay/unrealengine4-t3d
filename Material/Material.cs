@@ -72,10 +72,17 @@
             AddOptionalProperty("Specular", PropertyDataType.AttributeList);
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
+            AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
+            AddIgnoredProperty("bUsedWithStaticLighting");
+            AddIgnoredProperty("bUsedWithSplineMeshes");
+            AddIgnoredProperty("CachedExpressionData");
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("MaterialFunctionInfos");
+            AddIgnoredProperty("ParameterGroupData");
+            AddIgnoredProperty("ParameterOverviewExpansion");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("StateId");
+            AddIgnoredProperty("TextureStreamingDataVersion");
             AddIgnoredProperty("ThumbnailInfo");
         }
 
