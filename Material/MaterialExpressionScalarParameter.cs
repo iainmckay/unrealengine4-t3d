@@ -26,6 +26,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("ExpressionGUID");
+            AddIgnoredProperty("Group");
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
         }
