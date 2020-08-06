@@ -54,6 +54,7 @@
     <Compile Include="Material\MaterialExpressionSubtract.cs" />
     <Compile Include="Material\MaterialExpressionTextureObjectParameter.cs" />
     <Compile Include="Material\MaterialExpressionTextureSample.cs" />
+    <Compile Include="Material\MaterialExpressionTime.cs" />
     <Compile Include="Material\VectorConstantNode.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="Material\MaterialDocumentProcessor.cs" />
