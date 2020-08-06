@@ -19,9 +19,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("DefaultValue", PropertyDataType.Vector4);
             AddRequiredProperty("ParameterName", PropertyDataType.String);
 
+            AddOptionalProperty("DefaultValue", PropertyDataType.Vector4);
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
@@ -32,7 +32,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return new MaterialExpressionVectorParameter(node.FindAttributeValue("Name"), node.FindPropertyValue("ParameterName"), ValueUtil.ParseVector4(node.FindPropertyValue("DefaultValue")), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0"));
+            return new MaterialExpressionVectorParameter(
+                node.FindAttributeValue("Name"),
+                node.FindPropertyValue("ParameterName"),
+                ValueUtil.ParseVector4(node.FindPropertyValue("DefaultValue") ?? "(R=0.0,G=0.0,B=0.0,A=0.0)"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
+            );
         }
     }
 }
