@@ -76,6 +76,8 @@
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
+            AddIgnoredProperty("bUsedWithBeamTrails");
+            AddIgnoredProperty("bUsedWithMeshParticles");
             AddIgnoredProperty("bUsedWithParticleSprites");
             AddIgnoredProperty("bUsedWithStaticLighting");
             AddIgnoredProperty("bUsedWithSplineMeshes");
