@@ -19,5 +19,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         TextureReference = 2048,
         Vector4 = 4096,
         MaterialDomain = 8192,
+        TranslucencyLightingMode = 16384,
     }
 }

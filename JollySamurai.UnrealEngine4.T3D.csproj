@@ -92,6 +92,7 @@
     <Compile Include="ShadingModel.cs" />
     <Compile Include="TextureReference.cs" />
     <Compile Include="ExpressionReference.cs" />
+    <Compile Include="TranslucencyLightingMode.cs" />
     <Compile Include="ValueUtil.cs" />
     <Compile Include="Vector4.cs" />
   </ItemGroup>

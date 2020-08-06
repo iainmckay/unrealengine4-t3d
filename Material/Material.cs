@@ -9,6 +9,7 @@
         public ShadingModel ShadingModel { get; }
         public BlendMode BlendMode { get; }
         public MaterialDomain MaterialDomain { get; }
+        public TranslucencyLightingMode TranslucencyLightingMode { get; }
         public bool IsTwoSided { get; }
         public ParsedPropertyBag BaseColor { get; }
         public ParsedPropertyBag Metallic { get; }
@@ -20,12 +21,13 @@
         public ExpressionReference[] Expressions { get; }
         public ExpressionReference[] EditorComments { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int editorX, int editorY)
+        public Material(Node[] children, string name, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
             ShadingModel = shadingModel;
             BlendMode = blendMode;
             MaterialDomain = materialDomain;
+            TranslucencyLightingMode = translucencyLightingMode;
             IsTwoSided = isTwoSided;
             BaseColor = baseColor;
             Metallic = metallic;
@@ -73,6 +75,7 @@
             AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
             AddOptionalProperty("Specular", PropertyDataType.AttributeList);
+            AddOptionalProperty("TranslucencyLightingMode", PropertyDataType.TranslucencyLightingMode);
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
@@ -101,6 +104,7 @@
                 ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
                 ValueUtil.ParseBlendMode(node.FindPropertyValue("BlendMode")),
                 ValueUtil.ParseMaterialDomain(node.FindPropertyValue("MaterialDomain")),
+                ValueUtil.ParseTranslucencyLightingMode(node.FindPropertyValue("TranslucencyLightingMode")),
                 ValueUtil.ParseBoolean(node.FindPropertyValue("TwoSided") ?? "False"),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("BaseColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Metallic")),

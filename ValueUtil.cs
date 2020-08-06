@@ -148,6 +148,43 @@ namespace JollySamurai.UnrealEngine4.T3D
             throw new ValueException("Unexpected material domain: " + value);
         }
 
+        public static TranslucencyLightingMode TryParseTranslucencyLightingMode(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseTranslucencyLightingMode(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return TranslucencyLightingMode.Unknown;
+        }
+
+        public static TranslucencyLightingMode ParseTranslucencyLightingMode(string value)
+        {
+            if (value == null) {
+                return TranslucencyLightingMode.VolumetricNonDirectional;
+            }
+
+            switch (value) {
+                case "TLM_VolumetricNonDirectional":
+                    return TranslucencyLightingMode.VolumetricNonDirectional;
+                case "TLM_VolumetricDirectional":
+                    return TranslucencyLightingMode.VolumetricDirectional;
+                case "TLM_VolumetricPerVertexNonDirectional":
+                    return TranslucencyLightingMode.VolumetricPerVertexNonDirectional;
+                case "TLM_VolumetricPerVertexDirectional":
+                    return TranslucencyLightingMode.VolumetricPerVertexDirectional;
+                case "TLM_Surface":
+                    return TranslucencyLightingMode.Surface;
+                case "TLM_SurfacePerPixelLighting":
+                    return TranslucencyLightingMode.SurfacePerPixelLighting;
+            }
+
+            throw new ValueException("Unexpected translucency lighting mode: " + value);
+        }
+
         public static BlendMode TryParseBlendMode(string value, out bool successOrFailure)
         {
             try {
