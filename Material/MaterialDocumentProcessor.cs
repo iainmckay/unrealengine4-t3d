@@ -28,6 +28,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionSubtractProcessor());
             AddNodeProcessor(new MaterialExpressionTextureCoordinateProcessor());
             AddNodeProcessor(new MaterialExpressionTextureObjectParameterProcessor());
+            AddNodeProcessor(new MaterialExpressionTextureObjectProcessor());
             AddNodeProcessor(new MaterialExpressionTextureSampleProcessor());
             AddNodeProcessor(new MaterialExpressionTextureSampleParameter2DProcessor());
             AddNodeProcessor(new MaterialExpressionTimeProcessor());
