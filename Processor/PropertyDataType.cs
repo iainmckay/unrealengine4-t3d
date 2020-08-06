@@ -18,5 +18,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         String = 1024,
         TextureReference = 2048,
         Vector4 = 4096,
+        MaterialDomain = 8192,
     }
 }

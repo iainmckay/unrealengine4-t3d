@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using JollySamurai.UnrealEngine4.T3D.Exception;
+using JollySamurai.UnrealEngine4.T3D.Material;
 using JollySamurai.UnrealEngine4.T3D.Parser;
 
 namespace JollySamurai.UnrealEngine4.T3D
@@ -106,6 +107,45 @@ namespace JollySamurai.UnrealEngine4.T3D
             }
 
             throw new ValueException("Unexpected sampler type: " + value);
+        }
+
+        public static MaterialDomain TryParseMaterialDomain(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseMaterialDomain(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return MaterialDomain.Unknown;
+        }
+
+        public static MaterialDomain ParseMaterialDomain(string value)
+        {
+            if (value == null) {
+                return MaterialDomain.Surface;
+            }
+
+            switch (value) {
+                case "MD_Surface":
+                    return MaterialDomain.Surface;
+                case "MD_DeferredDecal":
+                    return MaterialDomain.DeferredDecal;
+                case "MD_LightFunction":
+                    return MaterialDomain.LightFunction;
+                case "MD_Volume":
+                    return MaterialDomain.Volume;
+                case "MD_PostProcess":
+                    return MaterialDomain.PostProcess;
+                case "MD_UI":
+                    return MaterialDomain.Ui;
+                case "MD_RuntimeVirtualTexture":
+                    return MaterialDomain.RuntimeVirtualTexture;
+            }
+
+            throw new ValueException("Unexpected material domain: " + value);
         }
 
         public static BlendMode TryParseBlendMode(string value, out bool successOrFailure)

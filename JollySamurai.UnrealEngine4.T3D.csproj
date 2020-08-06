@@ -43,6 +43,7 @@
     <Compile Include="Exception\T3DException.cs" />
     <Compile Include="Exception\ValueException.cs" />
     <Compile Include="FunctionReference.cs" />
+    <Compile Include="MaterialDomain.cs" />
     <Compile Include="MaterialInstance\MaterialInstanceDocumentProcessor.cs" />
     <Compile Include="MaterialInstance\MaterialInstance.cs" />
     <Compile Include="Material\MaterialExpressionConstant.cs" />
