@@ -21,12 +21,14 @@ namespace JollySamurai.UnrealEngine4.T3D
         public static bool TryParseBoolean(string value, out bool successOrFailure)
         {
             successOrFailure = Boolean.TryParse(value, out var result);
+
             return result;
         }
 
         public static int TryParseInteger(string value, out bool successOrFailure)
         {
             successOrFailure = int.TryParse(value, out var result);
+
             return result;
         }
 
@@ -38,6 +40,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         public static float TryParseFloat(string value, out bool successOrFailure)
         {
             successOrFailure = float.TryParse(value, out var result);
+
             return result;
         }
 
@@ -50,6 +53,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseSamplerType(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -62,8 +66,43 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             if (value == null) {
                 return SamplerType.Default;
-            } else if (value == "SAMPLERTYPE_Normal") {
-                return SamplerType.Normal;
+            }
+
+            switch (value) {
+                case "SAMPLERTYPE_Color":
+                    return SamplerType.Color;
+                case "SAMPLERTYPE_Grayscale":
+                    return SamplerType.Grayscale;
+                case "SAMPLERTYPE_Alpha":
+                    return SamplerType.Alpha;
+                case "SAMPLERTYPE_Normal":
+                    return SamplerType.Normal;
+                case "SAMPLERTYPE_Masks":
+                    return SamplerType.Masks;
+                case "SAMPLERTYPE_DistanceFieldFont":
+                    return SamplerType.DistanceFieldFont;
+                case "SAMPLERTYPE_LinearColor":
+                    return SamplerType.LinearColor;
+                case "SAMPLERTYPE_LinearGrayscale":
+                    return SamplerType.LinearGrayscale;
+                case "SAMPLERTYPE_Data":
+                    return SamplerType.Data;
+                case "SAMPLERTYPE_External":
+                    return SamplerType.External;
+                case "SAMPLERTYPE_VirtualColor":
+                    return SamplerType.VirtualColor;
+                case "SAMPLERTYPE_VirtualGrayscale":
+                    return SamplerType.VirtualGrayscale;
+                case "SAMPLERTYPE_VirtualAlpha":
+                    return SamplerType.VirtualAlpha;
+                case "SAMPLERTYPE_VirtualNormal":
+                    return SamplerType.VirtualNormal;
+                case "SAMPLERTYPE_VirtualMasks":
+                    return SamplerType.VirtualMasks;
+                case "SAMPLERTYPE_VirtualLinearColor":
+                    return SamplerType.VirtualLinearColor;
+                case "SAMPLERTYPE_VirtualLinearGrayscale":
+                    return SamplerType.VirtualLinearGrayscale;
             }
 
             throw new ValueException("Unexpected sampler type: " + value);
@@ -73,6 +112,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseBlendMode(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -102,6 +142,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseShadingModel(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -125,6 +166,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseExpressionReference(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -138,7 +180,7 @@ namespace JollySamurai.UnrealEngine4.T3D
             if (value == null) {
                 return null;
             }
-            
+
             Match match = ExpressionReferenceRegex.Match(value);
 
             if (! match.Success) {
@@ -167,6 +209,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseAttributeList(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -179,6 +222,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseTextureReference(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -210,6 +254,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseFunctionReference(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -233,6 +278,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         {
             try {
                 successOrFailure = true;
+
                 return ParseVector4(value);
             } catch (ValueException) {
                 successOrFailure = false;
@@ -255,7 +301,8 @@ namespace JollySamurai.UnrealEngine4.T3D
         public static ExpressionReference[] ParseExpressionReferenceArray(ParsedProperty[] elements)
         {
             if (null == elements) {
-                return new ExpressionReference[] {};
+                return new ExpressionReference[] {
+                };
             }
 
             List<ExpressionReference> list = new List<ExpressionReference>();
@@ -270,7 +317,8 @@ namespace JollySamurai.UnrealEngine4.T3D
         public static ParsedPropertyBag[] ParseAttributeListArray(ParsedProperty[] elements)
         {
             if (null == elements) {
-                return new ParsedPropertyBag[] {};
+                return new ParsedPropertyBag[] {
+                };
             }
 
             List<ParsedPropertyBag> list = new List<ParsedPropertyBag>();

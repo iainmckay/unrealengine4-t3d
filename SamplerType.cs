@@ -4,6 +4,22 @@
     {
         Unknown,
         Default,
-        Normal
+        Color,
+        Grayscale,
+        Alpha,
+        Normal,
+        Masks,
+        DistanceFieldFont,
+        LinearColor,
+        LinearGrayscale,
+        Data,
+        External,
+        VirtualColor,
+        VirtualGrayscale,
+        VirtualAlpha,
+        VirtualNormal,
+        VirtualMasks,
+        VirtualLinearColor,
+        VirtualLinearGrayscale,
     }
 }
