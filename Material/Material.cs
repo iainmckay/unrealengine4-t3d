@@ -6,6 +6,7 @@
 {
     public class Material : Node
     {
+        public ParsedPropertyBag AmbientOcclusion { get; }
         public ShadingModel ShadingModel { get; }
         public BlendMode BlendMode { get; }
         public MaterialDomain MaterialDomain { get; }
@@ -21,10 +22,13 @@
         public ExpressionReference OpacityMask { get; }
         public ExpressionReference[] Expressions { get; }
         public ExpressionReference[] EditorComments { get; }
+        public int TextureStreamingDataVersion { get; }
+        public ParsedPropertyBag[] TextureStreamingData { get; }
 
-        public Material(Node[] children, string name, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int editorX, int editorY)
+        public Material(Node[] children, string name, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, int editorX, int editorY)
             : base(name, editorX, editorY, children)
         {
+            AmbientOcclusion = ambientOcclusion;
             ShadingModel = shadingModel;
             BlendMode = blendMode;
             MaterialDomain = materialDomain;
@@ -40,6 +44,8 @@
             OpacityMask = opacityMask;
             Expressions = expressionReferences;
             EditorComments = editorComments;
+            TextureStreamingDataVersion = textureStreamingDataVersion;
+            TextureStreamingData = textureStreamingData;
         }
 
         public Node ResolveExpressionReference(ExpressionReference reference)
@@ -64,6 +70,7 @@
 
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
 
+            AddOptionalProperty("AmbientOcclusion", PropertyDataType.AttributeList);
             AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
             AddOptionalProperty("BlendMode", PropertyDataType.BlendMode);
             AddOptionalProperty("EditorComments", PropertyDataType.ExpressionReference | PropertyDataType.Array);
@@ -78,6 +85,8 @@
             AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
             AddOptionalProperty("Specular", PropertyDataType.AttributeList);
+            AddOptionalProperty("TextureStreamingDataVersion", PropertyDataType.Integer);
+            AddOptionalProperty("TextureStreamingData", PropertyDataType.AttributeList | PropertyDataType.Array);
             AddOptionalProperty("TranslucencyLightingMode", PropertyDataType.TranslucencyLightingMode);
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
@@ -95,7 +104,6 @@
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("ShadingModels");
             AddIgnoredProperty("StateId");
-            AddIgnoredProperty("TextureStreamingDataVersion");
             AddIgnoredProperty("ThumbnailInfo");
         }
 
@@ -104,6 +112,7 @@
             return new Material(
                 children,
                 node.FindAttributeValue("Name"),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("AmbientOcclusion")),
                 ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
                 ValueUtil.ParseBlendMode(node.FindPropertyValue("BlendMode")),
                 ValueUtil.ParseMaterialDomain(node.FindPropertyValue("MaterialDomain")),
@@ -119,6 +128,8 @@
                 ValueUtil.ParseExpressionReference(node.FindPropertyValue("OpacityMask")),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions")?.Elements),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments")?.Elements),
+                ValueUtil.ParseInteger(node.FindPropertyValue("TextureStreamingDataVersion") ?? "1"),
+                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureStreamingData")?.Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0")
             );
