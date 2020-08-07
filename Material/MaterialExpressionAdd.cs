@@ -37,6 +37,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
+            AddIgnoredProperty("bRealtimePreview");
             AddIgnoredProperty("MaterialExpressionGuid");
             AddIgnoredProperty("Material");
         }
