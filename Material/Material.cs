@@ -91,6 +91,8 @@
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
+            AddIgnoredProperty("bEnableSeparateTranslucency");
+            AddIgnoredProperty("bFullyRough");
             AddIgnoredProperty("bUsedWithBeamTrails");
             AddIgnoredProperty("bUsedWithMeshParticles");
             AddIgnoredProperty("bUsedWithParticleSprites");
@@ -106,6 +108,7 @@
             AddIgnoredProperty("ShadingModels");
             AddIgnoredProperty("StateId");
             AddIgnoredProperty("ThumbnailInfo");
+            AddIgnoredProperty("TranslucentShadowDensityScale");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
