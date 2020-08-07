@@ -9,13 +9,15 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public TextureReference Texture { get; }
         public ParsedPropertyBag TextureObject { get; }
+        public SamplerType SamplerType { get; }
 
-        public MaterialExpressionTextureSample(string name, ParsedPropertyBag coordinates, TextureReference texture, ParsedPropertyBag textureObject, int editorX, int editorY)
+        public MaterialExpressionTextureSample(string name, ParsedPropertyBag coordinates, TextureReference texture, ParsedPropertyBag textureObject, SamplerType samplerType, int editorX, int editorY)
             : base(name, editorX, editorY)
         {
             Coordinates = coordinates;
             Texture = texture;
             TextureObject = textureObject;
+            SamplerType = samplerType;
         }
     }
 
@@ -30,6 +32,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("Coordinates", PropertyDataType.AttributeList);
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
+            AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
             AddOptionalProperty("Texture", PropertyDataType.TextureReference);
             AddOptionalProperty("TextureObject", PropertyDataType.AttributeList);
 
@@ -44,6 +47,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")),
                 ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("TextureObject")),
+                ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
             );
