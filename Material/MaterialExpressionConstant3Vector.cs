@@ -23,7 +23,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             return new MaterialExpressionConstant3Vector(
                 node.FindAttributeValue("Name"),
-                ValueUtil.ParseVector4(node.FindPropertyValue("Constant")),
+                ValueUtil.ParseVector4(node.FindPropertyValue("Constant") ?? "(R=0.0,G=0.0,B=0.0,A=0.0)"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
             );
