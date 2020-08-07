@@ -96,6 +96,7 @@
             AddIgnoredProperty("bUsedWithParticleSprites");
             AddIgnoredProperty("bUsedWithStaticLighting");
             AddIgnoredProperty("bUsedWithSplineMeshes");
+            AddIgnoredProperty("bUsesDistortion");
             AddIgnoredProperty("CachedExpressionData");
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("MaterialFunctionInfos");
