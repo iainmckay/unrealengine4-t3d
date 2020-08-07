@@ -310,6 +310,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static TextureReference ParseTextureReference(string value)
         {
+            if(null == value) {
+                return null;
+            }
+            
             Match match = ResourceReferenceRegex.Match(value);
 
             if (! match.Success) {
