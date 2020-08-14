@@ -8,12 +8,14 @@
     {
         public ParsedPropertyBag[] ScalarParameters { get; }
         public ParsedPropertyBag[] TextureParameters { get; }
+        public ParsedPropertyBag[] VectorParameters { get; }
 
-        public MaterialInstance(Node[] children, string name, ParsedPropertyBag[] scalarParameters, ParsedPropertyBag[] textureParameters)
+        public MaterialInstance(Node[] children, string name, ParsedPropertyBag[] scalarParameters, ParsedPropertyBag[] textureParameters, ParsedPropertyBag[] vectorParameters)
             : base(name, -1, -1, children)
         {
             ScalarParameters = scalarParameters;
             TextureParameters = textureParameters;
+            VectorParameters = vectorParameters;
         }
     }
 
@@ -29,6 +31,7 @@
 
             AddOptionalProperty("ScalarParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
             AddOptionalProperty("TextureParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
+            AddOptionalProperty("VectorParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
 
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ParameterStateId");
@@ -44,7 +47,8 @@
                 children,
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseAttributeListArray(node.FindProperty("ScalarParameterValues")?.Elements),
-                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureParameterValues")?.Elements)
+                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureParameterValues")?.Elements),
+                ValueUtil.ParseAttributeListArray(node.FindProperty("VectorParameterValues")?.Elements)
             );
         }
     }
