@@ -16,9 +16,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         SamplerType = 256,
         ShadingModel = 512,
         String = 1024,
-        TextureReference = 2048,
+        ResourceReference = 2048,
         Vector4 = 4096,
         MaterialDomain = 8192,
         TranslucencyLightingMode = 16384,
+        Vector3 = 32768,
+        Rotator = 65536,
     }
 }

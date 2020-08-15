@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
 namespace JollySamurai.UnrealEngine4.T3D.Parser
 {
@@ -45,6 +48,17 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
             ParsedProperty property = FindProperty(name);
 
             return null != property && property.Value == value;
+        }
+
+        public override string ToString()
+        {
+            var b = new List<string>();
+
+            foreach (var parsedProperty in Properties) {
+                b.Add($"{parsedProperty.Name}={parsedProperty.Value}");
+            }
+
+            return string.Join(", ", b.ToArray());
         }
     }
 }

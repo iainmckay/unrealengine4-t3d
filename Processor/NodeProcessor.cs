@@ -6,8 +6,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
 {
     public abstract class NodeProcessor
     {
-        public abstract string Class { get; }
-
         public PropertyDefinition[] AttributeDefinitions {
             get => _attributeDefinitions.Values.ToArray();
         }
@@ -37,9 +35,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
 
             _ignoredAttributes = new List<string>();
             _ignoredProperties = new List<string>();
-
-            _ignoredAttributes.Add("Class");
         }
+
+        public abstract bool Supports(ParsedNode node);
 
         public abstract Node Convert(ParsedNode node, Node[] children);
 

@@ -11,8 +11,10 @@ namespace JollySamurai.UnrealEngine4.T3D
     public static class ValueUtil
     {
         public static readonly Regex ExpressionReferenceRegex = new Regex(@"(?<type>[a-zA-Z0-9]+)'""(?<material>\w+:)?(?<object>.+)""'", RegexOptions.Compiled);
-        public static readonly Regex ResourceReferenceRegex = new Regex(@"(\w+)'""(.+)""'", RegexOptions.Compiled);
+        public static readonly Regex ResourceReferenceRegex = new Regex(@"^(?<type>.+)'""(?<resource>.+)""'$|^(?<type>.+)'(?<resource>.+)'$", RegexOptions.Compiled);
+        public static readonly Regex Vector3Regex = new Regex(@"\(X=(\-{0,}[0-9]+\.[0-9]+),Y=(\-{0,}[0-9]+\.[0-9]+),Z=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
         public static readonly Regex Vector4Regex = new Regex(@"\(R=([0-9]+\.[0-9]+),G=([0-9]+\.[0-9]+),B=([0-9]+\.[0-9]+),A=([0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
+        public static readonly Regex RotatorRegex = new Regex(@"\(Pitch=(\-{0,}[0-9]+\.[0-9]+),Yaw=(\-{0,}[0-9]+\.[0-9]+),Roll=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
 
         public static bool ParseBoolean(string value)
         {
@@ -295,12 +297,12 @@ namespace JollySamurai.UnrealEngine4.T3D
             return null;
         }
 
-        public static TextureReference TryParseTextureReference(string value, out bool successOrFailure)
+        public static ResourceReference TryParseResourceReference(string value, out bool successOrFailure)
         {
             try {
                 successOrFailure = true;
 
-                return ParseTextureReference(value);
+                return ParseResourceReference(value);
             } catch (ValueException) {
                 successOrFailure = false;
             }
@@ -308,27 +310,23 @@ namespace JollySamurai.UnrealEngine4.T3D
             return null;
         }
 
-        public static TextureReference ParseTextureReference(string value)
+        public static ResourceReference ParseResourceReference(string value)
         {
-            if(null == value) {
+            if (null == value) {
                 return null;
             }
-            
+
+            if ("None" == value) {
+                return new ResourceReference("None", "None");
+            }
+
             Match match = ResourceReferenceRegex.Match(value);
 
             if (! match.Success) {
-                throw new ValueException("Failed to parse TextureReference");
+                throw new ValueException("Failed to parse resource reference");
             }
 
-            var type = TextureType.Texture2D;
-
-            if (match.Groups[1].Value == "Texture2D") {
-                type = TextureType.Texture2D;
-            } else {
-                throw new ValueException("Failed to parse TextureReference");
-            }
-
-            return new TextureReference(type, match.Groups[2].Value);
+            return new ResourceReference(match.Groups["type"].Value, match.Groups["resource"].Value);
         }
 
         public static FunctionReference TryParseFunctionReference(string value, out bool successOrFailure)
@@ -355,6 +353,62 @@ namespace JollySamurai.UnrealEngine4.T3D
             return new FunctionReference(match.Groups[1].Value, match.Groups[2].Value);
         }
 
+        public static Rotator TryParseRotator(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseRotator(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return default(Rotator);
+        }
+
+        public static Rotator ParseRotator(string value)
+        {
+            if (null == value) {
+                return default(Rotator);
+            }
+
+            Match match = RotatorRegex.Match(value);
+
+            if (! match.Success) {
+                throw new ValueException("Failed to parse Rotator");
+            }
+
+            return new Rotator(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value));
+        }
+
+        public static Vector3 TryParseVector3(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseVector3(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return default(Vector3);
+        }
+
+        public static Vector3 ParseVector3(string value)
+        {
+            if (null == value) {
+                return default(Vector3);
+            }
+
+            Match match = Vector3Regex.Match(value);
+
+            if (! match.Success) {
+                throw new ValueException("Failed to parse Vector3");
+            }
+
+            return new Vector3(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value));
+        }
+
         public static Vector4 TryParseVector4(string value, out bool successOrFailure)
         {
             try {
@@ -370,6 +424,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static Vector4 ParseVector4(string value)
         {
+            if (null == value) {
+                return default(Vector4);
+            }
+
             Match match = Vector4Regex.Match(value);
 
             if (! match.Success) {
@@ -377,6 +435,22 @@ namespace JollySamurai.UnrealEngine4.T3D
             }
 
             return new Vector4(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value), ParseFloat(match.Groups[4].Value));
+        }
+
+        public static ResourceReference[] ParseResourceReferenceArray(ParsedProperty[] elements)
+        {
+            if (null == elements) {
+                return new ResourceReference[] {
+                };
+            }
+
+            List<ResourceReference> list = new List<ResourceReference>();
+
+            foreach (var parsedProperty in elements) {
+                list.Add(ParseResourceReference(parsedProperty.Value));
+            }
+
+            return list.ToArray();
         }
 
         public static ExpressionReference[] ParseExpressionReferenceArray(ParsedProperty[] elements)

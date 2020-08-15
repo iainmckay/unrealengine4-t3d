@@ -39,10 +39,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlendMode.cs" />
+    <Compile Include="Common\ObjectNodeProcessor.cs" />
     <Compile Include="Exception\ParserException.cs" />
     <Compile Include="Exception\T3DException.cs" />
     <Compile Include="Exception\ValueException.cs" />
     <Compile Include="FunctionReference.cs" />
+    <Compile Include="Map\BaseActorNodeProcessor.cs" />
+    <Compile Include="Map\BaseComponentProcessor.cs" />
+    <Compile Include="Map\ILocation.cs" />
+    <Compile Include="Map\IRotation.cs" />
+    <Compile Include="Map\IScale3D.cs" />
+    <Compile Include="Map\Level.cs" />
+    <Compile Include="Map\Map.cs" />
+    <Compile Include="Map\MapDocumentProcessor.cs" />
+    <Compile Include="Map\StaticMeshActor.cs" />
+    <Compile Include="Map\StaticMeshComponent.cs" />
     <Compile Include="MaterialDomain.cs" />
     <Compile Include="MaterialInstance\MaterialInstanceDocumentProcessor.cs" />
     <Compile Include="MaterialInstance\MaterialInstance.cs" />
@@ -90,12 +101,14 @@
     <Compile Include="Processor\PropertyDataType.cs" />
     <Compile Include="Processor\PropertyDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rotator.cs" />
     <Compile Include="SamplerType.cs" />
     <Compile Include="ShadingModel.cs" />
-    <Compile Include="TextureReference.cs" />
+    <Compile Include="ResourceReference.cs" />
     <Compile Include="ExpressionReference.cs" />
     <Compile Include="TranslucencyLightingMode.cs" />
     <Compile Include="ValueUtil.cs" />
+    <Compile Include="Vector3.cs" />
     <Compile Include="Vector4.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

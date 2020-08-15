@@ -1,4 +1,6 @@
 ﻿﻿using System.Linq;
+ using JollySamurai.UnrealEngine4.T3D.Common;
+ using JollySamurai.UnrealEngine4.T3D.Material;
  using JollySamurai.UnrealEngine4.T3D.Parser;
  using JollySamurai.UnrealEngine4.T3D.Processor;
 
@@ -19,13 +21,13 @@
         }
     }
 
-    public class MaterialInstanceProcessor : NodeProcessor
+    public class ObjectInstanceProcessor : ObjectNodeProcessor
     {
         public override string Class {
             get { return "/Script/Engine.MaterialInstanceConstant"; }
         }
 
-        public MaterialInstanceProcessor() : base()
+        public ObjectInstanceProcessor() : base()
         {
             AddRequiredProperty("Parent", PropertyDataType.String);
 

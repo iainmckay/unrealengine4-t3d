@@ -41,7 +41,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
         protected ParsedNode ParseNode()
         {
             ExpectToken("Begin");
-            ExpectToken("Object");
+            var sectionType = ReadToken();
 
             ParsedPropertyBag attributeBag = ReadAttributeList();
             List<ParsedNode> childNodes = new List<ParsedNode>();
@@ -58,25 +58,31 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                     childNodes.Add(ParseNode());
                 } else if (token == "End") {
                     ExpectToken("End");
-                    ExpectToken("Object");
+                    ExpectToken(sectionType);
 
                     MoveToNextLine();
 
                     break;
+                } else if(token == "CustomProperties") {
+                    // FIXME: can't find an example where this is used and it breaks our parser
+                    MoveToNextLine();
                 } else {
-                    ParsedProperty property = ReadProperty();
+                    ParsedProperty property = ReadProperty(sectionType, propertyList);
 
-                    if (property == null) {
-                        throw CreateException("This is unexpected, read null property");
+                    if(property != null) {
+                        propertyList.Add(property);
                     }
-
-                    propertyList.Add(property);
                 }
             }
 
             childNodes = PostProcessNodes(childNodes.ToArray());
 
-            return new ParsedNode(new ParsedNodeBag(childNodes.ToArray()), attributeBag, new ParsedPropertyBag(propertyList.ToArray()));
+            return new ParsedNode(
+                sectionType,
+                new ParsedNodeBag(childNodes.ToArray()),
+                attributeBag,
+                new ParsedPropertyBag(propertyList.ToArray())
+            );
         }
 
         public void ExpectToken(string expectedToken)
@@ -116,11 +122,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
             return new ParsedProperty(key, value);
         }
 
-        public ParsedProperty ReadProperty()
+        public ParsedProperty ReadProperty(string sectionType, List<ParsedProperty> nodePropertyList)
         {
             string key = ReadToken();
 
-            ExpectToken("=");
+            if(sectionType != "Polygon") {
+                ExpectToken("=");
+            }
 
             string value = ReadUntilEndOfLine();
 
@@ -128,9 +136,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                 value = value.Substring(1, value.Length - 2);
             }
 
+            if(sectionType == "Polygon" && key == "Vertex") {
+                var count = CountPropertiesWithNameStartingWith(nodePropertyList, "Vertex(");
+                key = $"{key}({count})";
+            }
+
             return new ParsedProperty(key, value);
         }
-
 
         public string ReadToken()
         {
@@ -297,22 +309,29 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
         {
             List<ParsedNode> newList = new List<ParsedNode>();
 
+            // combine split objects
             foreach (ParsedNode parsedNode in nodes) {
-                // find nodes that only have a name, then combine them with the expected node that has both attributes
                 if (parsedNode.AttributeBag.HasProperty("Class")) {
                     newList.Add(parsedNode);
                 } else {
-                    string name = parsedNode.AttributeBag.FindProperty("Name").Value;
+                    string name = parsedNode.AttributeBag.FindProperty("Name")?.Value;
                     ParsedNode mainNode = nodes.SingleOrDefault(n => n.AttributeBag.HasProperty("Class") && n.AttributeBag.HasPropertyWithValue("Name", name));
 
                     if (mainNode != null) {
                         newList.Remove(mainNode);
-                        newList.Add(new ParsedNode(mainNode.Children, mainNode.AttributeBag, parsedNode.PropertyBag));
+                        newList.Add(new ParsedNode(mainNode.SectionType, mainNode.Children, mainNode.AttributeBag, parsedNode.PropertyBag));
+                    } else {
+                        newList.Add(parsedNode);
                     }
                 }
             }
 
             return newList;
+        }
+
+        private int CountPropertiesWithNameStartingWith(List<ParsedProperty> list, string name)
+        {
+            return list.Count(property => property.Name.StartsWith(name));
         }
 
         private void IncrementLineCounter()

@@ -1,8 +1,9 @@
-﻿﻿using System.Linq;
- using JollySamurai.UnrealEngine4.T3D.Parser;
- using JollySamurai.UnrealEngine4.T3D.Processor;
+﻿using System.Linq;
+using JollySamurai.UnrealEngine4.T3D.Common;
+using JollySamurai.UnrealEngine4.T3D.Parser;
+using JollySamurai.UnrealEngine4.T3D.Processor;
 
- namespace JollySamurai.UnrealEngine4.T3D.Material
+namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class Material : Node
     {
@@ -58,7 +59,7 @@
         }
     }
 
-    public class MaterialProcessor : NodeProcessor
+    public class MaterialProcessor : ObjectNodeProcessor
     {
         public override string Class {
             get { return "/Script/Engine.Material"; }

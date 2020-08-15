@@ -1,9 +1,15 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Processor;
+﻿using System.Linq;
+using JollySamurai.UnrealEngine4.T3D.Parser;
+using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialDocumentProcessor : DocumentProcessor<Material>
     {
+        private readonly string[] IgnoredNodes = {
+            "/Script/UnrealEd.SceneThumbnailInfoWithPrimitive",
+        };
+
         public MaterialDocumentProcessor()
         {
             AddNodeProcessor(new MaterialProcessor());
@@ -19,7 +25,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionDivideProcessor());
             AddNodeProcessor(new MaterialExpressionFresnelProcessor());
             AddNodeProcessor(new MaterialExpressionLinearInterpolateProcessor());
-            AddNodeProcessor(new MaterialExpressionMaterialFunctionCallProcessor());
+            AddNodeProcessor(new MaterialExpressionObjectFunctionCallProcessor());
             AddNodeProcessor(new MaterialExpressionMultiplyProcessor());
             AddNodeProcessor(new MaterialExpressionOneMinusProcessor());
             AddNodeProcessor(new MaterialExpressionPowerProcessor());
@@ -31,11 +37,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionTextureObjectParameterProcessor());
             AddNodeProcessor(new MaterialExpressionTextureObjectProcessor());
             AddNodeProcessor(new MaterialExpressionTextureSampleProcessor());
-            AddNodeProcessor(new MaterialExpressionTextureSampleParameter2DProcessor());
+            AddNodeProcessor(new ObjectExpressionTextureSampleParameter2DProcessor());
             AddNodeProcessor(new MaterialExpressionTimeProcessor());
             AddNodeProcessor(new MaterialExpressionVectorParameterProcessor());
+        }
 
-            IgnoreNode("/Script/UnrealEd.SceneThumbnailInfoWithPrimitive");
+        protected override bool IsIgnoredNode(ParsedNode parsedNode)
+        {
+            var nodeClass = parsedNode.AttributeBag.FindProperty("Class")?.Value;
+
+            return IgnoredNodes.Count(s => s == nodeClass) != 0;
         }
     }
 }

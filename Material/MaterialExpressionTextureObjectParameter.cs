@@ -1,17 +1,18 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using JollySamurai.UnrealEngine4.T3D.Common;
+using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class MaterialExpressionTextureObjectParameter : ParameterNode<TextureReference>
+    public class MaterialExpressionTextureObjectParameter : ParameterNode<ResourceReference>
     {
-        public MaterialExpressionTextureObjectParameter(string name, string parameterName, TextureReference texture, int editorX, int editorY)
-            : base(name, parameterName, texture, editorX, editorY)
+        public MaterialExpressionTextureObjectParameter(string name, string parameterName, ResourceReference resource, int editorX, int editorY)
+            : base(name, parameterName, resource, editorX, editorY)
         {
         }
     }
 
-    public class MaterialExpressionTextureObjectParameterProcessor : NodeProcessor
+    public class MaterialExpressionTextureObjectParameterProcessor : ObjectNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionTextureObjectParameter";
 
@@ -20,7 +21,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredAttribute("Name", PropertyDataType.String);
 
             AddRequiredProperty("ParameterName", PropertyDataType.String);
-            AddRequiredProperty("Texture", PropertyDataType.TextureReference);
+            AddRequiredProperty("Texture", PropertyDataType.ResourceReference);
 
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
@@ -35,7 +36,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             return new MaterialExpressionTextureObjectParameter(
                 node.FindAttributeValue("Name"),
                 node.FindPropertyValue("ParameterName"),
-                ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")),
+                ValueUtil.ParseResourceReference(node.FindPropertyValue("Texture")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
             );

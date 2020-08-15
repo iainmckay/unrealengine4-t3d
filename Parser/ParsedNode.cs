@@ -8,12 +8,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
 {
     public class ParsedNode
     {
+        public string SectionType { get; }
         public ParsedNodeBag Children { get; }
         public ParsedPropertyBag AttributeBag { get; }
         public ParsedPropertyBag PropertyBag { get; }
 
-        public ParsedNode(ParsedNodeBag children, ParsedPropertyBag attributeBag, ParsedPropertyBag propertyBag)
+        public ParsedNode(string sectionType, ParsedNodeBag children, ParsedPropertyBag attributeBag, ParsedPropertyBag propertyBag)
         {
+            SectionType = sectionType;
             Children = children;
             AttributeBag = attributeBag;
             PropertyBag = ConvertArrays(propertyBag);

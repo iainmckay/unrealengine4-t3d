@@ -1,4 +1,5 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using JollySamurai.UnrealEngine4.T3D.Common;
+using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
@@ -7,11 +8,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
     {
         public ParsedPropertyBag Coordinates { get; }
 
-        public TextureReference Texture { get; }
+        public ResourceReference Texture { get; }
         public ParsedPropertyBag TextureObject { get; }
         public SamplerType SamplerType { get; }
 
-        public MaterialExpressionTextureSample(string name, ParsedPropertyBag coordinates, TextureReference texture, ParsedPropertyBag textureObject, SamplerType samplerType, int editorX, int editorY)
+        public MaterialExpressionTextureSample(string name, ParsedPropertyBag coordinates, ResourceReference texture, ParsedPropertyBag textureObject, SamplerType samplerType, int editorX, int editorY)
             : base(name, editorX, editorY)
         {
             Coordinates = coordinates;
@@ -21,7 +22,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionTextureSampleProcessor : NodeProcessor
+    public class MaterialExpressionTextureSampleProcessor : ObjectNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionTextureSample";
 
@@ -33,7 +34,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
-            AddOptionalProperty("Texture", PropertyDataType.TextureReference);
+            AddOptionalProperty("Texture", PropertyDataType.ResourceReference);
             AddOptionalProperty("TextureObject", PropertyDataType.AttributeList);
 
             AddIgnoredProperty("Material");
@@ -45,7 +46,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             return new MaterialExpressionTextureSample(
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")),
-                ValueUtil.ParseTextureReference(node.FindPropertyValue("Texture")),
+                ValueUtil.ParseResourceReference(node.FindPropertyValue("Texture")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("TextureObject")),
                 ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),

@@ -1,4 +1,5 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using JollySamurai.UnrealEngine4.T3D.Common;
+using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
@@ -11,7 +12,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionConstant4VectorProcessor : NodeProcessor
+    public class MaterialExpressionConstant4VectorProcessor : ObjectNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionConstant4Vector";
 

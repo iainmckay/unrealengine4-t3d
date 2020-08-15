@@ -12,46 +12,31 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
     {
         public static readonly Regex TypeNameRegex = new Regex(@"(\w+)[0-9]{1,}", RegexOptions.Compiled);
 
-        private Dictionary<string, NodeProcessor> _nodeProcessors;
-
-        private List<string> _ignoredNodes;
+        private List<NodeProcessor> _nodeProcessors;
 
         public DocumentProcessor()
         {
-            _nodeProcessors = new Dictionary<string, NodeProcessor>();
-            _ignoredNodes = new List<string>();
+            _nodeProcessors = new List<NodeProcessor>();
         }
 
         protected void AddNodeProcessor(NodeProcessor nodeProcessor)
         {
-            _nodeProcessors.Add(nodeProcessor.Class, nodeProcessor);
-        }
-        
-        protected void IgnoreNode(string className)
-        {
-            _ignoredNodes.Add(className);
+            _nodeProcessors.Add(nodeProcessor);
         }
 
         protected NodeProcessor FindProcessorForNode(ParsedNode parsedNode)
         {
-            string className = parsedNode.AttributeBag.FindProperty("Class")?.Value;
-
-            if (null != className) {
-                return FindProcessor(className);
+            foreach (var nodeProcessor in _nodeProcessors) {
+                if (nodeProcessor.Supports(parsedNode)) {
+                    return nodeProcessor;
+                }
             }
 
             return null;
         }
 
-        protected NodeProcessor FindProcessor(string name)
-        {
-            if (_nodeProcessors.ContainsKey(name)) {
-                return _nodeProcessors[name];
-            }
-
-            return null;
-        }
-
+        protected abstract bool IsIgnoredNode(ParsedNode parsedNode);
+        
         public DocumentProcessorResult<T> Convert(ParsedDocument document)
         {
             ParsedNode rootNode = document.RootNode;
@@ -63,17 +48,15 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
 
         private Node ProcessNode(ParsedNode node, DocumentProcessorState state)
         {
-            var nodeClass = node.AttributeBag.FindProperty("Class")?.Value;
-
-            if (_ignoredNodes.Contains(nodeClass)) {
+            if (IsIgnoredNode(node)) {
                 return null;
             }
 
             NodeProcessor nodeProcessor = FindProcessorForNode(node);
 
             if (null == nodeProcessor) {
-                state.AddWarning("Processor not found (class={0}, node={1})", nodeClass, node.AttributeBag.FindProperty("Name")?.Value);
-
+                state.AddWarning("Processor not found (sectionType={0}, {1})",  node.SectionType, node.AttributeBag.ToString());
+                
                 return null;
             }
 
@@ -191,10 +174,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseShadingModel(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.String)) {
                 wasValid = true;
-            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.TextureReference)) {
-                ValueUtil.TryParseTextureReference(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.ResourceReference)) {
+                ValueUtil.TryParseResourceReference(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.TranslucencyLightingMode)) {
                 ValueUtil.TryParseTranslucencyLightingMode(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Rotator)) {
+                ValueUtil.TryParseRotator(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector3)) {
+                ValueUtil.TryParseVector3(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector4)) {
                 ValueUtil.TryParseVector4(parsedProperty.Value, out wasValid);
             } else {

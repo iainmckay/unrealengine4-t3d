@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using JollySamurai.UnrealEngine4.T3D.Common;
 using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
@@ -18,11 +19,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionMaterialFunctionCallProcessor : NodeProcessor
+    public class MaterialExpressionObjectFunctionCallProcessor : ObjectNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionMaterialFunctionCall";
 
-        public MaterialExpressionMaterialFunctionCallProcessor()
+        public MaterialExpressionObjectFunctionCallProcessor()
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
