@@ -52,6 +52,10 @@
     <Compile Include="Map\Level.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\MapDocumentProcessor.cs" />
+    <Compile Include="Map\PointLightActor.cs" />
+    <Compile Include="Map\PointLightComponent.cs" />
+    <Compile Include="Map\SpotLightActor.cs" />
+    <Compile Include="Map\SpotLightComponent.cs" />
     <Compile Include="Map\StaticMeshActor.cs" />
     <Compile Include="Map\StaticMeshComponent.cs" />
     <Compile Include="MaterialDomain.cs" />
@@ -88,6 +92,7 @@
     <Compile Include="Material\MaterialExpressionTextureSampleParameter2D.cs" />
     <Compile Include="Material\MaterialExpressionVectorParameter.cs" />
     <Compile Include="Material\ParameterNode.cs" />
+    <Compile Include="Mobility.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Parser\ParsedDocument.cs" />
     <Compile Include="Parser\ParsedNode.cs" />

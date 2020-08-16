@@ -180,6 +180,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseTranslucencyLightingMode(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Rotator)) {
                 ValueUtil.TryParseRotator(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Mobility)) {
+                ValueUtil.TryParseMobility(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector3)) {
                 ValueUtil.TryParseVector3(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector4)) {

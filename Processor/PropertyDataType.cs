@@ -22,5 +22,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         TranslucencyLightingMode = 16384,
         Vector3 = 32768,
         Rotator = 65536,
+        Mobility = 131072,
     }
 }

@@ -13,7 +13,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         public static readonly Regex ExpressionReferenceRegex = new Regex(@"(?<type>[a-zA-Z0-9]+)'""(?<material>\w+:)?(?<object>.+)""'", RegexOptions.Compiled);
         public static readonly Regex ResourceReferenceRegex = new Regex(@"^(?<type>.+)'""(?<resource>.+)""'$|^(?<type>.+)'(?<resource>.+)'$", RegexOptions.Compiled);
         public static readonly Regex Vector3Regex = new Regex(@"\(X=(\-{0,}[0-9]+\.[0-9]+),Y=(\-{0,}[0-9]+\.[0-9]+),Z=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
-        public static readonly Regex Vector4Regex = new Regex(@"\(R=([0-9]+\.[0-9]+),G=([0-9]+\.[0-9]+),B=([0-9]+\.[0-9]+),A=([0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
+        public static readonly Regex Vector4Regex = new Regex(@"\(([RGBA])=([0-9\.]+),([RGBA])=([0-9\.]+),([RGBA])=([0-9\.]+),([RGBA])=([0-9\.]+)\)", RegexOptions.Compiled);
         public static readonly Regex RotatorRegex = new Regex(@"\(Pitch=(\-{0,}[0-9]+\.[0-9]+),Yaw=(\-{0,}[0-9]+\.[0-9]+),Roll=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
 
         public static bool ParseBoolean(string value)
@@ -381,6 +381,32 @@ namespace JollySamurai.UnrealEngine4.T3D
             return new Rotator(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value));
         }
 
+        public static Mobility TryParseMobility(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseMobility(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return Mobility.Stationary;
+        }
+
+        public static Mobility ParseMobility(string value)
+        {
+            if (value == null || value == "Stationary") {
+                return Mobility.Stationary;
+            } else if (value == "Movable") {
+                return Mobility.Movable;
+            } else if (value == "Static") {
+                return Mobility.Static;
+            }
+
+            throw new ValueException("Unexpected mobility mode: " + value);
+        }
+
         public static Vector3 TryParseVector3(string value, out bool successOrFailure)
         {
             try {
@@ -434,7 +460,39 @@ namespace JollySamurai.UnrealEngine4.T3D
                 throw new ValueException("Failed to parse Vector4");
             }
 
-            return new Vector4(ParseFloat(match.Groups[1].Value), ParseFloat(match.Groups[2].Value), ParseFloat(match.Groups[3].Value), ParseFloat(match.Groups[4].Value));
+            var v1 = match.Groups[1].Value;
+            var v2 = match.Groups[2].Value;
+            var v3 = match.Groups[3].Value;
+            var v4 = match.Groups[4].Value;
+            var v5 = match.Groups[5].Value;
+            var v6 = match.Groups[6].Value;
+            var v7 = match.Groups[7].Value;
+
+            var r = 0.0f;
+            var g = 0.0f;
+            var b = 0.0f;
+            var a = 0.0f;
+            
+            for (int i = 1; i < 8; i += 2) {
+                var component = match.Groups[i].Value;
+
+                switch (component) {
+                    case "R":
+                        r = ParseFloat(match.Groups[i + 1].Value);
+                        break;
+                    case "G":
+                        g = ParseFloat(match.Groups[i + 1].Value);
+                        break;
+                    case "B":
+                        b = ParseFloat(match.Groups[i + 1].Value);
+                        break;
+                    case "A":
+                        a = ParseFloat(match.Groups[i + 1].Value);
+                        break;
+                }
+            }
+
+            return new Vector4(r, g, b, a);
         }
 
         public static ResourceReference[] ParseResourceReferenceArray(ParsedProperty[] elements)
