@@ -25,11 +25,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("R", PropertyDataType.Float);
-            AddRequiredProperty("G", PropertyDataType.Float);
-
+            AddOptionalProperty("G", PropertyDataType.Float);
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
+            AddOptionalProperty("R", PropertyDataType.Float);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");

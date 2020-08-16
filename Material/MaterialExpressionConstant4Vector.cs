@@ -20,8 +20,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddRequiredProperty("Constant", PropertyDataType.Vector4);
-
+            AddOptionalProperty("Constant", PropertyDataType.Vector4);
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
