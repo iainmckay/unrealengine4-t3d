@@ -65,6 +65,7 @@
     <Compile Include="Material\MaterialExpressionConstant2Vector.cs" />
     <Compile Include="Material\MaterialExpressionConstant4Vector.cs" />
     <Compile Include="Material\MaterialExpressionDivide.cs" />
+    <Compile Include="Material\MaterialExpressionFrac.cs" />
     <Compile Include="Material\MaterialExpressionOneMinus.cs" />
     <Compile Include="Material\MaterialExpressionPower.cs" />
     <Compile Include="Material\MaterialExpressionSine.cs" />
