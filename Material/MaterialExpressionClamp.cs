@@ -10,11 +10,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag Min { get; }
         public ParsedPropertyBag Max { get; }
 
-        public MaterialExpressionClamp(string name, ParsedPropertyBag input, ParsedPropertyBag min, ParsedPropertyBag max, int editorX, int editorY) : base(name, editorX, editorY)
+        public float MinDefault { get; }
+        public float MaxDefault { get; }
+
+        public MaterialExpressionClamp(string name, ParsedPropertyBag input, ParsedPropertyBag min, ParsedPropertyBag max, float minDefault, float maxDefault, int editorX, int editorY) : base(name, editorX, editorY)
         {
             Input = input;
             Min = min;
+            MinDefault = minDefault;
             Max = max;
+            MaxDefault = maxDefault;
         }
     }
 
@@ -31,7 +36,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
             AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddOptionalProperty("Max", PropertyDataType.AttributeList);
+            AddOptionalProperty("MaxDefault", PropertyDataType.Float);
             AddOptionalProperty("Min", PropertyDataType.AttributeList);
+            AddOptionalProperty("MinDefault", PropertyDataType.Float);
 
             AddIgnoredProperty("Material");
             AddIgnoredProperty("MaterialExpressionGuid");
@@ -44,6 +51,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Input")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Min") ?? null),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Max") ?? null),
+                ValueUtil.ParseFloat(node.FindPropertyValue("MinDefault") ?? "0"),
+                ValueUtil.ParseFloat(node.FindPropertyValue("MaxDefault") ?? "1"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
             );
