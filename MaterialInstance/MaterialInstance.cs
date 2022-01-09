@@ -31,13 +31,17 @@
         {
             AddRequiredProperty("Parent", PropertyDataType.String);
 
+            AddRequiredAttribute("Name", PropertyDataType.String);
+
             AddOptionalProperty("ScalarParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
             AddOptionalProperty("TextureParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
             AddOptionalProperty("VectorParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
 
+            AddIgnoredProperty("CachedReferencedTextures");
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ParameterStateId");
             AddIgnoredProperty("ReferencedTextureGuids");
+            AddIgnoredProperty("TextureStreamingData");
             AddIgnoredProperty("ThumbnailInfo");
         }
 
