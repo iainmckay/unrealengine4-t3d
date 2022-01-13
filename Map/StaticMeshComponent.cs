@@ -3,24 +3,17 @@ using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Map
 {
-    public class StaticMeshComponent : BaseComponent, ILocation, IRotation, IScale3D
+    public class StaticMeshComponent : BaseComponent
     {
         public ResourceReference StaticMesh { get; }
         public int StaticMeshImportVersion { get; }
         public ResourceReference[] OverrideMaterials { get; }
 
-        public Vector3 Location { get; }
-        public Vector3 Scale3D { get; }
-        public Rotator Rotation { get; }
-        
-        public StaticMeshComponent(string name, ResourceReference archetype, ResourceReference staticMesh, int staticMeshImportVersion, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, ResourceReference[] overrideMaterials, Node[] children)
-            : base(name, archetype, children)
+        public StaticMeshComponent(string name, ResourceReference archetype, ResourceReference staticMesh, int staticMeshImportVersion, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, ResourceReference[] overrideMaterials)
+            : base(name, archetype, relativeLocation, relativeScale3D, relativeRotation, children)
         {
             StaticMesh = staticMesh;
             StaticMeshImportVersion = staticMeshImportVersion;
-            Location = relativeLocation;
-            Scale3D = relativeScale3D;
-            Rotation = relativeRotation;
             OverrideMaterials = overrideMaterials;
         }
     }
@@ -29,16 +22,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
     {
         public override string Class => "/Script/Engine.StaticMeshComponent";
 
-        public StaticMeshComponentProcessor() : base()
+        public StaticMeshComponentProcessor()
         {
             AddRequiredProperty("StaticMesh", PropertyDataType.ResourceReference);
             AddRequiredProperty("StaticMeshImportVersion", PropertyDataType.Integer);
-            AddRequiredProperty("RelativeLocation", PropertyDataType.Vector3);
-            
+
             AddOptionalProperty("OverrideMaterials", PropertyDataType.ResourceReference | PropertyDataType.Array);
-            AddOptionalProperty("RelativeRotation", PropertyDataType.Rotator);
-            AddOptionalProperty("RelativeScale3D", PropertyDataType.Vector3);
-            
+
             AddIgnoredProperty("AssetUserData");
             AddIgnoredProperty("MaterialStreamingRelativeBoxes");
             AddIgnoredProperty("StreamingTextureData");
@@ -56,8 +46,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseVector3(node.FindPropertyValue("RelativeLocation")),
                 ValueUtil.ParseRotator(node.FindPropertyValue("RelativeRotation")),
                 ValueUtil.ParseVector3(node.FindPropertyValue("RelativeScale3D") ?? "(X=1.0,Y=1.0,Z=1.0)"),
-                ValueUtil.ParseResourceReferenceArray(node.FindProperty("OverrideMaterials")?.Elements),
-                children
+                children,
+                ValueUtil.ParseResourceReferenceArray(node.FindProperty("OverrideMaterials")?.Elements)
             );
         }
     }

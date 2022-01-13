@@ -44,6 +44,7 @@
     <Compile Include="Exception\T3DException.cs" />
     <Compile Include="Exception\ValueException.cs" />
     <Compile Include="FunctionReference.cs" />
+    <Compile Include="IEditorPositionable.cs" />
     <Compile Include="Map\BaseActorNodeProcessor.cs" />
     <Compile Include="Map\BaseComponentProcessor.cs" />
     <Compile Include="Map\ILocation.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Material\MaterialExpressionTextureObjectParameter.cs" />
     <Compile Include="Material\MaterialExpressionTextureSample.cs" />
     <Compile Include="Material\MaterialExpressionTime.cs" />
+    <Compile Include="Material\MaterialNode.cs" />
     <Compile Include="Material\VectorConstantNode.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="Material\MaterialDocumentProcessor.cs" />

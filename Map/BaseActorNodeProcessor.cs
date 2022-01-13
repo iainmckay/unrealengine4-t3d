@@ -6,6 +6,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 {
     public abstract class BaseActorNode : Node
     {
+        public string FolderPath { get; }
         public string ActorLabel { get; }
 
         public ResourceReference Archetype { get; }
@@ -14,10 +15,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public BaseComponent RootComponent => Children.First(node => node.Name == RootComponentName) as BaseComponent;
 
-        protected BaseActorNode(string name, string actorLabel, string rootComponentName, ResourceReference archetype, Node[] children = null)
-            : base(name, 0, 0, children)
+        protected BaseActorNode(string name, string actorLabel, string folderPath, string rootComponentName, ResourceReference archetype, Node[] children = null)
+            : base(name, children)
         {
             ActorLabel = actorLabel;
+            FolderPath = folderPath;
             RootComponentName = rootComponentName;
             Archetype = archetype;
         }
@@ -29,15 +31,20 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public BaseActorNodeProcessor()
         {
-            AddRequiredAttribute("Archetype", PropertyDataType.ResourceReference);
             AddRequiredAttribute("Name", PropertyDataType.String);
+            AddRequiredAttribute("Archetype", PropertyDataType.ResourceReference);
+
+            AddRequiredProperty("RootComponent", PropertyDataType.String);
+
+            AddOptionalProperty("ActorLabel", PropertyDataType.String);
+            AddOptionalProperty("FolderPath", PropertyDataType.String);
 
             AddIgnoredAttribute("Class");
         }
 
         public override bool Supports(ParsedNode node)
         {
-            return node.SectionType == "Actor" && this.Class == node.AttributeBag.FindProperty("Class")?.Value;
+            return node.SectionType == "Actor" && Class == node.AttributeBag.FindProperty("Class")?.Value;
         }
     }
 }

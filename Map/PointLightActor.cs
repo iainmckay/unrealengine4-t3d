@@ -6,17 +6,15 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 {
     public class PointLightActor : BaseActorNode
     {
-        public string FolderPath { get; }
         public string PointLightComponentName { get; }
         public string LightComponentName { get; }
 
         public PointLightComponent PointLightComponent => Children.First(node => node.Name == PointLightComponentName) as PointLightComponent;
         public PointLightComponent LightComponent => PointLightComponent;
 
-        public PointLightActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string pointLightComponentName, string lightComponentName, string rootComponentName, Node[] children)
-            : base(name, actorLabel, rootComponentName, archetype, children)
+        public PointLightActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string pointLightComponentName, string lightComponentName)
+            : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
         {
-            FolderPath = folderPath;
             PointLightComponentName = pointLightComponentName;
             LightComponentName = lightComponentName;
         }
@@ -28,12 +26,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public PointLightActorProcessor()
         {
-            AddRequiredProperty("ActorLabel", PropertyDataType.String);
             AddRequiredProperty("LightComponent", PropertyDataType.String);
             AddRequiredProperty("PointLightComponent", PropertyDataType.String);
-            AddRequiredProperty("RootComponent", PropertyDataType.String);
-
-            AddOptionalProperty("FolderPath", PropertyDataType.String);
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
@@ -43,10 +37,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                 node.FindPropertyValue("ActorLabel"),
                 node.FindPropertyValue("FolderPath"),
-                node.FindPropertyValue("PointLightComponent"),
-                node.FindPropertyValue("LightComponent"),
                 node.FindPropertyValue("RootComponent"),
-                children
+                children,
+                node.FindPropertyValue("PointLightComponent"),
+                node.FindPropertyValue("LightComponent")
             );
         }
     }

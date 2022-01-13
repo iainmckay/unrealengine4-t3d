@@ -1,15 +1,14 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Common;
-using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class MaterialExpressionConstant2Vector : Node
+    public class MaterialExpressionConstant2Vector : MaterialNode
     {
         public float R { get; }
         public float G { get; }
 
-        public MaterialExpressionConstant2Vector(string name, float r, float g, int editorX, int editorY)
+        public MaterialExpressionConstant2Vector(string name, int editorX, int editorY, float r, float g)
             : base(name, editorX, editorY)
         {
             R = r;
@@ -17,31 +16,24 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionConstant2VectorProcessor : ObjectNodeProcessor
+    public class MaterialExpressionConstant2VectorProcessor : MaterialNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionConstant2Vector";
 
         public MaterialExpressionConstant2VectorProcessor()
         {
-            AddRequiredAttribute("Name", PropertyDataType.String);
-
             AddOptionalProperty("G", PropertyDataType.Float);
-            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddOptionalProperty("R", PropertyDataType.Float);
-
-            AddIgnoredProperty("Material");
-            AddIgnoredProperty("MaterialExpressionGuid");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
             return new MaterialExpressionConstant2Vector(
                 node.FindAttributeValue("Name"),
-                ValueUtil.ParseFloat(node.FindPropertyValue("R") ?? "0.0"),
-                ValueUtil.ParseFloat(node.FindPropertyValue("G") ?? "0.0"),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
+                ValueUtil.ParseFloat(node.FindPropertyValue("R")),
+                ValueUtil.ParseFloat(node.FindPropertyValue("G"))
             );
         }
     }

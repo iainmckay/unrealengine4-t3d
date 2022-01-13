@@ -1,5 +1,4 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Common;
-using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
@@ -9,44 +8,38 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag A { get; }
         public ParsedPropertyBag B { get; }
 
-        public MaterialExpressionStaticSwitchParameter(string name, string parameterName, bool defaultValue, ParsedPropertyBag a, ParsedPropertyBag b, int editorX, int editorY)
-            : base(name, parameterName, defaultValue, editorX, editorY)
+        public MaterialExpressionStaticSwitchParameter(string name, int editorX, int editorY, string parameterName, bool defaultValue, ParsedPropertyBag a, ParsedPropertyBag b)
+            : base(name, editorX, editorY, parameterName, defaultValue)
         {
             A = a;
             B = b;
         }
     }
 
-    public class MaterialExpressionStaticSwitchParameterProcessor : ObjectNodeProcessor
+    public class MaterialExpressionStaticSwitchParameterProcessor : MaterialNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionStaticSwitchParameter";
 
         public MaterialExpressionStaticSwitchParameterProcessor()
         {
-            AddRequiredAttribute("Name", PropertyDataType.String);
-
             AddOptionalProperty("A", PropertyDataType.AttributeList);
             AddOptionalProperty("B", PropertyDataType.AttributeList);
             AddOptionalProperty("DefaultValue", PropertyDataType.Boolean);
-            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddOptionalProperty("ParameterName", PropertyDataType.String);
 
             AddIgnoredProperty("ExpressionGUID");
-            AddIgnoredProperty("Material");
-            AddIgnoredProperty("MaterialExpressionGuid");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
             return new MaterialExpressionStaticSwitchParameter(
                 node.FindAttributeValue("Name"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
                 node.FindPropertyValue("ParameterName") ?? "Param",
-                ValueUtil.ParseBoolean(node.FindPropertyValue("DefaultValue") ?? "False"),
+                ValueUtil.ParseBoolean(node.FindPropertyValue("DefaultValue")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("A")),
-                ValueUtil.ParseAttributeList(node.FindPropertyValue("B")),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("B"))
             );
         }
     }

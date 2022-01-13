@@ -7,7 +7,7 @@ namespace JollySamurai.UnrealEngine4.T3D.MaterialInstance
     {
         public MaterialInstanceDocumentProcessor()
         {
-            AddNodeProcessor(new ObjectInstanceProcessor());
+            AddNodeProcessor(new MaterialInstanceProcessor());
         }
 
         protected override bool IsIgnoredNode(ParsedNode parsedNode)

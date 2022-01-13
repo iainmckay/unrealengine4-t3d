@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using JollySamurai.UnrealEngine4.T3D.Common;
 using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class Material : Node
+    public class Material : MaterialNode
     {
         public ParsedPropertyBag AmbientOcclusion { get; }
         public ShadingModel ShadingModel { get; }
@@ -26,7 +25,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public int TextureStreamingDataVersion { get; }
         public ParsedPropertyBag[] TextureStreamingData { get; }
 
-        public Material(Node[] children, string name, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, int editorX, int editorY)
+        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData)
             : base(name, editorX, editorY, children)
         {
             AmbientOcclusion = ambientOcclusion;
@@ -49,26 +48,22 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             TextureStreamingData = textureStreamingData;
         }
 
-        public Node ResolveExpressionReference(ExpressionReference reference)
+        public MaterialNode ResolveExpressionReference(ExpressionReference reference)
         {
             if (null == reference) {
                 return null;
             }
 
-            return Children.SingleOrDefault(node => node.Name == reference.NodeName && node.IsClassOf(reference.ClassName));
+            return Children.SingleOrDefault(node => node.Name == reference.NodeName && node.IsClassOf(reference.ClassName)) as MaterialNode;
         }
     }
 
-    public class MaterialProcessor : ObjectNodeProcessor
+    public class MaterialProcessor : MaterialNodeProcessor
     {
-        public override string Class {
-            get { return "/Script/Engine.Material"; }
-        }
+        public override string Class => "/Script/Engine.Material";
 
-        public MaterialProcessor() : base()
+        public MaterialProcessor()
         {
-            AddRequiredAttribute("Name", PropertyDataType.String);
-
             AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
 
             AddOptionalProperty("AmbientOcclusion", PropertyDataType.AttributeList);
@@ -115,14 +110,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public override Node Convert(ParsedNode node, Node[] children)
         {
             return new Material(
-                children,
                 node.FindAttributeValue("Name"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX")),
+                children,
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("AmbientOcclusion")),
                 ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
                 ValueUtil.ParseBlendMode(node.FindPropertyValue("BlendMode")),
                 ValueUtil.ParseMaterialDomain(node.FindPropertyValue("MaterialDomain")),
                 ValueUtil.ParseTranslucencyLightingMode(node.FindPropertyValue("TranslucencyLightingMode")),
-                ValueUtil.ParseBoolean(node.FindPropertyValue("TwoSided") ?? "False"),
+                ValueUtil.ParseBoolean(node.FindPropertyValue("TwoSided")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("BaseColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Metallic")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Normal")),
@@ -134,9 +131,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions")?.Elements),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments")?.Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("TextureStreamingDataVersion") ?? "1"),
-                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureStreamingData")?.Elements),
-                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0"),
-                ValueUtil.ParseInteger(node.FindPropertyValue("EditorX") ?? "0")
+                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureStreamingData")?.Elements)
             );
         }
     }

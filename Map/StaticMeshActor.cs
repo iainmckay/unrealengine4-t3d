@@ -6,15 +6,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 {
     public class StaticMeshActor : BaseActorNode
     {
-        public string FolderPath { get; }
         public string StaticMeshComponentName { get; }
 
         public StaticMeshComponent StaticMeshComponent => Children.First(node => node.Name == StaticMeshComponentName) as StaticMeshComponent;
 
-        public StaticMeshActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string staticMeshComponentName, string rootComponentName, Node[] children)
-            : base(name, actorLabel, rootComponentName, archetype, children)
+        public StaticMeshActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string staticMeshComponentName)
+            : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
         {
-            FolderPath = folderPath;
             StaticMeshComponentName = staticMeshComponentName;
         }
     }
@@ -25,11 +23,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public StaticMeshActorProcessor()
         {
-            AddRequiredProperty("ActorLabel", PropertyDataType.String);
             AddRequiredProperty("StaticMeshComponent", PropertyDataType.String);
-            AddRequiredProperty("RootComponent", PropertyDataType.String);
-
-            AddOptionalProperty("FolderPath", PropertyDataType.String);
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
@@ -39,9 +33,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                 node.FindPropertyValue("ActorLabel"),
                 node.FindPropertyValue("FolderPath"),
-                node.FindPropertyValue("StaticMeshComponent"),
                 node.FindPropertyValue("RootComponent"),
-                children
+                children,
+                node.FindPropertyValue("StaticMeshComponent")
             );
         }
     }

@@ -10,7 +10,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public Level[] Levels => Children.OfType<Level>().ToArray();
 
         public Map(string name, Node[] children)
-            : base(name, 0, 0, children)
+            : base(name, children)
         {
         }
     }
@@ -18,7 +18,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
     public class MapProcessor : NodeProcessor
     {
         public MapProcessor()
-            : base()
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
         }

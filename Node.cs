@@ -4,16 +4,11 @@
     {
         public string Name { get; }
 
-        public int EditorX { get; }
-        public int EditorY { get; }
-
         public Node[] Children { get; }
 
-        public Node(string name, int editorX, int editorY, Node[] children = null)
+        public Node(string name, Node[] children = null)
         {
             Name = name;
-            EditorX = editorX;
-            EditorY = editorY;
             Children = children;
         }
 

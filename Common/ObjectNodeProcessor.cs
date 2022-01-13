@@ -8,8 +8,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Common
         public abstract string Class { get; }
 
         public ObjectNodeProcessor()
-            : base()
         {
+            AddRequiredAttribute("Name", PropertyDataType.String);
+
             AddIgnoredAttribute("Class");
         }
 

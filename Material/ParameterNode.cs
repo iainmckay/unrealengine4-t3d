@@ -4,17 +4,19 @@
     {
         public T DefaultValue { get; }
 
-        public ParameterNode(string name, string parameterName, T defaultValue, int editorX, int editorY) : base(name, parameterName, editorX, editorY)
+        public ParameterNode(string name, int editorX, int editorY, string parameterName, T defaultValue)
+            : base(name, editorX, editorY, parameterName)
         {
             DefaultValue = defaultValue;
         }
     }
 
-    public abstract class ParameterNode : Node
+    public abstract class ParameterNode : MaterialNode
     {
         public string ParameterName { get; }
         
-        public ParameterNode(string name, string parameterName, int editorX, int editorY) : base(name, editorX, editorY)
+        public ParameterNode(string name, int editorX, int editorY, string parameterName)
+            : base(name, editorX, editorY)
         {
             ParameterName = parameterName;
         }

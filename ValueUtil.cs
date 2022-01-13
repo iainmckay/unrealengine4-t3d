@@ -18,6 +18,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static bool ParseBoolean(string value)
         {
+            if (null == value) {
+                return false;
+            }
+
             return Boolean.Parse(value);
         }
 
@@ -37,6 +41,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static int ParseInteger(string value)
         {
+            if (null == value) {
+                return 0;
+            }
+
             return int.Parse(value);
         }
 
@@ -49,6 +57,10 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static float ParseFloat(string value)
         {
+            if (null == value) {
+                return 0;
+            }
+
             return float.Parse(value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign);
         }
 

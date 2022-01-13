@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
-using JollySamurai.UnrealEngine4.T3D.Common;
 using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class MaterialExpressionMaterialFunctionCall : Node
+    public class MaterialExpressionMaterialFunctionCall : MaterialNode
     {
         public ExpressionReference MaterialFunction { get; }
         public ParsedPropertyBag[] FunctionInputs { get; }
 
-        public MaterialExpressionMaterialFunctionCall(string name, ExpressionReference materialFunction, ParsedPropertyBag[] functionInputs, int editorX, int editorY)
+        public MaterialExpressionMaterialFunctionCall(string name, int editorX, int editorY, ExpressionReference materialFunction, ParsedPropertyBag[] functionInputs)
             : base(name, editorX, editorY)
         {
             MaterialFunction = materialFunction;
@@ -19,23 +17,17 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionObjectFunctionCallProcessor : ObjectNodeProcessor
+    public class MaterialExpressionObjectFunctionCallProcessor : MaterialNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionMaterialFunctionCall";
 
         public MaterialExpressionObjectFunctionCallProcessor()
         {
-            AddRequiredAttribute("Name", PropertyDataType.String);
-
             AddRequiredProperty("MaterialFunction", PropertyDataType.ExpressionReference);
 
             AddOptionalProperty("FunctionInputs", PropertyDataType.AttributeList | PropertyDataType.Array);
-            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
 
             AddIgnoredProperty("FunctionOutputs");
-            AddIgnoredProperty("Material");
-            AddIgnoredProperty("MaterialExpressionGuid");
             AddIgnoredProperty("Outputs");
         }
 
@@ -47,7 +39,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 functionInputList.Add(ValueUtil.ParseAttributeList(parsedProperty.Value));
             }
 
-            return new MaterialExpressionMaterialFunctionCall(node.FindAttributeValue("Name"), ValueUtil.ParseExpressionReference(node.FindPropertyValue("MaterialFunction")), functionInputList.ToArray(), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"), ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0"));
+            return new MaterialExpressionMaterialFunctionCall(node.FindAttributeValue("Name"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
+                ValueUtil.ParseExpressionReference(node.FindPropertyValue("MaterialFunction")),
+                functionInputList.ToArray()
+            );
         }
     }
 }

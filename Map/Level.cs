@@ -6,7 +6,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
     public class Level : Node
     {
         public Level(string name, Node[] children)
-            : base(name, 0, 0, children)
+            : base(name, children)
         {
         }
     }

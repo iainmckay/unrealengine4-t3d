@@ -3,14 +3,20 @@ using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Map
 {
-    public abstract class BaseComponent : Node
+    public abstract class BaseComponent : Node, ILocation, IRotation, IScale3D
     {
         public ResourceReference Archetype { get; }
+        public Vector3 Location { get; }
+        public Vector3 Scale3D { get; }
+        public Rotator Rotation { get; }
 
-        protected BaseComponent(string name, ResourceReference archetype, Node[] children = null)
-            : base(name, 0, 0, children)
+        protected BaseComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Vector3 relativeScale3D, Rotator relativeRotation, Node[] children = null)
+            : base(name, children)
         {
             Archetype = archetype;
+            Location = relativeLocation;
+            Scale3D = relativeScale3D;
+            Rotation = relativeRotation;
         }
     }
 
@@ -19,9 +25,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public BaseComponentProcessor()
         {
             AddRequiredAttribute("Archetype", PropertyDataType.ResourceReference);
-            AddRequiredAttribute("Name", PropertyDataType.String);
 
-            AddIgnoredAttribute("Class");
+            AddOptionalProperty("RelativeLocation", PropertyDataType.Vector3);
+            AddOptionalProperty("RelativeRotation", PropertyDataType.Rotator);
+            AddOptionalProperty("RelativeScale3D", PropertyDataType.Vector3);
         }
     }
 }

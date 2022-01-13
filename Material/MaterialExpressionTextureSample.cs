@@ -1,10 +1,9 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Common;
-using JollySamurai.UnrealEngine4.T3D.Parser;
+﻿using JollySamurai.UnrealEngine4.T3D.Parser;
 using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
-    public class MaterialExpressionTextureSample : Node
+    public class MaterialExpressionTextureSample : MaterialNode
     {
         public ParsedPropertyBag Coordinates { get; }
 
@@ -12,7 +11,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag TextureObject { get; }
         public SamplerType SamplerType { get; }
 
-        public MaterialExpressionTextureSample(string name, ParsedPropertyBag coordinates, ResourceReference texture, ParsedPropertyBag textureObject, SamplerType samplerType, int editorX, int editorY)
+        public MaterialExpressionTextureSample(string name, int editorX, int editorY, ParsedPropertyBag coordinates, ResourceReference texture, ParsedPropertyBag textureObject, SamplerType samplerType)
             : base(name, editorX, editorY)
         {
             Coordinates = coordinates;
@@ -22,35 +21,28 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionTextureSampleProcessor : ObjectNodeProcessor
+    public class MaterialExpressionTextureSampleProcessor : MaterialNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionTextureSample";
 
         public MaterialExpressionTextureSampleProcessor()
         {
-            AddRequiredAttribute("Name", PropertyDataType.String);
-
             AddOptionalProperty("Coordinates", PropertyDataType.AttributeList);
-            AddOptionalProperty("MaterialExpressionEditorX", PropertyDataType.Integer);
-            AddOptionalProperty("MaterialExpressionEditorY", PropertyDataType.Integer);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
             AddOptionalProperty("Texture", PropertyDataType.ResourceReference);
             AddOptionalProperty("TextureObject", PropertyDataType.AttributeList);
-
-            AddIgnoredProperty("Material");
-            AddIgnoredProperty("MaterialExpressionGuid");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
             return new MaterialExpressionTextureSample(
                 node.FindAttributeValue("Name"),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
+                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")),
                 ValueUtil.ParseResourceReference(node.FindPropertyValue("Texture")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("TextureObject")),
-                ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType")),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX") ?? "0"),
-                ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY") ?? "0")
+                ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType"))
             );
         }
     }

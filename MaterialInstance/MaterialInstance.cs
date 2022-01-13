@@ -12,8 +12,8 @@
         public ParsedPropertyBag[] TextureParameters { get; }
         public ParsedPropertyBag[] VectorParameters { get; }
 
-        public MaterialInstance(Node[] children, string name, ParsedPropertyBag[] scalarParameters, ParsedPropertyBag[] textureParameters, ParsedPropertyBag[] vectorParameters)
-            : base(name, -1, -1, children)
+        public MaterialInstance(string name, Node[] children, ParsedPropertyBag[] scalarParameters, ParsedPropertyBag[] textureParameters, ParsedPropertyBag[] vectorParameters)
+            : base(name, children)
         {
             ScalarParameters = scalarParameters;
             TextureParameters = textureParameters;
@@ -21,17 +21,15 @@
         }
     }
 
-    public class ObjectInstanceProcessor : ObjectNodeProcessor
+    public class MaterialInstanceProcessor : ObjectNodeProcessor
     {
         public override string Class {
             get { return "/Script/Engine.MaterialInstanceConstant"; }
         }
 
-        public ObjectInstanceProcessor() : base()
+        public MaterialInstanceProcessor()
         {
             AddRequiredProperty("Parent", PropertyDataType.String);
-
-            AddRequiredAttribute("Name", PropertyDataType.String);
 
             AddOptionalProperty("ScalarParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
             AddOptionalProperty("TextureParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
@@ -50,8 +48,8 @@
             ParsedProperty expressionList = node.FindProperty("Expressions");
 
             return new MaterialInstance(
-                children,
                 node.FindAttributeValue("Name"),
+                children,
                 ValueUtil.ParseAttributeListArray(node.FindProperty("ScalarParameterValues")?.Elements),
                 ValueUtil.ParseAttributeListArray(node.FindProperty("TextureParameterValues")?.Elements),
                 ValueUtil.ParseAttributeListArray(node.FindProperty("VectorParameterValues")?.Elements)
