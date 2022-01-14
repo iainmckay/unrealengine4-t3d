@@ -47,6 +47,8 @@
     <Compile Include="IEditorPositionable.cs" />
     <Compile Include="Map\BaseActorNodeProcessor.cs" />
     <Compile Include="Map\BaseComponentProcessor.cs" />
+    <Compile Include="Map\DecalActor.cs" />
+    <Compile Include="Map\DecalComponent.cs" />
     <Compile Include="Map\ILocation.cs" />
     <Compile Include="Map\IMobility.cs" />
     <Compile Include="Map\IRotation.cs" />
