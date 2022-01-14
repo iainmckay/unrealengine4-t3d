@@ -18,6 +18,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddNodeProcessor(new DecalComponentProcessor());
             AddNodeProcessor(new PointLightActorProcessor());
             AddNodeProcessor(new PointLightComponentProcessor());
+            AddNodeProcessor(new SphereReflectionCaptureActorProcessor());
+            AddNodeProcessor(new SphereReflectionCaptureComponentProcessor());
             AddNodeProcessor(new SpotLightActorProcessor());
             AddNodeProcessor(new SpotLightComponentProcessor());
             AddNodeProcessor(new StaticMeshActorProcessor());

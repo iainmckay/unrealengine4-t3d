@@ -408,15 +408,39 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static Mobility ParseMobility(string value)
         {
-            if (value == null || value == "Stationary") {
+            if (value == "Stationary") {
                 return Mobility.Stationary;
             } else if (value == "Movable") {
                 return Mobility.Movable;
-            } else if (value == "Static") {
+            } else if (value == null || value == "Static") {
                 return Mobility.Static;
             }
 
             throw new ValueException("Unexpected mobility mode: " + value);
+        }
+
+        public static ReflectionSourceType TryParseReflectionSourceType(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseReflectionSourceType(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return ReflectionSourceType.CapturedScene;
+        }
+
+        public static ReflectionSourceType ParseReflectionSourceType(string value)
+        {
+            if (value == null || value == "CapturedScene") {
+                return ReflectionSourceType.CapturedScene;
+            } else if (value == "SpecifiedCubemap") {
+                return ReflectionSourceType.SpecifiedCubemap;
+            }
+
+            throw new ValueException("Unexpected reflection source type: " + value);
         }
 
         public static Vector3 TryParseVector3(string value, out bool successOrFailure)
