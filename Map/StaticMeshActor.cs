@@ -10,8 +10,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public StaticMeshComponent StaticMeshComponent => Children.First(node => node.Name == StaticMeshComponentName) as StaticMeshComponent;
 
-        public StaticMeshActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string staticMeshComponentName)
-            : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
+        public StaticMeshActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string staticMeshComponentName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
         {
             StaticMeshComponentName = staticMeshComponentName;
         }
@@ -32,6 +32,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                 node.FindPropertyValue("ActorLabel"),
+                ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
                 children,

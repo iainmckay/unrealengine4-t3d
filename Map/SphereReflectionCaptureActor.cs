@@ -10,8 +10,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
          public SphereReflectionCaptureComponent CaptureComponent => Children.First(node => node.Name == CaptureComponentName) as SphereReflectionCaptureComponent;
 
-         public SphereReflectionCaptureActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string captureComponentName)
-             : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
+         public SphereReflectionCaptureActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string captureComponentName)
+             : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
          {
              CaptureComponentName = captureComponentName;
          }
@@ -38,6 +38,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                  node.FindAttributeValue("Name"),
                  ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                  node.FindPropertyValue("ActorLabel"),
+                 ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                  node.FindPropertyValue("FolderPath"),
                  node.FindPropertyValue("RootComponent"),
                  children,

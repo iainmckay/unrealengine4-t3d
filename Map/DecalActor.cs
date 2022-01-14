@@ -10,8 +10,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public DecalComponent DecalComponent => Children.First(node => node.Name == DecalComponentName) as DecalComponent;
 
-        public DecalActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string decalComponentName)
-            : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
+        public DecalActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string decalComponentName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
         {
             DecalComponentName = decalComponentName;
         }
@@ -35,6 +35,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                 node.FindPropertyValue("ActorLabel"),
+                ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
                 children,

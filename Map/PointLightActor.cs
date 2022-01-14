@@ -12,8 +12,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public PointLightComponent PointLightComponent => Children.First(node => node.Name == PointLightComponentName) as PointLightComponent;
         public PointLightComponent LightComponent => PointLightComponent;
 
-        public PointLightActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string pointLightComponentName, string lightComponentName)
-            : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
+        public PointLightActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string pointLightComponentName, string lightComponentName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
         {
             PointLightComponentName = pointLightComponentName;
             LightComponentName = lightComponentName;
@@ -36,6 +36,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                 node.FindPropertyValue("ActorLabel"),
+                ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
                 children,

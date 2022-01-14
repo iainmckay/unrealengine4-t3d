@@ -121,6 +121,7 @@
     <Compile Include="ShadingModel.cs" />
     <Compile Include="ResourceReference.cs" />
     <Compile Include="ExpressionReference.cs" />
+    <Compile Include="SpawnCollisionHandlingMethod.cs" />
     <Compile Include="TranslucencyLightingMode.cs" />
     <Compile Include="ValueUtil.cs" />
     <Compile Include="Vector3.cs" />

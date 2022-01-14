@@ -443,6 +443,34 @@ namespace JollySamurai.UnrealEngine4.T3D
             throw new ValueException("Unexpected reflection source type: " + value);
         }
 
+        public static SpawnCollisionHandlingMethod TryParseSpawnCollisionHandlingMethod(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseSpawnCollisionHandlingMethod(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return SpawnCollisionHandlingMethod.AlwaysSpawn;
+        }
+
+        public static SpawnCollisionHandlingMethod ParseSpawnCollisionHandlingMethod(string value)
+        {
+            if (value == null || value == "AlwaysSpawn") {
+                return SpawnCollisionHandlingMethod.AlwaysSpawn;
+            } else if (value == "AdjustIfPossibleButAlwaysSpawn") {
+                return SpawnCollisionHandlingMethod.AdjustIfPossibleButAlwaysSpawn;
+            } else if (value == "AdjustIfPossibleButDontSpawnIfColliding") {
+                return SpawnCollisionHandlingMethod.AdjustIfPossibleButDontSpawnIfColliding;
+            } else if (value == "DontSpawnIfColliding") {
+                return SpawnCollisionHandlingMethod.DontSpawnIfColliding;
+            }
+
+            throw new ValueException("Unexpected spawn collision handling method: " + value);
+        }
+
         public static Vector3 TryParseVector3(string value, out bool successOrFailure)
         {
             try {

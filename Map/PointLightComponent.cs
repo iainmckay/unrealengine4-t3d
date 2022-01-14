@@ -13,8 +13,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public float SpecularScale { get; }
         public float SourceRadius { get; }
         public float SourceLength { get; }
-        
-        public PointLightComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, float attenuationRadius, float intensity, Vector4 lightColor, Mobility mobility, bool castShadows, float specularScale, float sourceRadius, float sourceLength)
+        public float SoftSourceRadius { get; }
+
+        public PointLightComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, float attenuationRadius, float intensity, Vector4 lightColor, Mobility mobility, bool castShadows, float specularScale, float sourceRadius, float sourceLength, float softSourceRadius)
             : base(name, archetype, relativeLocation, relativeScale3D, relativeRotation, children)
         {
             AttenuationRadius = attenuationRadius;
@@ -25,6 +26,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             SpecularScale = specularScale;
             SourceRadius = sourceRadius;
             SourceLength = sourceLength;
+            SoftSourceRadius = softSourceRadius;
         }
     }
 
@@ -42,6 +44,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddOptionalProperty("SpecularScale", PropertyDataType.Float);
             AddOptionalProperty("SourceRadius", PropertyDataType.Float);
             AddOptionalProperty("SourceLength", PropertyDataType.Float);
+            AddOptionalProperty("SoftSourceRadius", PropertyDataType.Float);
 
             AddIgnoredProperty("LightGuid");
         }
@@ -62,7 +65,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseBoolean(node.FindPropertyValue("CastShadows") ?? "True"),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SpecularScale") ?? "1.0"),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SourceRadius")),
-                ValueUtil.ParseFloat(node.FindPropertyValue("SourceLength"))
+                ValueUtil.ParseFloat(node.FindPropertyValue("SourceLength")),
+                ValueUtil.ParseFloat(node.FindPropertyValue("SoftSourceRadius"))
             );
         }
     }

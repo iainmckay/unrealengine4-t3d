@@ -12,8 +12,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public SpotLightComponent SpotLightComponent => Children.First(node => node.Name == SpotLightComponentName) as SpotLightComponent;
         public SpotLightComponent LightComponent => SpotLightComponent;
 
-        public SpotLightActor(string name, ResourceReference archetype, string actorLabel, string folderPath, string rootComponentName, Node[] children, string spotLightComponentName, string lightComponentName)
-            : base(name, actorLabel, folderPath, rootComponentName, archetype, children)
+        public SpotLightActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string spotLightComponentName, string lightComponentName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
         {
             SpotLightComponentName = spotLightComponentName;
             LightComponentName = lightComponentName;
@@ -28,6 +28,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         {
             AddRequiredProperty("LightComponent", PropertyDataType.String);
             AddRequiredProperty("SpotLightComponent", PropertyDataType.String);
+
+            AddIgnoredProperty("ArrowComponent");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)
@@ -36,6 +38,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseResourceReference(node.FindAttributeValue("Archetype")),
                 node.FindPropertyValue("ActorLabel"),
+                ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
                 children,

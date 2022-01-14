@@ -8,6 +8,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
     {
         private readonly string[] IgnoredNodes = {
             "/Script/DatasmithContent.DatasmithAssetUserData",
+            "/Script/Engine.ArrowComponent",
+            "/Script/Engine.BillboardComponent",
+            "/Script/Engine.DrawSphereComponent",
+            "/Script/NavigationSystem.AbstractNavData"
         };
         
         public MapDocumentProcessor()
