@@ -3,7 +3,7 @@ using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Map
 {
-    public class PointLightComponent : BaseComponent
+    public class PointLightComponent : BaseComponent, IMobility
     {
         public float AttenuationRadius { get; }
         public float Intensity { get; }

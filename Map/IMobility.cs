@@ -1,7 +1,7 @@
 ﻿namespace JollySamurai.UnrealEngine4.T3D.Map
 {
-    public interface IRotation
+    public interface IMobility
     {
-        Rotator Rotation { get; }
+        Mobility Mobility { get; }
     }
 }

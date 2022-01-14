@@ -3,18 +3,20 @@ using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Map
 {
-    public class StaticMeshComponent : BaseComponent
+    public class StaticMeshComponent : BaseComponent, IMobility
     {
         public ResourceReference StaticMesh { get; }
         public int StaticMeshImportVersion { get; }
         public ResourceReference[] OverrideMaterials { get; }
+        public Mobility Mobility { get; }
 
-        public StaticMeshComponent(string name, ResourceReference archetype, ResourceReference staticMesh, int staticMeshImportVersion, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, ResourceReference[] overrideMaterials)
+        public StaticMeshComponent(string name, ResourceReference archetype, ResourceReference staticMesh, int staticMeshImportVersion, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, ResourceReference[] overrideMaterials, Mobility mobility)
             : base(name, archetype, relativeLocation, relativeScale3D, relativeRotation, children)
         {
             StaticMesh = staticMesh;
             StaticMeshImportVersion = staticMeshImportVersion;
             OverrideMaterials = overrideMaterials;
+            Mobility = mobility;
         }
     }
 
@@ -27,6 +29,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddRequiredProperty("StaticMesh", PropertyDataType.ResourceReference);
             AddRequiredProperty("StaticMeshImportVersion", PropertyDataType.Integer);
 
+            AddOptionalProperty("Mobility", PropertyDataType.String);
             AddOptionalProperty("OverrideMaterials", PropertyDataType.ResourceReference | PropertyDataType.Array);
 
             AddIgnoredProperty("AssetUserData");
@@ -47,7 +50,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseRotator(node.FindPropertyValue("RelativeRotation")),
                 ValueUtil.ParseVector3(node.FindPropertyValue("RelativeScale3D") ?? "(X=1.0,Y=1.0,Z=1.0)"),
                 children,
-                ValueUtil.ParseResourceReferenceArray(node.FindProperty("OverrideMaterials")?.Elements)
+                ValueUtil.ParseResourceReferenceArray(node.FindProperty("OverrideMaterials")?.Elements),
+                ValueUtil.ParseMobility(node.FindPropertyValue("Mobility"))
             );
         }
     }
