@@ -1,6 +1,4 @@
-﻿using JollySamurai.UnrealEngine4.T3D.Parser;
-
-namespace JollySamurai.UnrealEngine4.T3D
+﻿namespace JollySamurai.UnrealEngine4.T3D
 {
     public class ExpressionReference
     {

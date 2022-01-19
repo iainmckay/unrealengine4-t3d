@@ -5,7 +5,7 @@
         public ParsedNode RootNode { get; }
         public string FileName { get; }
 
-        private ParsedDocument(string fileName, ParsedNode rootNode)
+        public ParsedDocument(string fileName, ParsedNode rootNode)
         {
             FileName = fileName;
             RootNode = rootNode;

@@ -11,12 +11,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public Mobility Mobility { get; }
         public bool CastShadows { get; }
         public float SpecularScale { get; }
+        public float SoftSourceRadius { get; }
         public float SourceRadius { get; }
         public float SourceLength { get; }
         public float InnerConeAngle { get; }
         public float OuterConeAngle { get; }
-        
-        public SpotLightComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, float attenuationRadius, float intensity, Vector4 lightColor, Mobility mobility, bool castShadows, float specularScale, float sourceRadius, float sourceLength, float innerConeAngle, float outerConeAngle)
+        public ResourceReference LightFunctionReference { get; }
+
+        public SpotLightComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, float attenuationRadius, float intensity, Vector4 lightColor, Mobility mobility, bool castShadows, float specularScale, float softSourceRadius, float sourceRadius, float sourceLength, float innerConeAngle, float outerConeAngle, ResourceReference lightFunctionReference)
             : base(name, archetype, relativeLocation, relativeScale3D, relativeRotation, children)
         {
             AttenuationRadius = attenuationRadius;
@@ -25,10 +27,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             Mobility = mobility;
             CastShadows = castShadows;
             SpecularScale = specularScale;
+            SoftSourceRadius = softSourceRadius;
             SourceRadius = sourceRadius;
             SourceLength = sourceLength;
             InnerConeAngle = innerConeAngle;
             OuterConeAngle = outerConeAngle;
+            LightFunctionReference = lightFunctionReference;
         }
     }
 
@@ -43,9 +47,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddOptionalProperty("InnerConeAngle", PropertyDataType.Float);
             AddOptionalProperty("Intensity", PropertyDataType.Float);
             AddOptionalProperty("LightColor", PropertyDataType.Vector4);
+            AddOptionalProperty("LightFunctionMaterial", PropertyDataType.ResourceReference);
             AddOptionalProperty("Mobility", PropertyDataType.Mobility);
             AddOptionalProperty("OuterConeAngle", PropertyDataType.Float);
             AddOptionalProperty("SpecularScale", PropertyDataType.Float);
+            AddOptionalProperty("SoftSourceRadius", PropertyDataType.Float);
             AddOptionalProperty("SourceRadius", PropertyDataType.Float);
             AddOptionalProperty("SourceLength", PropertyDataType.Float);
 
@@ -67,10 +73,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseMobility(node.FindPropertyValue("Mobility")),
                 ValueUtil.ParseBoolean(node.FindPropertyValue("CastShadows") ?? "True"),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SpecularScale") ?? "1.0"),
+                ValueUtil.ParseFloat(node.FindPropertyValue("SoftSourceRadius")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SourceRadius")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SourceLength")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("InnerConeAngle")),
-                ValueUtil.ParseFloat(node.FindPropertyValue("OuterConeAngle") ?? "44.0")
+                ValueUtil.ParseFloat(node.FindPropertyValue("OuterConeAngle") ?? "44.0"),
+                ValueUtil.ParseResourceReference(node.FindPropertyValue("LightFunctionMaterial"))
             );
         }
     }

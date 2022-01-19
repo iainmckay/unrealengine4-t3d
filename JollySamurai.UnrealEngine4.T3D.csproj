@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlendMode.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="Common\ObjectNodeProcessor.cs" />
     <Compile Include="Exception\ParserException.cs" />
     <Compile Include="Exception\T3DException.cs" />
@@ -49,6 +50,8 @@
     <Compile Include="Map\BaseComponentProcessor.cs" />
     <Compile Include="Map\DecalActor.cs" />
     <Compile Include="Map\DecalComponent.cs" />
+    <Compile Include="Map\ExponentialHeightFog.cs" />
+    <Compile Include="Map\ExponentialHeightFogComponent.cs" />
     <Compile Include="Map\ILocation.cs" />
     <Compile Include="Map\IMobility.cs" />
     <Compile Include="Map\IRotation.cs" />
@@ -58,6 +61,9 @@
     <Compile Include="Map\MapDocumentProcessor.cs" />
     <Compile Include="Map\PointLightActor.cs" />
     <Compile Include="Map\PointLightComponent.cs" />
+    <Compile Include="Map\PostProcessingVolume.cs" />
+    <Compile Include="Map\SkyLight.cs" />
+    <Compile Include="Map\SkyLightComponent.cs" />
     <Compile Include="Map\SphereReflectionCaptureActor.cs" />
     <Compile Include="Map\SphereReflectionCaptureComponent.cs" />
     <Compile Include="Map\SpotLightActor.cs" />
@@ -110,6 +116,7 @@
     <Compile Include="Parser\ParsedPropertyBag.cs" />
     <Compile Include="Parser\DocumentParser.cs" />
     <Compile Include="Processor\DocumentProcessor.cs" />
+    <Compile Include="Processor\GenericDocumentProcessor.cs" />
     <Compile Include="Processor\NodeProcessor.cs" />
     <Compile Include="Processor\Problem.cs" />
     <Compile Include="Processor\PropertyDataType.cs" />

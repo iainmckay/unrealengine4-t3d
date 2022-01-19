@@ -13,9 +13,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public float SpecularScale { get; }
         public float SourceRadius { get; }
         public float SourceLength { get; }
+        public ResourceReference LightFunctionReference { get; }
         public float SoftSourceRadius { get; }
 
-        public PointLightComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, float attenuationRadius, float intensity, Vector4 lightColor, Mobility mobility, bool castShadows, float specularScale, float sourceRadius, float sourceLength, float softSourceRadius)
+        public PointLightComponent(string name, ResourceReference archetype, Vector3 relativeLocation, Rotator relativeRotation, Vector3 relativeScale3D, Node[] children, float attenuationRadius, float intensity, Vector4 lightColor, Mobility mobility, bool castShadows, float specularScale, float softSourceRadius, float sourceRadius, float sourceLength, ResourceReference lightFunctionReference)
             : base(name, archetype, relativeLocation, relativeScale3D, relativeRotation, children)
         {
             AttenuationRadius = attenuationRadius;
@@ -27,6 +28,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             SourceRadius = sourceRadius;
             SourceLength = sourceLength;
             SoftSourceRadius = softSourceRadius;
+            LightFunctionReference = lightFunctionReference;
         }
     }
 
@@ -40,11 +42,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddOptionalProperty("CastShadows", PropertyDataType.Boolean);
             AddOptionalProperty("Intensity", PropertyDataType.Float);
             AddOptionalProperty("LightColor", PropertyDataType.Vector4);
+            AddOptionalProperty("LightFunctionMaterial", PropertyDataType.ResourceReference);
             AddOptionalProperty("Mobility", PropertyDataType.Mobility);
             AddOptionalProperty("SpecularScale", PropertyDataType.Float);
+            AddOptionalProperty("SoftSourceRadius", PropertyDataType.Float);
             AddOptionalProperty("SourceRadius", PropertyDataType.Float);
             AddOptionalProperty("SourceLength", PropertyDataType.Float);
-            AddOptionalProperty("SoftSourceRadius", PropertyDataType.Float);
 
             AddIgnoredProperty("LightGuid");
         }
@@ -64,9 +67,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseMobility(node.FindPropertyValue("Mobility")),
                 ValueUtil.ParseBoolean(node.FindPropertyValue("CastShadows") ?? "True"),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SpecularScale") ?? "1.0"),
+                ValueUtil.ParseFloat(node.FindPropertyValue("SoftSourceRadius")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SourceRadius")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("SourceLength")),
-                ValueUtil.ParseFloat(node.FindPropertyValue("SoftSourceRadius"))
+                ValueUtil.ParseResourceReference(node.FindPropertyValue("LightFunctionMaterial"))
             );
         }
     }

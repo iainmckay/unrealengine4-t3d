@@ -19,7 +19,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
             _nodeProcessors = new List<NodeProcessor>();
         }
 
-        protected void AddNodeProcessor(NodeProcessor nodeProcessor)
+        public void AddNodeProcessor(NodeProcessor nodeProcessor)
         {
             _nodeProcessors.Add(nodeProcessor);
         }
@@ -182,6 +182,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseRotator(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Mobility)) {
                 ValueUtil.TryParseMobility(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector2)) {
+                ValueUtil.TryParseVector2(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector3)) {
                 ValueUtil.TryParseVector3(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector4)) {

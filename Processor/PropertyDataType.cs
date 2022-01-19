@@ -23,5 +23,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         Vector3 = 32768,
         Rotator = 65536,
         Mobility = 131072,
+        Vector2 = 262144,
     }
 }

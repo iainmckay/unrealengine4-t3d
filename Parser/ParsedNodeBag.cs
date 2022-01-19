@@ -8,5 +8,9 @@
         {
             Nodes = nodes;
         }
+
+        public static ParsedNodeBag Empty =>
+            new ParsedNodeBag(new ParsedNode[] {
+            });
     }
 }
