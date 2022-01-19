@@ -124,9 +124,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
 
         public ParsedProperty ReadProperty(string sectionType, List<ParsedProperty> nodePropertyList)
         {
-            string key = ReadToken();
+            bool isPolygon = sectionType == "Polygon";
+            string key = ReadToken(! isPolygon);
 
-            if(sectionType != "Polygon") {
+            if(! isPolygon) {
                 ExpectToken("=");
             }
 
@@ -144,9 +145,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
             return new ParsedProperty(key, value);
         }
 
-        public string ReadToken()
+        public string ReadToken(bool treatSpacesAsContent = false)
         {
-            return ReadUntil(TokenTerminatorList);
+            return ReadUntil(TokenTerminatorList, treatSpacesAsContent: treatSpacesAsContent);
         }
 
         public string PeekToken()
@@ -190,7 +191,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
             return _tokenBuffer.ToString();
         }
 
-        public string ReadUntil(char[] terminatorList, bool enableBufferConsumption = true)
+        public string ReadUntil(char[] terminatorList, bool enableBufferConsumption = true, bool treatSpacesAsContent = false)
         {
             _tokenBuffer.Clear();
 
@@ -227,6 +228,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                 bool isWhitespaceCharacter = IsWhitespaceCharacter(nextCharacter);
                 bool isEndOfLine = IsEndOfLine(nextCharacter);
 
+                if (isWhitespaceCharacter && nextCharacter == ' ' && treatSpacesAsContent) {
+                    isWhitespaceCharacter = false;
+                }
+
                 bool shouldReturn = isEndOfLine || (! isInsideString && (isWhitespaceCharacter || isTerminationCharacter));
                 bool shouldConsume = (isStringStartOrEnd || isInsideString) || ! (isTerminationCharacter && _tokenBuffer.Length != 0) && ! isEndOfLine;
                 bool shouldAppend = true;
@@ -246,6 +251,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
                 }
 
                 if (isEndOfLine) {
+                    if (IsEndOfLine(PeekCharacter())) {
+                        ReadCharacter();
+                    }
+
                     IncrementLineCounter();
                 }
 
