@@ -22,6 +22,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("DefaultValue", PropertyDataType.Vector4);
 
             AddIgnoredProperty("ExpressionGUID");
+            AddIgnoredProperty("Group");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

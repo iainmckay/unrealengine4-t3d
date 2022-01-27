@@ -93,24 +93,37 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
+            AddIgnoredProperty("bEnableCrackFreeDisplacement");
+            AddIgnoredProperty("bEnableResponsiveAA");
             AddIgnoredProperty("bEnableSeparateTranslucency");
             AddIgnoredProperty("bFullyRough");
             AddIgnoredProperty("bUsedWithBeamTrails");
+            AddIgnoredProperty("bUsedWithClothing");
+            AddIgnoredProperty("bUsedWithInstancedStaticMeshes");
             AddIgnoredProperty("bUsedWithMeshParticles");
             AddIgnoredProperty("bUsedWithParticleSprites");
+            AddIgnoredProperty("bUsedWithSkeletalMesh");
             AddIgnoredProperty("bUsedWithStaticLighting");
             AddIgnoredProperty("bUsedWithSplineMeshes");
+            AddIgnoredProperty("bUseFullPrecision");
+            AddIgnoredProperty("bUseMaterialAttributes");
             AddIgnoredProperty("bUsesDistortion");
             AddIgnoredProperty("CachedExpressionData");
+            AddIgnoredProperty("D3D11TessellationMode");
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("MaterialFunctionInfos");
+            AddIgnoredProperty("MaxDisplacement");
             AddIgnoredProperty("ParameterGroupData");
             AddIgnoredProperty("ParameterOverviewExpansion");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("ShadingModels");
             AddIgnoredProperty("StateId");
+            AddIgnoredProperty("SubsurfaceColor");
+            AddIgnoredProperty("TessellationMultiplier");
             AddIgnoredProperty("ThumbnailInfo");
             AddIgnoredProperty("TranslucentShadowDensityScale");
+            AddIgnoredProperty("WorldDisplacement");
+            AddIgnoredProperty("WorldPositionOffset");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

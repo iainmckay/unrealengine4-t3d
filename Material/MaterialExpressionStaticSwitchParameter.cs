@@ -28,6 +28,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("ParameterName", PropertyDataType.String);
 
             AddIgnoredProperty("ExpressionGUID");
+            AddIgnoredProperty("Group");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

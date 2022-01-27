@@ -21,6 +21,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddRequiredProperty("Texture", PropertyDataType.ResourceReference);
 
             AddIgnoredProperty("ExpressionGUID");
+            AddIgnoredProperty("Group");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

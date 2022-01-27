@@ -35,11 +35,13 @@
             AddOptionalProperty("TextureParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
             AddOptionalProperty("VectorParameterValues", PropertyDataType.AttributeList | PropertyDataType.Array);
 
+            AddIgnoredProperty("bHasStaticPermutationResource");
             AddIgnoredProperty("CachedReferencedTextures");
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ParameterStateId");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("TextureStreamingData");
+            AddIgnoredProperty("TextureStreamingDataVersion");
             AddIgnoredProperty("ThumbnailInfo");
         }
 

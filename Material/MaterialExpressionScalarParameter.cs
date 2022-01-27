@@ -23,6 +23,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");
+            AddIgnoredProperty("SliderMax");
+            AddIgnoredProperty("SliderMin");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

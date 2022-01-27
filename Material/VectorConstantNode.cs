@@ -18,6 +18,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public VectorConstantProcessor()
         {
             AddOptionalProperty("Constant", PropertyDataType.Vector4);
+
+            AddIgnoredProperty("bCollapsed");
         }
     }
 }
