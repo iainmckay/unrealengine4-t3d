@@ -24,5 +24,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         Rotator = 65536,
         Mobility = 131072,
         Vector2 = 262144,
+        DecalBlendMode = 524288,
     }
 }

@@ -156,6 +156,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseAttributeList(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.BlendMode)) {
                 ValueUtil.TryParseBlendMode(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.DecalBlendMode)) {
+                ValueUtil.TryParseDecalBlendMode(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Boolean)) {
                 ValueUtil.TryParseBoolean(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.ExpressionReference)) {

@@ -3,7 +3,17 @@
     public enum ShadingModel
     {
         Unknown,
+        Unlit,
         DefaultLit,
-        Unlit
+        Subsurface,
+        PreIntegratedSkin,
+        ClearCoat,
+        SubsurfaceProfile,
+        TwoSidedFoliage,
+        Hair,
+        Cloth,
+        Eye,
+        SingleLayerWater,
+        ThinTranslucent
     }
 }

@@ -9,6 +9,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag AmbientOcclusion { get; }
         public ShadingModel ShadingModel { get; }
         public BlendMode BlendMode { get; }
+        public DecalBlendMode DecalBlendMode { get; }
         public MaterialDomain MaterialDomain { get; }
         public TranslucencyLightingMode TranslucencyLightingMode { get; }
         public bool IsTwoSided { get; }
@@ -24,13 +25,15 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ExpressionReference[] EditorComments { get; }
         public int TextureStreamingDataVersion { get; }
         public ParsedPropertyBag[] TextureStreamingData { get; }
+        public bool DitherOpacityMask { get; }
 
-        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData)
+        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, DecalBlendMode decalBlendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, bool ditherOpacityMask)
             : base(name, editorX, editorY, children)
         {
             AmbientOcclusion = ambientOcclusion;
             ShadingModel = shadingModel;
             BlendMode = blendMode;
+            DecalBlendMode = decalBlendMode;
             MaterialDomain = materialDomain;
             TranslucencyLightingMode = translucencyLightingMode;
             IsTwoSided = isTwoSided;
@@ -46,6 +49,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             EditorComments = editorComments;
             TextureStreamingDataVersion = textureStreamingDataVersion;
             TextureStreamingData = textureStreamingData;
+            DitherOpacityMask = ditherOpacityMask;
         }
 
         public MaterialNode ResolveExpressionReference(ExpressionReference reference)
@@ -69,6 +73,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("AmbientOcclusion", PropertyDataType.AttributeList);
             AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
             AddOptionalProperty("BlendMode", PropertyDataType.BlendMode);
+            AddOptionalProperty("DecalBlendMode", PropertyDataType.DecalBlendMode);
+            AddOptionalProperty("DitherOpacityMask", PropertyDataType.Boolean);
             AddOptionalProperty("EditorComments", PropertyDataType.ExpressionReference | PropertyDataType.Array);
             AddOptionalProperty("EditorX", PropertyDataType.Integer);
             AddOptionalProperty("EditorY", PropertyDataType.Integer);
@@ -117,6 +123,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("AmbientOcclusion")),
                 ValueUtil.ParseShadingModel(node.FindPropertyValue("ShadingModel")),
                 ValueUtil.ParseBlendMode(node.FindPropertyValue("BlendMode")),
+                ValueUtil.ParseDecalBlendMode(node.FindPropertyValue("DecalBlendMode")),
                 ValueUtil.ParseMaterialDomain(node.FindPropertyValue("MaterialDomain")),
                 ValueUtil.ParseTranslucencyLightingMode(node.FindPropertyValue("TranslucencyLightingMode")),
                 ValueUtil.ParseBoolean(node.FindPropertyValue("TwoSided")),
@@ -131,7 +138,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions")?.Elements),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments")?.Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("TextureStreamingDataVersion") ?? "1"),
-                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureStreamingData")?.Elements)
+                ValueUtil.ParseAttributeListArray(node.FindProperty("TextureStreamingData")?.Elements),
+                ValueUtil.ParseBoolean(node.FindPropertyValue("DitherOpacityMask"))
             );
         }
     }

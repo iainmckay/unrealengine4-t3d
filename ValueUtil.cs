@@ -245,10 +245,30 @@ namespace JollySamurai.UnrealEngine4.T3D
 
         public static ShadingModel ParseShadingModel(string value)
         {
-            if (value == null) {
+            if (value == null || value == "MSM_DefaultLit") {
                 return ShadingModel.DefaultLit;
             } else if (value == "MSM_Unlit") {
                 return ShadingModel.Unlit;
+            } else if (value == "MSM_Subsurface") {
+                return ShadingModel.Subsurface;
+            } else if (value == "MSM_PreintegratedSkin") {
+                return ShadingModel.PreIntegratedSkin;
+            } else if (value == "MSM_ClearCoat") {
+                return ShadingModel.ClearCoat;
+            } else if (value == "MSM_SubsurfaceProfile") {
+                return ShadingModel.SubsurfaceProfile;
+            } else if (value == "MSM_TwoSidedFoliage") {
+                return ShadingModel.TwoSidedFoliage;
+            } else if (value == "MSM_Hair") {
+                return ShadingModel.Hair;
+            } else if (value == "MSM_Cloth") {
+                return ShadingModel.Cloth;
+            } else if (value == "MSM_Eye") {
+                return ShadingModel.Eye;
+            } else if (value == "MSM_SingleLayerWater") {
+                return ShadingModel.SingleLayerWater;
+            } else if (value == "MSM_ThinTranslucent") {
+                return ShadingModel.ThinTranslucent;
             }
 
             throw new ValueException("Unexpected shading model: " + value);
@@ -668,6 +688,58 @@ namespace JollySamurai.UnrealEngine4.T3D
             }
 
             throw new ValueException("Unexpected sky light source type: " + value);
+        }
+
+        public static DecalBlendMode TryParseDecalBlendMode(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseDecalBlendMode(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return DecalBlendMode.Translucent;
+        }
+
+        public static DecalBlendMode ParseDecalBlendMode(string value)
+        {
+            if (value == null || value == "DBM_Translucent") {
+                return DecalBlendMode.Translucent;
+            } else if (value == "DBM_Stain") {
+                return DecalBlendMode.Stain;
+            } else if (value == "DBM_Normal") {
+                return DecalBlendMode.Normal;
+            } else if (value == "DBM_DBuffer_ColorNormalRoughness") {
+                return DecalBlendMode.DBufferColorNormalRoughness;
+            } else if (value == "DBM_DBuffer_Color") {
+                return DecalBlendMode.DBufferColor;
+            } else if (value == "DBM_DBuffer_ColorNormal") {
+                return DecalBlendMode.DBufferColorNormal;
+            } else if (value == "DBM_DBuffer_ColorRoughness") {
+                return DecalBlendMode.DBufferColorRoughness;
+            } else if (value == "DBM_DBuffer_Normal") {
+                return DecalBlendMode.DBufferNormal;
+            } else if (value == "DBM_DBuffer_NormalRoughness") {
+                return DecalBlendMode.DBufferNormalRoughness;
+            } else if (value == "DBM_DBuffer_Roughness") {
+                return DecalBlendMode.DBufferRoughness;
+            } else if (value == "DBM_DBuffer_Emissive") {
+                return DecalBlendMode.DBufferEmissive;
+            } else if (value == "DBM_DBuffer_AlphaComposite") {
+                return DecalBlendMode.DBufferAlphaComposite;
+            } else if (value == "DBM_DBuffer_EmissiveAlphaComposite") {
+                return DecalBlendMode.DBufferEmissiveAlphaComposite;
+            } else if (value == "DBM_Volumetric_DistanceFunction") {
+                return DecalBlendMode.VolumetricDistanceFunction;
+            } else if (value == "DBM_AlphaComposite") {
+                return DecalBlendMode.AlphaComposite;
+            } else if (value == "DBM_AmbientOcclusion") {
+                return DecalBlendMode.AmbientOcclusion;
+            }
+
+            throw new ValueException("Unexpected decal blend mode: " + value);
         }
 
         public static Vector2 TryParseVector2(string value, out bool successOrFailure)

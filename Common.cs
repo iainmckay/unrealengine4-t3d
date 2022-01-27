@@ -59,6 +59,27 @@
         SpecifiedCubemap
     }
 
+    public enum DecalBlendMode
+    {
+        Translucent,
+        Stain,
+        Normal,
+        Emissive,
+        DBufferColorNormalRoughness,
+        DBufferColor,
+        DBufferColorNormal,
+        DBufferColorRoughness,
+        DBufferNormal,
+        DBufferNormalRoughness,
+        DBufferRoughness,
+        DBufferEmissive,
+        DBufferAlphaComposite,
+        DBufferEmissiveAlphaComposite,
+        VolumetricDistanceFunction,
+        AlphaComposite,
+        AmbientOcclusion
+    }
+
     public struct Vector2
     {
         public float X { get; }
