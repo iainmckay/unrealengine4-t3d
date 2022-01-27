@@ -1,5 +1,4 @@
 ﻿using JollySamurai.UnrealEngine4.T3D.Parser;
-using JollySamurai.UnrealEngine4.T3D.Processor;
 
 namespace JollySamurai.UnrealEngine4.T3D.Material
 {
@@ -17,13 +16,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public override Node Convert(ParsedNode node, Node[] children)
         {
-            return null;
-            /*return new MaterialExpressionConstant3Vector(
+            return new MaterialExpressionConstant3Vector(
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
                 ValueUtil.ParseVector4(node.FindPropertyValue("Constant"))
-            );*/
+            );
         }
     }
 }
