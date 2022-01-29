@@ -76,6 +76,7 @@
     <Compile Include="Material\MaterialExpressionConstant.cs" />
     <Compile Include="Material\MaterialExpressionConstant2Vector.cs" />
     <Compile Include="Material\MaterialExpressionConstant4Vector.cs" />
+    <Compile Include="Material\MaterialExpressionDepthFade.cs" />
     <Compile Include="Material\MaterialExpressionDivide.cs" />
     <Compile Include="Material\MaterialExpressionFrac.cs" />
     <Compile Include="Material\MaterialExpressionOneMinus.cs" />
