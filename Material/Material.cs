@@ -20,14 +20,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag Specular { get; }
         public ParsedPropertyBag EmissiveColor { get; }
         public ParsedPropertyBag Opacity { get; }
-        public ExpressionReference OpacityMask { get; }
+        public ParsedPropertyBag OpacityMask { get; }
         public ExpressionReference[] Expressions { get; }
         public ExpressionReference[] EditorComments { get; }
         public int TextureStreamingDataVersion { get; }
         public ParsedPropertyBag[] TextureStreamingData { get; }
         public bool DitherOpacityMask { get; }
 
-        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, DecalBlendMode decalBlendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ExpressionReference opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, bool ditherOpacityMask)
+        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, DecalBlendMode decalBlendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ParsedPropertyBag opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, bool ditherOpacityMask)
             : base(name, editorX, editorY, children)
         {
             AmbientOcclusion = ambientOcclusion;
@@ -83,7 +83,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("Metallic", PropertyDataType.AttributeList);
             AddOptionalProperty("Normal", PropertyDataType.AttributeList);
             AddOptionalProperty("Opacity", PropertyDataType.AttributeList);
-            AddOptionalProperty("OpacityMask", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("OpacityMask", PropertyDataType.AttributeList);
             AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
             AddOptionalProperty("Specular", PropertyDataType.AttributeList);
@@ -147,7 +147,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Specular")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Opacity")),
-                ValueUtil.ParseExpressionReference(node.FindPropertyValue("OpacityMask")),
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("OpacityMask")),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions")?.Elements),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments")?.Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("TextureStreamingDataVersion") ?? "1"),
