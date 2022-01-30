@@ -11,7 +11,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionScalarParameterProcessor : MaterialNodeProcessor
+    public class MaterialExpressionScalarParameterProcessor : ParameterNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionScalarParameter";
 

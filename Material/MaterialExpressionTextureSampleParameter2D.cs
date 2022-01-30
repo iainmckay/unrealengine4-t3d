@@ -18,7 +18,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class ObjectExpressionTextureSampleParameter2DProcessor : MaterialNodeProcessor
+    public class ObjectExpressionTextureSampleParameter2DProcessor : ParameterNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionTextureSampleParameter2D";
 

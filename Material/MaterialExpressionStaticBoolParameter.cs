@@ -11,7 +11,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class MaterialExpressionStaticBoolParameterProcessor : MaterialNodeProcessor
+    public class MaterialExpressionStaticBoolParameterProcessor : ParameterNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionStaticBoolParameter";
 

@@ -21,4 +21,12 @@
             ParameterName = parameterName;
         }
     }
+
+    public abstract class ParameterNodeProcessor : MaterialNodeProcessor
+    {
+        public ParameterNodeProcessor()
+        {
+            AddIgnoredProperty("SortPriority");
+        }
+    }
 }
