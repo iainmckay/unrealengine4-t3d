@@ -18,7 +18,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public MaterialExpressionTextureObjectParameterProcessor()
         {
             AddRequiredProperty("ParameterName", PropertyDataType.String);
-            AddRequiredProperty("Texture", PropertyDataType.ResourceReference);
+
+            AddOptionalProperty("Texture", PropertyDataType.ResourceReference);
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");

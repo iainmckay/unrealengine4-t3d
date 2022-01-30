@@ -118,6 +118,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddIgnoredProperty("MaxDisplacement");
             AddIgnoredProperty("ParameterGroupData");
             AddIgnoredProperty("ParameterOverviewExpansion");
+            AddIgnoredProperty("PreviewMesh");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("ShadingModels");
             AddIgnoredProperty("StateId");
