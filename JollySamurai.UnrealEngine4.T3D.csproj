@@ -91,6 +91,7 @@
     <Compile Include="Material\MaterialExpressionTextureObjectParameter.cs" />
     <Compile Include="Material\MaterialExpressionTextureSample.cs" />
     <Compile Include="Material\MaterialExpressionTime.cs" />
+    <Compile Include="Material\MaterialExpressionVertexNormalWS.cs" />
     <Compile Include="Material\MaterialNode.cs" />
     <Compile Include="Material\VectorConstantNode.cs" />
     <Compile Include="Material\Material.cs" />

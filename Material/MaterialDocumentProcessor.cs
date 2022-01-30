@@ -45,6 +45,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new ObjectExpressionTextureSampleParameter2DProcessor());
             AddNodeProcessor(new MaterialExpressionTimeProcessor());
             AddNodeProcessor(new MaterialExpressionVectorParameterProcessor());
+            AddNodeProcessor(new MaterialExpressionVertexNormalWSProcessor());
         }
 
         protected override bool IsIgnoredNode(ParsedNode parsedNode)
