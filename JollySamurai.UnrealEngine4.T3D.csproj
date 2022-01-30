@@ -73,6 +73,7 @@
     <Compile Include="MaterialDomain.cs" />
     <Compile Include="MaterialInstance\MaterialInstanceDocumentProcessor.cs" />
     <Compile Include="MaterialInstance\MaterialInstance.cs" />
+    <Compile Include="Material\MaterialExpressionComponentMask.cs" />
     <Compile Include="Material\MaterialExpressionConstant.cs" />
     <Compile Include="Material\MaterialExpressionConstant2Vector.cs" />
     <Compile Include="Material\MaterialExpressionConstant4Vector.cs" />
