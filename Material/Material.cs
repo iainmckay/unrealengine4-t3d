@@ -96,6 +96,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("TwoSided", PropertyDataType.Boolean);
 
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
+            AddIgnoredProperty("bEnableAdaptiveTessellation");
             AddIgnoredProperty("bEnableCrackFreeDisplacement");
             AddIgnoredProperty("bEnableResponsiveAA");
             AddIgnoredProperty("bEnableSeparateTranslucency");

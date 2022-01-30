@@ -21,6 +21,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
             AddOptionalProperty("DefaultValue", PropertyDataType.Float);
 
+            AddIgnoredProperty("bCollapsed");
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");
             AddIgnoredProperty("SliderMax");
