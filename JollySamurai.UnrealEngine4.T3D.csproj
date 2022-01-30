@@ -84,6 +84,7 @@
     <Compile Include="Material\MaterialExpressionPanner.cs" />
     <Compile Include="Material\MaterialExpressionPower.cs" />
     <Compile Include="Material\MaterialExpressionSine.cs" />
+    <Compile Include="Material\MaterialExpressionStaticBoolParameter.cs" />
     <Compile Include="Material\MaterialExpressionSubtract.cs" />
     <Compile Include="Material\MaterialExpressionTextureObject.cs" />
     <Compile Include="Material\MaterialExpressionTextureObjectParameter.cs" />
