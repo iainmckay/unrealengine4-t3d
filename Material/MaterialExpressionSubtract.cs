@@ -26,8 +26,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public MaterialExpressionSubtractProcessor()
         {
-            AddRequiredProperty("A", PropertyDataType.AttributeList);
-            AddRequiredProperty("B", PropertyDataType.AttributeList);
+            AddOptionalProperty("A", PropertyDataType.AttributeList);
+            AddOptionalProperty("B", PropertyDataType.AttributeList);
 
             AddOptionalProperty("ConstA", PropertyDataType.Float);
             AddOptionalProperty("ConstB", PropertyDataType.Float);

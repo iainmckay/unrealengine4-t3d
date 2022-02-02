@@ -27,6 +27,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("DefaultValue", PropertyDataType.Boolean);
             AddOptionalProperty("ParameterName", PropertyDataType.String);
 
+            AddIgnoredProperty("bRealtimePreview");
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");
         }

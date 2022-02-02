@@ -184,6 +184,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseRotator(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Mobility)) {
                 ValueUtil.TryParseMobility(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.WorldPositionIncludedOffsets)) {
+                ValueUtil.TryParseWorldPositionIncludedOffsets(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.MaterialSceneAttributeInputMode)) {
+                ValueUtil.TryParseMaterialSceneAttributeInputMode(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.SceneTextureId)) {
+                ValueUtil.TryParseSceneTextureId(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector2)) {
                 ValueUtil.TryParseVector2(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector3)) {

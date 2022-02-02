@@ -14,7 +14,7 @@ namespace JollySamurai.UnrealEngine4.T3D
         public static readonly Regex ResourceReferenceRegex = new Regex(@"^(?<type>.+)'""(?<resource>.+)""'$|^(?<type>.+)'(?<resource>.+)'$", RegexOptions.Compiled);
         public static readonly Regex Vector2Regex = new Regex(@"\(X=(\-{0,}[0-9]+\.[0-9]+),Y=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
         public static readonly Regex Vector3Regex = new Regex(@"\(X=(\-{0,}[0-9]+\.[0-9]+),Y=(\-{0,}[0-9]+\.[0-9]+),Z=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
-        public static readonly Regex Vector4Regex = new Regex(@"\(([RGBAX])=([0-9\.]+),([RGBAY])=([0-9\.]+),([RGBAZ])=([0-9\.]+),([RGBAW])=([0-9\.]+)\)", RegexOptions.Compiled);
+        public static readonly Regex Vector4Regex = new Regex(@"\(([RGBAX])=([\-0-9\.]+),([RGBAY])=([\-0-9\.]+),([RGBAZ])=([\-0-9\.]+),([RGBAW])=([\-0-9\.]+)\)", RegexOptions.Compiled);
         public static readonly Regex RotatorRegex = new Regex(@"\(Pitch=(\-{0,}[0-9]+\.[0-9]+),Yaw=(\-{0,}[0-9]+\.[0-9]+),Roll=(\-{0,}[0-9]+\.[0-9]+)\)", RegexOptions.Compiled);
 
         public static bool ParseBoolean(string value)
@@ -740,6 +740,166 @@ namespace JollySamurai.UnrealEngine4.T3D
             }
 
             throw new ValueException("Unexpected decal blend mode: " + value);
+        }
+
+        public static WorldPositionIncludedOffsets TryParseWorldPositionIncludedOffsets(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseWorldPositionIncludedOffsets(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return WorldPositionIncludedOffsets.Default;
+        }
+
+        public static WorldPositionIncludedOffsets ParseWorldPositionIncludedOffsets(string value)
+        {
+            if (value == null || value == "WPT_Default") {
+                return WorldPositionIncludedOffsets.Default;
+            } else if (value == "WPT_ExcludeAllShaderOffsets") {
+                return WorldPositionIncludedOffsets.ExcludeAllShaderOffsets;
+            } else if (value == "WPT_CameraRelative") {
+                return WorldPositionIncludedOffsets.CameraRelative;
+            } else if (value == "WPT_CameraRelativeNoOffsets") {
+                return WorldPositionIncludedOffsets.CameraRelativeNoOffsets;
+            }
+
+            throw new ValueException("Unexpected world position included offsets: " + value);
+        }
+
+        public static MaterialSceneAttributeInputMode TryParseMaterialSceneAttributeInputMode(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseMaterialSceneAttributeInputMode(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return MaterialSceneAttributeInputMode.Coordinates;
+        }
+
+        public static MaterialSceneAttributeInputMode ParseMaterialSceneAttributeInputMode(string value)
+        {
+            if (value == null || value == "Coordinates") {
+                return MaterialSceneAttributeInputMode.Coordinates;
+            } else if (value == "OffsetFraction") {
+                return MaterialSceneAttributeInputMode.OffsetFraction;
+            }
+
+            throw new ValueException("Unexpected material scene attribute input mode: " + value);
+        }
+
+        public static LandscapeLayerBlendType TryParseLandscapeLayerBlendType(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseLandscapeLayerBlendType(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return LandscapeLayerBlendType.WeightBlend;
+        }
+
+        public static LandscapeLayerBlendType ParseLandscapeLayerBlendType(string value)
+        {
+            if (value == null || value == "LB_WeightBlend") {
+                return LandscapeLayerBlendType.WeightBlend;
+            } else if (value == "LB_AlphaBlend") {
+                return LandscapeLayerBlendType.AlphaBlend;
+            } else if (value == "LB_HeightBlend") {
+                return LandscapeLayerBlendType.HeightBlend;
+            }
+
+            throw new ValueException("Unexpected material scene attribute input mode: " + value);
+        }
+
+        public static SceneTextureId TryParseSceneTextureId(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseSceneTextureId(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return SceneTextureId.SceneColor;
+        }
+
+        public static SceneTextureId ParseSceneTextureId(string value)
+        {
+            if (value == null || value == "PPI_SceneColor") {
+                return SceneTextureId.SceneColor;
+            } else if (value == "PPI_SceneDepth") {
+                return SceneTextureId.SceneDepth;
+            } else if (value == "PPI_DiffuseColor") {
+                return SceneTextureId.DiffuseColor;
+            } else if (value == "PPI_SpecularColor") {
+                return SceneTextureId.SpecularColor;
+            } else if (value == "PPI_SubsurfaceColor") {
+                return SceneTextureId.SubsurfaceColor;
+            } else if (value == "PPI_BaseColor") {
+                return SceneTextureId.BaseColor;
+            } else if (value == "PPI_Specular") {
+                return SceneTextureId.Specular;
+            } else if (value == "PPI_Metallic") {
+                return SceneTextureId.Metallic;
+            } else if (value == "PPI_WorldNormal") {
+                return SceneTextureId.WorldNormal;
+            } else if (value == "PPI_SeparateTranslucency") {
+                return SceneTextureId.SeparateTranslucency;
+            } else if (value == "PPI_Opacity") {
+                return SceneTextureId.Opacity;
+            } else if (value == "PPI_Roughness") {
+                return SceneTextureId.Roughness;
+            } else if (value == "PPI_MaterialAO") {
+                return SceneTextureId.MaterialAo;
+            } else if (value == "PPI_CustomDepth") {
+                return SceneTextureId.CustomDepth;
+            } else if (value == "PPI_PostProcessInput0") {
+                return SceneTextureId.PostProcessInput0;
+            } else if (value == "PPI_PostProcessInput1") {
+                return SceneTextureId.PostProcessInput1;
+            } else if (value == "PPI_PostProcessInput2") {
+                return SceneTextureId.PostProcessInput2;
+            } else if (value == "PPI_PostProcessInput3") {
+                return SceneTextureId.PostProcessInput3;
+            } else if (value == "PPI_PostProcessInput4") {
+                return SceneTextureId.PostProcessInput4;
+            } else if (value == "PPI_PostProcessInput5") {
+                return SceneTextureId.PostProcessInput5;
+            } else if (value == "PPI_PostProcessInput6") {
+                return SceneTextureId.PostProcessInput6;
+            } else if (value == "PPI_DecalMask") {
+                return SceneTextureId.DecalMask;
+            } else if (value == "PPI_ShadingModelColor") {
+                return SceneTextureId.ShadingModelColor;
+            } else if (value == "PPI_ShadingModelID") {
+                return SceneTextureId.ShadingModelId;
+            } else if (value == "PPI_AmbientOcclusion") {
+                return SceneTextureId.AmbientOcclusion;
+            } else if (value == "PPI_CustomStencil") {
+                return SceneTextureId.CustomStencil;
+            } else if (value == "PPI_StoredBaseColor") {
+                return SceneTextureId.StoredBaseColor;
+            } else if (value == "PPI_StoredSpecular") {
+                return SceneTextureId.StoredSpecular;
+            } else if (value == "PPI_Velocity") {
+                return SceneTextureId.Velocity;
+            } else if (value == "PPI_WorldTangent") {
+                return SceneTextureId.WorldTangent;
+            } else if (value == "PPI_Anisotropy") {
+                return SceneTextureId.Anisotropy;
+            }
+
+            throw new ValueException("Unexpected scene texture ID: " + value);
         }
 
         public static Vector2 TryParseVector2(string value, out bool successOrFailure)

@@ -9,14 +9,20 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag A { get; }
         public ParsedPropertyBag B { get; }
         public ParsedPropertyBag Alpha { get; }
+        public float ConstA { get; }
+        public float ConstB { get; }
+        public float ConstAlpha { get; }
 
-        public MaterialExpressionLinearInterpolate(string name, int editorX, int editorY, bool collapsed, ParsedPropertyBag a, ParsedPropertyBag b, ParsedPropertyBag alpha)
+        public MaterialExpressionLinearInterpolate(string name, int editorX, int editorY, bool collapsed, ParsedPropertyBag a, ParsedPropertyBag b, ParsedPropertyBag alpha, float constA, float constB, float constAlpha)
             : base(name, editorX, editorY)
         {
             Collapsed = collapsed;
             A = a;
             B = b;
             Alpha = alpha;
+            ConstA = constA;
+            ConstB = constB;
+            ConstAlpha = constAlpha;
         }
     }
 
@@ -30,6 +36,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("A", PropertyDataType.AttributeList);
             AddOptionalProperty("Alpha", PropertyDataType.AttributeList);
             AddOptionalProperty("B", PropertyDataType.AttributeList);
+            AddOptionalProperty("ConstA", PropertyDataType.Float);
+            AddOptionalProperty("ConstB", PropertyDataType.Float);
+            AddOptionalProperty("ConstAlpha", PropertyDataType.Float);
 
             AddIgnoredProperty("bRealtimePreview");
         }
@@ -43,7 +52,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseBoolean(node.FindPropertyValue("bCollapsed")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("A")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("B")),
-                ValueUtil.ParseAttributeList(node.FindPropertyValue("Alpha"))
+                ValueUtil.ParseAttributeList(node.FindPropertyValue("Alpha")),
+                ValueUtil.ParseFloat(node.FindPropertyValue("ConstA")),
+                ValueUtil.ParseFloat(node.FindPropertyValue("ConstB") ?? "1.0"),
+                ValueUtil.ParseFloat(node.FindPropertyValue("ConstAlpha") ?? "0.5")
             );
         }
     }

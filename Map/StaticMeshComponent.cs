@@ -27,10 +27,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public StaticMeshComponentProcessor()
         {
             AddRequiredProperty("StaticMesh", PropertyDataType.ResourceReference);
-            AddRequiredProperty("StaticMeshImportVersion", PropertyDataType.Integer);
 
             AddOptionalProperty("Mobility", PropertyDataType.String);
             AddOptionalProperty("OverrideMaterials", PropertyDataType.ResourceReference | PropertyDataType.Array);
+            AddOptionalProperty("StaticMeshImportVersion", PropertyDataType.Integer);
 
             AddIgnoredProperty("AssetUserData");
             AddIgnoredProperty("MaterialStreamingRelativeBoxes");

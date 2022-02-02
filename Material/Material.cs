@@ -22,13 +22,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public ParsedPropertyBag EmissiveColor { get; }
         public ParsedPropertyBag Opacity { get; }
         public ParsedPropertyBag OpacityMask { get; }
+        public float OpacityMaskClipValue { get; }
         public ExpressionReference[] Expressions { get; }
         public ExpressionReference[] EditorComments { get; }
         public int TextureStreamingDataVersion { get; }
         public ParsedPropertyBag[] TextureStreamingData { get; }
         public bool DitherOpacityMask { get; }
 
-        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, DecalBlendMode decalBlendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag refraction, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ParsedPropertyBag opacityMask, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, bool ditherOpacityMask)
+        public Material(string name, int editorX, int editorY, Node[] children, ParsedPropertyBag ambientOcclusion, ShadingModel shadingModel, BlendMode blendMode, DecalBlendMode decalBlendMode, MaterialDomain materialDomain, TranslucencyLightingMode translucencyLightingMode, bool isTwoSided, ParsedPropertyBag baseColor, ParsedPropertyBag metallic, ParsedPropertyBag normal, ParsedPropertyBag refraction, ParsedPropertyBag roughness, ParsedPropertyBag specular, ParsedPropertyBag emissiveColor, ParsedPropertyBag opacity, ParsedPropertyBag opacityMask, float opacityMaskClipValue, ExpressionReference[] expressionReferences, ExpressionReference[] editorComments, int textureStreamingDataVersion, ParsedPropertyBag[] textureStreamingData, bool ditherOpacityMask)
             : base(name, editorX, editorY, children)
         {
             AmbientOcclusion = ambientOcclusion;
@@ -47,6 +48,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             EmissiveColor = emissiveColor;
             Opacity = opacity;
             OpacityMask = opacityMask;
+            OpacityMaskClipValue = opacityMaskClipValue;
             Expressions = expressionReferences;
             EditorComments = editorComments;
             TextureStreamingDataVersion = textureStreamingDataVersion;
@@ -86,6 +88,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("Normal", PropertyDataType.AttributeList);
             AddOptionalProperty("Opacity", PropertyDataType.AttributeList);
             AddOptionalProperty("OpacityMask", PropertyDataType.AttributeList);
+            AddOptionalProperty("OpacityMaskClipValue", PropertyDataType.Float);
             AddOptionalProperty("Refraction", PropertyDataType.AttributeList);
             AddOptionalProperty("Roughness", PropertyDataType.AttributeList);
             AddOptionalProperty("ShadingModel", PropertyDataType.ShadingModel);
@@ -98,9 +101,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddIgnoredProperty("bCanMaskedBeAssumedOpaque");
             AddIgnoredProperty("bEnableAdaptiveTessellation");
             AddIgnoredProperty("bEnableCrackFreeDisplacement");
+            AddIgnoredProperty("bEnableMobileSeparateTranslucency");
             AddIgnoredProperty("bEnableResponsiveAA");
             AddIgnoredProperty("bEnableSeparateTranslucency");
             AddIgnoredProperty("bFullyRough");
+            AddIgnoredProperty("bGenerateSphericalParticleNormals");
             AddIgnoredProperty("bUsedWithBeamTrails");
             AddIgnoredProperty("bUsedWithClothing");
             AddIgnoredProperty("bUsedWithInstancedStaticMeshes");
@@ -109,6 +114,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddIgnoredProperty("bUsedWithSkeletalMesh");
             AddIgnoredProperty("bUsedWithStaticLighting");
             AddIgnoredProperty("bUsedWithSplineMeshes");
+            AddIgnoredProperty("bUseEmissiveForDynamicAreaLighting");
             AddIgnoredProperty("bUseFullPrecision");
             AddIgnoredProperty("bUseMaterialAttributes");
             AddIgnoredProperty("bUsesDistortion");
@@ -154,6 +160,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("EmissiveColor")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Opacity")),
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("OpacityMask")),
+                ValueUtil.ParseFloat(node.FindPropertyValue("OpacityMaskClipValue") ?? "0.33"),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("Expressions")?.Elements),
                 ValueUtil.ParseExpressionReferenceArray(node.FindProperty("EditorComments")?.Elements),
                 ValueUtil.ParseInteger(node.FindPropertyValue("TextureStreamingDataVersion") ?? "1"),

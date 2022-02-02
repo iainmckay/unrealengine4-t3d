@@ -30,6 +30,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("Coordinates", PropertyDataType.AttributeList);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
 
+            AddIgnoredProperty("bRealtimePreview");
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");
         }

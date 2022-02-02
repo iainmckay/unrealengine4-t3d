@@ -13,8 +13,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public MaterialDocumentProcessor()
         {
             AddNodeProcessor(new MaterialProcessor());
+            AddNodeProcessor(new MaterialExpressionAbsProcessor());
             AddNodeProcessor(new MaterialExpressionAddProcessor());
             AddNodeProcessor(new MaterialExpressionAppendVectorProcessor());
+            AddNodeProcessor(new MaterialExpressionCameraPositionWSProcessor());
             AddNodeProcessor(new MaterialExpressionClampProcessor());
             AddNodeProcessor(new MaterialExpressionCommentProcessor());
             AddNodeProcessor(new MaterialExpressionComponentMaskProcessor());
@@ -22,18 +24,30 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionConstant2VectorProcessor());
             AddNodeProcessor(new MaterialExpressionConstant3VectorProcessor());
             AddNodeProcessor(new MaterialExpressionConstant4VectorProcessor());
+            AddNodeProcessor(new MaterialExpressionCrossProductProcessor());
             AddNodeProcessor(new MaterialExpressionDepthFadeProcessor());
             AddNodeProcessor(new MaterialExpressionDesaturationProcessor());
+            AddNodeProcessor(new MaterialExpressionDistanceProcessor());
             AddNodeProcessor(new MaterialExpressionDivideProcessor());
+            AddNodeProcessor(new MaterialExpressionDotProductProcessor());
+            AddNodeProcessor(new MaterialExpressionFloorProcessor());
             AddNodeProcessor(new MaterialExpressionFracProcessor());
             AddNodeProcessor(new MaterialExpressionFresnelProcessor());
             AddNodeProcessor(new MaterialExpressionLinearInterpolateProcessor());
             AddNodeProcessor(new MaterialExpressionObjectFunctionCallProcessor());
             AddNodeProcessor(new MaterialExpressionMultiplyProcessor());
+            AddNodeProcessor(new MaterialExpressionNormalizeProcessor());
             AddNodeProcessor(new MaterialExpressionOneMinusProcessor());
             AddNodeProcessor(new MaterialExpressionPannerProcessor());
+            AddNodeProcessor(new MaterialExpressionParticleColorProcessor());
+            AddNodeProcessor(new MaterialExpressionParticleSizeProcessor());
+            AddNodeProcessor(new MaterialExpressionPixelDepthProcessor());
             AddNodeProcessor(new MaterialExpressionPowerProcessor());
+            AddNodeProcessor(new MaterialExpressionRotateAboutAxisProcessor());
             AddNodeProcessor(new MaterialExpressionScalarParameterProcessor());
+            AddNodeProcessor(new MaterialExpressionSceneDepthProcessor());
+            AddNodeProcessor(new MaterialExpressionSceneTextureProcessor());
+            AddNodeProcessor(new MaterialExpressionScreenPositionProcessor());
             AddNodeProcessor(new MaterialExpressionSineProcessor());
             AddNodeProcessor(new MaterialExpressionStaticBoolParameterProcessor());
             AddNodeProcessor(new MaterialExpressionStaticSwitchParameterProcessor());
@@ -46,7 +60,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new ObjectExpressionTextureSampleParameter2DProcessor());
             AddNodeProcessor(new MaterialExpressionTimeProcessor());
             AddNodeProcessor(new MaterialExpressionVectorParameterProcessor());
+            AddNodeProcessor(new MaterialExpressionVertexColorProcessor());
             AddNodeProcessor(new MaterialExpressionVertexNormalWSProcessor());
+            AddNodeProcessor(new MaterialExpressionWorldPositionProcessor());
         }
 
         protected override bool IsIgnoredNode(ParsedNode parsedNode)

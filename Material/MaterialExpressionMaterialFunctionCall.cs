@@ -35,11 +35,12 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         {
             var functionInputList = new List<ParsedPropertyBag>();
 
-            foreach (var parsedProperty in node.FindProperty("FunctionInputs").Elements) {
-                functionInputList.Add(ValueUtil.ParseAttributeList(parsedProperty.Value));
+            foreach (var parsedProperty in node.FindProperty("FunctionInputs")?.Elements ?? ParsedPropertyBag.Empty.Properties) {
+                functionInputList.Add(ValueUtil.ParseAttributeList(parsedProperty?.Value));
             }
 
-            return new MaterialExpressionMaterialFunctionCall(node.FindAttributeValue("Name"),
+            return new MaterialExpressionMaterialFunctionCall(
+                node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
                 ValueUtil.ParseExpressionReference(node.FindPropertyValue("MaterialFunction")),

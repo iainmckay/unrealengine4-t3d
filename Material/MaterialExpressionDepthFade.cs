@@ -5,16 +5,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 {
     public class MaterialExpressionDepthFade : MaterialNode
     {
-        public ParsedPropertyBag A { get; }
-        public ParsedPropertyBag B { get; }
+        public ExpressionReference InOpacity { get; }
+        public ExpressionReference FadeDistance { get; }
         public float OpacityDefault { get; }
         public float FadeDistanceDefault { get; }
 
-        public MaterialExpressionDepthFade(string name, int editorX, int editorY, ParsedPropertyBag a, ParsedPropertyBag b, float opacityDefault, float fadeDistanceDefault)
+        public MaterialExpressionDepthFade(string name, int editorX, int editorY, ExpressionReference inOpacity, ExpressionReference fadeDistance, float opacityDefault, float fadeDistanceDefault)
             : base(name, editorX, editorY)
         {
-            A = a;
-            B = b;
+            InOpacity = inOpacity;
+            FadeDistance = fadeDistance;
             OpacityDefault = opacityDefault;
             FadeDistanceDefault = fadeDistanceDefault;
         }
@@ -26,8 +26,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public MaterialExpressionDepthFadeProcessor()
         {
-            AddOptionalProperty("A", PropertyDataType.AttributeList);
-            AddOptionalProperty("B", PropertyDataType.AttributeList);
+            AddOptionalProperty("InOpacity", PropertyDataType.ExpressionReference);
+            AddOptionalProperty("FadeDistance", PropertyDataType.ExpressionReference);
             AddOptionalProperty("OpacityDefault", PropertyDataType.Float);
             AddOptionalProperty("FadeDistanceDefault", PropertyDataType.Float);
         }
@@ -38,8 +38,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
-                ValueUtil.ParseAttributeList(node.FindPropertyValue("A")),
-                ValueUtil.ParseAttributeList(node.FindPropertyValue("B")),
+                ValueUtil.ParseExpressionReference(node.FindPropertyValue("InOpacity")),
+                ValueUtil.ParseExpressionReference(node.FindPropertyValue("FadeDistance")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("OpacityDefault") ?? "1.0"),
                 ValueUtil.ParseFloat(node.FindPropertyValue("FadeDistanceDefault") ?? "100.0")
             );

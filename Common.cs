@@ -80,6 +80,62 @@
         AmbientOcclusion
     }
 
+    public enum WorldPositionIncludedOffsets
+    {
+        Default,
+        ExcludeAllShaderOffsets,
+        CameraRelative,
+        CameraRelativeNoOffsets
+    }
+
+    public enum MaterialSceneAttributeInputMode
+    {
+        Coordinates,
+        OffsetFraction
+    }
+
+    public enum SceneTextureId
+    {
+        SceneColor,
+        SceneDepth,
+        DiffuseColor,
+        SpecularColor,
+        SubsurfaceColor,
+        BaseColor,
+        Specular,
+        Metallic,
+        WorldNormal,
+        SeparateTranslucency,
+        Opacity,
+        Roughness,
+        MaterialAo,
+        CustomDepth,
+        PostProcessInput0,
+        PostProcessInput1,
+        PostProcessInput2,
+        PostProcessInput3,
+        PostProcessInput4,
+        PostProcessInput5,
+        PostProcessInput6,
+        DecalMask,
+        ShadingModelColor,
+        ShadingModelId,
+        AmbientOcclusion,
+        CustomStencil,
+        StoredBaseColor,
+        StoredSpecular,
+        Velocity,
+        WorldTangent,
+        Anisotropy,
+    }
+
+    public enum LandscapeLayerBlendType
+    {
+        WeightBlend,
+        AlphaBlend,
+        HeightBlend
+    }
+
     public struct Vector2
     {
         public float X { get; }
