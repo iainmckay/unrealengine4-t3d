@@ -21,6 +21,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         public MaterialExpressionConstantProcessor()
         {
             AddOptionalProperty("R", PropertyDataType.Float);
+
+            AddIgnoredProperty("bCollapsed");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

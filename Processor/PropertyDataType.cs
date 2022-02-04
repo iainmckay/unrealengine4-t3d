@@ -27,6 +27,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
         DecalBlendMode = 524288,
         WorldPositionIncludedOffsets = 1048576,
         MaterialSceneAttributeInputMode = 2097152,
-        SceneTextureId = 4194304
+        SceneTextureId = 4194304,
+        MaterialVectorCoordTransformSource = 8388608,
+        MaterialVectorCoordTransform = 16777216
     }
 }

@@ -43,11 +43,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public PostProcessingVolumeProcessor()
         {
-            AddRequiredProperty("bUnbound", PropertyDataType.Boolean);
-            
-            AddOptionalProperty("Priority", PropertyDataType.Float);
+            AddOptionalProperty("bUnbound", PropertyDataType.Boolean);
             AddOptionalProperty("bEnabled", PropertyDataType.Boolean);
             AddOptionalProperty("BlendWeight", PropertyDataType.Float);
+            AddOptionalProperty("Priority", PropertyDataType.Float);
 
             AddIgnoredProperty("bHidden");
         }

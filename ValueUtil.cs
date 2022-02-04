@@ -820,6 +820,70 @@ namespace JollySamurai.UnrealEngine4.T3D
             throw new ValueException("Unexpected material scene attribute input mode: " + value);
         }
 
+        public static MaterialVectorCoordTransformSource TryParseMaterialVectorCoordTransformSource(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseMaterialVectorCoordTransformSource(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return MaterialVectorCoordTransformSource.Tangent;
+        }
+
+        public static MaterialVectorCoordTransformSource ParseMaterialVectorCoordTransformSource(string value)
+        {
+            if (value == null || value == "TRANSFORMSOURCE_Tangent") {
+                return MaterialVectorCoordTransformSource.Tangent;
+            } else if (value == "TRANSFORMSOURCE_Local") {
+                return MaterialVectorCoordTransformSource.Local;
+            } else if (value == "TRANSFORMSOURCE_World") {
+                return MaterialVectorCoordTransformSource.World;
+            } else if (value == "TRANSFORMSOURCE_View") {
+                return MaterialVectorCoordTransformSource.View;
+            } else if (value == "TRANSFORMSOURCE_Camera") {
+                return MaterialVectorCoordTransformSource.Camera;
+            } else if (value == "TRANSFORMSOURCE_ParticleWorld") {
+                return MaterialVectorCoordTransformSource.ParticleWorld;
+            }
+
+            throw new ValueException("Unexpected material vector coord transform source: " + value);
+        }
+
+        public static MaterialVectorCoordTransform TryParseMaterialVectorCoordTransform(string value, out bool successOrFailure)
+        {
+            try {
+                successOrFailure = true;
+
+                return ParseMaterialVectorCoordTransform(value);
+            } catch (ValueException) {
+                successOrFailure = false;
+            }
+
+            return MaterialVectorCoordTransform.Tangent;
+        }
+
+        public static MaterialVectorCoordTransform ParseMaterialVectorCoordTransform(string value)
+        {
+            if (value == null || value == "TRANSFORM_World") {
+                return MaterialVectorCoordTransform.World;
+            } else if (value == "TRANSFORM_Tangent") {
+                return MaterialVectorCoordTransform.Tangent;
+            } else if (value == "TRANSFORM_Local") {
+                return MaterialVectorCoordTransform.Local;
+            } else if (value == "TRANSFORM_View") {
+                return MaterialVectorCoordTransform.View;
+            } else if (value == "TRANSFORM_Camera") {
+                return MaterialVectorCoordTransform.Camera;
+            } else if (value == "TRANSFORM_ParticleWorld") {
+                return MaterialVectorCoordTransform.ParticleWorld;
+            }
+
+            throw new ValueException("Unexpected material vector coord transform: " + value);
+        }
+
         public static SceneTextureId TryParseSceneTextureId(string value, out bool successOrFailure)
         {
             try {

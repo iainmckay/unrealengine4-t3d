@@ -25,6 +25,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionConstant3VectorProcessor());
             AddNodeProcessor(new MaterialExpressionConstant4VectorProcessor());
             AddNodeProcessor(new MaterialExpressionCrossProductProcessor());
+            AddNodeProcessor(new MaterialExpressionDDXProcessor());
+            AddNodeProcessor(new MaterialExpressionDDYProcessor());
             AddNodeProcessor(new MaterialExpressionDepthFadeProcessor());
             AddNodeProcessor(new MaterialExpressionDesaturationProcessor());
             AddNodeProcessor(new MaterialExpressionDistanceProcessor());
@@ -57,7 +59,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddNodeProcessor(new MaterialExpressionTextureObjectParameterProcessor());
             AddNodeProcessor(new MaterialExpressionTextureObjectProcessor());
             AddNodeProcessor(new MaterialExpressionTextureSampleProcessor());
-            AddNodeProcessor(new ObjectExpressionTextureSampleParameter2DProcessor());
+            AddNodeProcessor(new MaterialExpressionTransformProcessor());
+            AddNodeProcessor(new MaterialExpressionTextureSampleParameter2DProcessor());
             AddNodeProcessor(new MaterialExpressionTimeProcessor());
             AddNodeProcessor(new MaterialExpressionVectorParameterProcessor());
             AddNodeProcessor(new MaterialExpressionVertexColorProcessor());

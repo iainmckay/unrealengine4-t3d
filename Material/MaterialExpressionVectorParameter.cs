@@ -17,9 +17,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public MaterialExpressionVectorParameterProcessor()
         {
-            AddRequiredProperty("ParameterName", PropertyDataType.String);
-
             AddOptionalProperty("DefaultValue", PropertyDataType.Vector4);
+            AddOptionalProperty("ParameterName", PropertyDataType.String);
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");
@@ -31,7 +30,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
-                node.FindPropertyValue("ParameterName"),
+                node.FindPropertyValue("ParameterName") ?? "Param",
                 ValueUtil.ParseVector4(node.FindPropertyValue("DefaultValue"))
             );
         }

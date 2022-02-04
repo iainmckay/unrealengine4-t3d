@@ -190,6 +190,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
                 ValueUtil.TryParseMaterialSceneAttributeInputMode(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.SceneTextureId)) {
                 ValueUtil.TryParseSceneTextureId(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.MaterialVectorCoordTransformSource)) {
+                ValueUtil.TryParseMaterialVectorCoordTransformSource(parsedProperty.Value, out wasValid);
+            } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.MaterialVectorCoordTransform)) {
+                ValueUtil.TryParseMaterialVectorCoordTransform(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector2)) {
                 ValueUtil.TryParseVector2(parsedProperty.Value, out wasValid);
             } else if (propertyDefinition.DataType.HasFlag(PropertyDataType.Vector3)) {

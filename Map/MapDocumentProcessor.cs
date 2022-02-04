@@ -20,6 +20,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddNodeProcessor(new MapProcessor());
             AddNodeProcessor(new DecalActorProcessor());
             AddNodeProcessor(new DecalComponentProcessor());
+            AddNodeProcessor(new DirectionalLightActorProcessor());
+            AddNodeProcessor(new DirectionalLightComponentProcessor());
             AddNodeProcessor(new ExponentialHeightFogProcessor());
             AddNodeProcessor(new ExponentialHeightFogComponentProcessor());
             AddNodeProcessor(new PointLightActorProcessor());

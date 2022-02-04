@@ -31,6 +31,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
             AddOptionalProperty("Texture", PropertyDataType.ResourceReference);
             AddOptionalProperty("TextureObject", PropertyDataType.AttributeList);
+
+            AddIgnoredProperty("bCollapsed");
         }
 
         public override Node Convert(ParsedNode node, Node[] children)

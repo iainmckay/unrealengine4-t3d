@@ -20,10 +20,9 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public MaterialExpressionTextureObjectParameterProcessor()
         {
-            AddRequiredProperty("ParameterName", PropertyDataType.String);
-
-            AddOptionalProperty("Texture", PropertyDataType.ResourceReference);
+            AddOptionalProperty("ParameterName", PropertyDataType.String);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
+            AddOptionalProperty("Texture", PropertyDataType.ResourceReference);
 
             AddIgnoredProperty("ExpressionGUID");
             AddIgnoredProperty("Group");
@@ -35,7 +34,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
-                node.FindPropertyValue("ParameterName"),
+                node.FindPropertyValue("ParameterName") ?? "Param",
                 ValueUtil.ParseResourceReference(node.FindPropertyValue("Texture")),
                 ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType"))
             );

@@ -133,6 +133,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Parser
 
             string value = ReadUntilEndOfLine();
 
+            if (sectionType == "Foliage" && key == "Location") {
+                return null;
+            }
+
             if (value.StartsWith("\"") && value.EndsWith("\"")) {
                 value = value.Substring(1, value.Length - 2);
             }

@@ -18,16 +18,16 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
         }
     }
 
-    public class ObjectExpressionTextureSampleParameter2DProcessor : ParameterNodeProcessor
+    public class MaterialExpressionTextureSampleParameter2DProcessor : ParameterNodeProcessor
     {
         public override string Class => "/Script/Engine.MaterialExpressionTextureSampleParameter2D";
 
-        public ObjectExpressionTextureSampleParameter2DProcessor()
+        public MaterialExpressionTextureSampleParameter2DProcessor()
         {
-            AddRequiredProperty("ParameterName", PropertyDataType.String);
             AddRequiredProperty("Texture", PropertyDataType.ResourceReference);
 
             AddOptionalProperty("Coordinates", PropertyDataType.AttributeList);
+            AddOptionalProperty("ParameterName", PropertyDataType.String);
             AddOptionalProperty("SamplerType", PropertyDataType.SamplerType);
 
             AddIgnoredProperty("bRealtimePreview");
@@ -41,7 +41,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
-                node.FindPropertyValue("ParameterName"),
+                node.FindPropertyValue("ParameterName") ?? "Param",
                 ValueUtil.ParseAttributeList(node.FindPropertyValue("Coordinates")),
                 ValueUtil.ParseResourceReference(node.FindPropertyValue("Texture")),
                 ValueUtil.ParseSamplerType(node.FindPropertyValue("SamplerType"))

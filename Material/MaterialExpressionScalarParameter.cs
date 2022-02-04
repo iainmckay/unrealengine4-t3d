@@ -17,9 +17,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public MaterialExpressionScalarParameterProcessor()
         {
-            AddRequiredProperty("ParameterName", PropertyDataType.String);
-
             AddOptionalProperty("DefaultValue", PropertyDataType.Float);
+            AddOptionalProperty("ParameterName", PropertyDataType.String);
 
             AddIgnoredProperty("bCollapsed");
             AddIgnoredProperty("ExpressionGUID");
@@ -34,7 +33,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
                 node.FindAttributeValue("Name"),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorX")),
                 ValueUtil.ParseInteger(node.FindPropertyValue("MaterialExpressionEditorY")),
-                node.FindPropertyValue("ParameterName"),
+                node.FindPropertyValue("ParameterName") ?? "Param",
                 ValueUtil.ParseFloat(node.FindPropertyValue("DefaultValue"))
             );
         }

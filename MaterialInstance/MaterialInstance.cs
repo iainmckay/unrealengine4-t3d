@@ -39,6 +39,7 @@
             AddIgnoredProperty("CachedReferencedTextures");
             AddIgnoredProperty("LightingGuid");
             AddIgnoredProperty("ParameterStateId");
+            AddIgnoredProperty("PreviewMesh");
             AddIgnoredProperty("ReferencedTextureGuids");
             AddIgnoredProperty("TextureStreamingData");
             AddIgnoredProperty("TextureStreamingDataVersion");

@@ -136,6 +136,26 @@
         HeightBlend
     }
 
+    public enum MaterialVectorCoordTransformSource
+    {
+        Tangent,
+        Local,
+        World,
+        View,
+        Camera,
+        ParticleWorld
+    }
+
+    public enum MaterialVectorCoordTransform
+    {
+        Tangent,
+        Local,
+        World,
+        View,
+        Camera,
+        ParticleWorld
+    }
+
     public struct Vector2
     {
         public float X { get; }
