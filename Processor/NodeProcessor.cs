@@ -56,6 +56,11 @@ namespace JollySamurai.UnrealEngine4.T3D.Processor
             _attributeDefinitions.Add(name, new PropertyDefinition(name, propertyDataType, true));
         }
 
+        protected void AddOptionalAttribute(string name, PropertyDataType propertyDataType)
+        {
+            _attributeDefinitions.Add(name, new PropertyDefinition(name, propertyDataType, false));
+        }
+
         protected void AddRequiredProperty(string name, PropertyDataType propertyDataType)
         {
             _propertyDefinitions.Add(name, new PropertyDefinition(name, propertyDataType, true));

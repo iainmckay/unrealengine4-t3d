@@ -11,12 +11,13 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public string FolderPath { get; }
 
         public ResourceReference Archetype { get; }
+        public string ParentActorName { get; }
 
         public string RootComponentName { get; }
 
         public BaseComponent RootComponent => Children.First(node => node.Name == RootComponentName) as BaseComponent;
 
-        protected BaseActorNode(string name, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, ResourceReference archetype, Node[] children = null)
+        protected BaseActorNode(string name, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, ResourceReference archetype, Node[] children = null, string parentActorName = null)
             : base(name, children)
         {
             ActorLabel = actorLabel;
@@ -24,6 +25,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             FolderPath = folderPath;
             RootComponentName = rootComponentName;
             Archetype = archetype;
+            ParentActorName = parentActorName;
         }
     }
     
@@ -35,6 +37,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         {
             AddRequiredAttribute("Name", PropertyDataType.String);
             AddRequiredAttribute("Archetype", PropertyDataType.ResourceReference);
+
+            AddOptionalAttribute("ParentActor", PropertyDataType.String);
 
             AddRequiredProperty("RootComponent", PropertyDataType.String);
 

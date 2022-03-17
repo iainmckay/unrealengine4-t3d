@@ -10,8 +10,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
 
         public DirectionalLightComponent DirectionalLightComponent => Children.First(node => node.Name == DirectionalLightComponentName) as DirectionalLightComponent;
 
-        public DirectionalLightActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string directionalLightComponentName)
-            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
+        public DirectionalLightActor(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string parentActorName, string directionalLightComponentName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children, parentActorName)
         {
             DirectionalLightComponentName = directionalLightComponentName;
         }
@@ -38,6 +38,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
                 children,
+                node.FindAttributeValue("ParentActor"),
                 node.FindPropertyValue("DirectionalLightComponent")
             );
         }

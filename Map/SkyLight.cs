@@ -8,8 +8,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
     {
         public SkyLightComponent SkyLightComponent => Children.First(node => node.Name == RootComponentName) as SkyLightComponent;
 
-        public SkyLight(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children)
-            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
+        public SkyLight(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string parentActorName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children, parentActorName)
         {
         }
     }
@@ -21,9 +21,10 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
         public SkyLightProcessor()
         {
             AddIgnoredProperty("Component");
+            AddIgnoredProperty("LightComponent");
             AddIgnoredProperty("SpriteComponent");
         }
-        
+
         public override Node Convert(ParsedNode node, Node[] children)
         {
             return new SkyLight(
@@ -33,7 +34,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
-                children
+                children,
+                node.FindAttributeValue("ParentActor")
             );
         }
     }

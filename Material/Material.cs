@@ -72,8 +72,6 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
 
         public MaterialProcessor()
         {
-            AddRequiredProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
-
             AddOptionalProperty("AmbientOcclusion", PropertyDataType.AttributeList);
             AddOptionalProperty("BaseColor", PropertyDataType.AttributeList);
             AddOptionalProperty("BlendMode", PropertyDataType.BlendMode);
@@ -83,6 +81,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Material
             AddOptionalProperty("EditorX", PropertyDataType.Integer);
             AddOptionalProperty("EditorY", PropertyDataType.Integer);
             AddOptionalProperty("EmissiveColor", PropertyDataType.AttributeList);
+            AddOptionalProperty("Expressions", PropertyDataType.ExpressionReference | PropertyDataType.Array);
             AddOptionalProperty("MaterialDomain", PropertyDataType.MaterialDomain);
             AddOptionalProperty("Metallic", PropertyDataType.AttributeList);
             AddOptionalProperty("Normal", PropertyDataType.AttributeList);

@@ -21,13 +21,14 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             string folderPath,
             string rootComponentName,
             Node[] children,
+            string parentActorName,
             float priority,
             float blendWeight,
             bool enabled,
             bool unbound,
             PostProcessingVolumeProcessor.PostProcessingVolumeSettings settings
         )
-            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children, parentActorName)
         {
             Priority = priority;
             BlendWeight = blendWeight;
@@ -73,6 +74,7 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
                 children,
+                node.FindAttributeValue("ParentActor"),
                 ValueUtil.ParseFloat(node.FindPropertyValue("Priority")),
                 ValueUtil.ParseFloat(node.FindPropertyValue("Priority") ?? "1.0"),
                 ValueUtil.ParseBoolean(node.FindPropertyValue("bEnabled") ?? "True"),

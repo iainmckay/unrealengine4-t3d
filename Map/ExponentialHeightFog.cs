@@ -8,8 +8,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
     {
         public ExponentialHeightFogComponent ExponentialHeightFogComponent => Children.First(node => node.Name == RootComponentName) as ExponentialHeightFogComponent;
 
-        public ExponentialHeightFog(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children)
-            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children)
+        public ExponentialHeightFog(string name, ResourceReference archetype, string actorLabel, SpawnCollisionHandlingMethod spawnCollisionHandlingMethod, string folderPath, string rootComponentName, Node[] children, string parentActorName)
+            : base(name, actorLabel, spawnCollisionHandlingMethod, folderPath, rootComponentName, archetype, children, parentActorName)
         {
         }
     }
@@ -33,7 +33,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
                 ValueUtil.ParseSpawnCollisionHandlingMethod(node.FindPropertyValue("SpawnCollisionHandlingMethod")),
                 node.FindPropertyValue("FolderPath"),
                 node.FindPropertyValue("RootComponent"),
-                children
+                children,
+                node.FindAttributeValue("ParentActor")
             );
         }
     }
