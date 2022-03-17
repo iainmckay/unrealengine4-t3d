@@ -64,6 +64,8 @@
     <Compile Include="Map\PointLightActor.cs" />
     <Compile Include="Map\PointLightComponent.cs" />
     <Compile Include="Map\PostProcessingVolume.cs" />
+    <Compile Include="Map\SkeletalMeshActor.cs" />
+    <Compile Include="Map\SkeletalMeshComponent.cs" />
     <Compile Include="Map\SkyLight.cs" />
     <Compile Include="Map\SkyLightComponent.cs" />
     <Compile Include="Map\SphereReflectionCaptureActor.cs" />

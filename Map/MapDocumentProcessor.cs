@@ -27,6 +27,8 @@ namespace JollySamurai.UnrealEngine4.T3D.Map
             AddNodeProcessor(new PointLightActorProcessor());
             AddNodeProcessor(new PointLightComponentProcessor());
             AddNodeProcessor(new PostProcessingVolumeProcessor());
+            AddNodeProcessor(new SkeletalMeshActorProcessor());
+            AddNodeProcessor(new SkeletalMeshComponentProcessor());
             AddNodeProcessor(new SkyLightProcessor());
             AddNodeProcessor(new SkyLightComponentProcessor());
             AddNodeProcessor(new SphereReflectionCaptureActorProcessor());
